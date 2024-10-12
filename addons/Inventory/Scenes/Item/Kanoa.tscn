@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1gfeqy0klscu"]
+
+[ext_resource type="Texture2D" uid="uid://x03imjta0clc" path="res://addons/Inventory/Assets/Imagens/kanoa.png" id="1_6bteu"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/item.gd" id="2_j361l"]
+
+[node name="Kanoa" type="TextureRect"]
+custom_minimum_size = Vector2(84, 84)
+offset_right = 84.0
+offset_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1_6bteu")
+expand_mode = 3
+script = ExtResource("2_j361l")
+type = 1
+icon = ExtResource("1_6bteu")
+item_name = &"Kanoa"
+max_amount = 16

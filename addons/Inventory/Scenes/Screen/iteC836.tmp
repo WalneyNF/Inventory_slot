@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://q6fx05lnjbw6"]
+
+[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/Inventory/Assets/Imagens/sword.png" id="1_u2gb0"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/item_texture.gd" id="2_b3bfb"]
+
+[node name="Item_texture" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.0555556
+anchor_bottom = 0.0987654
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1_u2gb0")
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2_b3bfb")
+amount_anchor = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "33"

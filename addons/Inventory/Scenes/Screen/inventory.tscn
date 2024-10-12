@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0fgcy0fvtoi7"]
+
+[ext_resource type="Script" path="res://addons/Inventory/Script/inventory_panel.gd" id="1_kpgjp"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/inventory.gd" id="2_8fnwn"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/panel.gd" id="3_u70es"]
+
+[sub_resource type="GDScript" id="GDScript_dyddg"]
+script/source = "extends VBoxContainer
+
+@onready var inventory_system: Control = $\"..\"
+
+func _on_reset_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+
+func _process(delta: float) -> void:
+	$List.text = str(inventory_system.inventory.panel_item.inventory.items)
+
+func _on_add_sword_pressed() -> void:
+	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Sword.tscn\")
+
+func _on_add_kanoa_pressed() -> void:
+	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Kanoa.tscn\")
+
+func _on_add_potion_pressed() -> void:
+	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Potion.tscn\",1,false,-1,true)
+"
+
+[node name="Inventory_system" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kpgjp")
+
+[node name="Inventory_main" type="Node" parent="."]
+script = ExtResource("2_8fnwn")
+
+[node name="Inventory" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_main", "grid_slot")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.388889
+anchor_top = 0.0277778
+anchor_right = 0.787326
+anchor_bottom = 0.688272
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_u70es")
+inventory_main = NodePath("../Inventory_main")
+grid_slot = NodePath("Grid")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="Inventory"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 10
+
+[node name="Equipped" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_main", "grid_slot")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.388889
+anchor_top = 0.82716
+anchor_right = 0.791667
+anchor_bottom = 0.925926
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_u70es")
+slot_type = 1
+inventory_main = NodePath("../Inventory_main")
+grid_slot = NodePath("Grid")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="Equipped"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 10
+
+[node name="Debbug" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 72.0
+offset_right = 240.0
+offset_bottom = 208.0
+mouse_filter = 2
+script = SubResource("GDScript_dyddg")
+
+[node name="Reset" type="Button" parent="Debbug"]
+layout_mode = 2
+text = "Reset"
+
+[node name="Add_sword" type="Button" parent="Debbug"]
+layout_mode = 2
+text = "Add_sword"
+
+[node name="Add_Kanoa" type="Button" parent="Debbug"]
+layout_mode = 2
+text = "Add_kanoa"
+
+[node name="Add_Potion" type="Button" parent="Debbug"]
+layout_mode = 2
+text = "Add_potion
+"
+
+[node name="List" type="Label" parent="Debbug"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "asddddddddddddd"
+autowrap_mode = 1
+
+[connection signal="pressed" from="Debbug/Reset" to="Debbug" method="_on_reset_pressed"]
+[connection signal="pressed" from="Debbug/Add_sword" to="Debbug" method="_on_add_sword_pressed"]
+[connection signal="pressed" from="Debbug/Add_Kanoa" to="Debbug" method="_on_add_kanoa_pressed"]
+[connection signal="pressed" from="Debbug/Add_Potion" to="Debbug" method="_on_add_potion_pressed"]

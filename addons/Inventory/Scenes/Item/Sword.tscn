@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd2a4mksncxgr"]
+
+[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/Inventory/Assets/Imagens/sword.png" id="1_sirxn"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/item.gd" id="2_lxu76"]
+
+[node name="Sword" type="TextureRect"]
+custom_minimum_size = Vector2(84, 84)
+offset_right = 84.0
+offset_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1_sirxn")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("2_lxu76")
+icon = ExtResource("1_sirxn")
+item_name = &"Sword"
+max_amount = 1

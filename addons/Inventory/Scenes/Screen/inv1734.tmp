@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0fgcy0fvtoi7"]
+
+[ext_resource type="Script" path="res://addons/Inventory/Script/inventory_panel.gd" id="1_kpgjp"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/inventory.gd" id="2_8fnwn"]
+
+[node name="Inventory" type="Control" node_paths=PackedStringArray("inventory_grid_slot", "equipped_grid_slot")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kpgjp")
+inventory_grid_slot = NodePath("Inventory/Grid")
+equipped_grid_slot = NodePath("Equipped/Grid")
+size_slot = Vector2(84, 84)
+
+[node name="Inventory_main" type="Node" parent="."]
+script = ExtResource("2_8fnwn")
+
+[node name="Inventory" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.222222
+anchor_top = 0.0277778
+anchor_right = 0.787326
+anchor_bottom = 0.688272
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="Inventory"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 10
+
+[node name="Equipped" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.222222
+anchor_top = 0.82716
+anchor_right = 0.787326
+anchor_bottom = 0.925926
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="Equipped"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 10
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 59.0
+offset_bottom = 39.0
+text = "Reset"
+
+[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]
