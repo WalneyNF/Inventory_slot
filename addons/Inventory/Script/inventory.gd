@@ -11,6 +11,7 @@ signal discart_item(item,system_slot)
 enum ITEM_TYPE {GUN,ACCESSORIES}
 enum TYPE_SLOT {INVENTORY,EQUIPPED}
 
+const SLOT_BUTTON_VOID: int = -2
 
 var item_selected
 
@@ -42,10 +43,21 @@ func _ready() -> void:
 
 ## Main functions ----------------------------------------
 func add_item(dic_item: Dictionary, path: String, amount: int = 1, new_slot: bool = false, slot: int = -1, unique: bool = false):
+	var item = search_item(dic_item.items,-1,path)
+	
+	if dic_item.items.size() == dic_item.max_slot:
+		return ""
+	
 	if unique:
 		return _append_item(dic_item,path,amount)
 	
-	var item = search_item(dic_item.items,-1,path)
+	if slot == SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
+		var _new_item = _append_item(dic_item,path,amount,SLOT_BUTTON_VOID)
+		new_item.emit(_new_item,dic_item.type)
+		
+		return _new_item
+	
+	
 	
 	if item is Dictionary:
 		var item_instance = load(path).instantiate()
@@ -112,8 +124,11 @@ func _function_slot_changed(slot, move) -> void:
 	else:
 		item_selected = null
 
-func _append_item(dic_item: Dictionary, path: String, amount: int):
-	var now_slot = search_void_slot(dic_item)
+func _append_item(dic_item: Dictionary, path: String, amount: int, slot: int = -1):
+	var now_slot = slot
+	if now_slot == -1:
+		now_slot = search_void_slot(dic_item)
+	
 	var new_create_item = {"id": randi(),"amount": amount, "slot" : now_slot, "path": path}
 	
 	dic_item.items.append(new_create_item)
@@ -145,8 +160,22 @@ func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 	return separate_amount
 #---------------------------------------------------------
 
+# Get ---------------------------------------------------
+func get_panel_type(type: int):
+	for panels in panel_item:
+		
+		if panel_item.get(panels).type == type:
+			return panel_item.get(panels)
+	
+	return null
+
 # Searchs -----------------------------------------------
-func search_item(array_item: Array, id: int = -1, path : String = ""):
+func search_item(array_item: Array, id: int = -1, path : String = "",slot: int = -1):
+	if slot != -1:
+		for item in array_item:
+			if item.slot == slot:
+				return item
+	
 	if id == -1 and path != "":
 		for item in array_item:
 			if item.path == path:

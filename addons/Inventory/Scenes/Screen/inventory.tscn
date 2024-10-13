@@ -51,6 +51,7 @@ grow_vertical = 2
 script = ExtResource("3_u70es")
 inventory_main = NodePath("../Inventory_main")
 grid_slot = NodePath("Grid")
+next_system_slot = NodePath("../Equipped")
 metadata/_edit_use_anchors_ = true
 
 [node name="Grid" type="GridContainer" parent="Inventory"]
@@ -72,6 +73,7 @@ script = ExtResource("3_u70es")
 slot_type = 1
 inventory_main = NodePath("../Inventory_main")
 grid_slot = NodePath("Grid")
+next_system_slot = NodePath("../Inventory")
 metadata/_edit_use_anchors_ = true
 
 [node name="Grid" type="GridContainer" parent="Equipped"]

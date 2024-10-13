@@ -3,12 +3,34 @@ extends Button
 var item_node
 var type: int
 var inventory: Inventory_main
+var right_mouse: bool
+var free_use: bool
+
+func _gui_input(event: InputEvent) -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		right_mouse = true
 
 func _pressed() -> void:
 	
 	if is_instance_valid(inventory.item_selected):
 		
 		if is_instance_valid(item_node):
+			if right_mouse:
+				var is_item = inventory.search_item(inventory.get_panel_type(type).items,-1,"",inventory.SLOT_BUTTON_VOID)
+				
+				if is_item != null:
+					if item_node.item.amount == 1:
+						item_node.item.amount += is_item.amount
+						is_item.amount = 0
+						
+						inventory.slot_changed.emit(self,true)
+						item_node.z_index = 1
+					else:
+						item_node.item.amount -= 1
+						is_item.amount += 1
+					inventory.new_data_global.emit()
+				
+				return
 			
 			if item_node == inventory.item_selected:
 				reset()
@@ -21,6 +43,20 @@ func _pressed() -> void:
 			item_move_void_slot()
 		
 	else:
+		if right_mouse:
+			
+			
+			if item_node.item.amount == 1:
+				set_main_item()
+				inventory.new_data_global.emit()
+			else:
+				item_node.item.amount -= 1
+				
+				inventory.add_item(inventory.get_panel_type(type),item_node.item.path,1,false,inventory.SLOT_BUTTON_VOID)
+				inventory.new_data_global.emit()
+			
+			right_mouse = false
+			return
 		if is_instance_valid(item_node):
 			set_main_item()
 
@@ -29,6 +65,9 @@ func _ready() -> void:
 
 func exit_child(node: Node) -> void:
 	tooltip_text = ""
+	
+	if free_use:
+		queue_free()
 
 
 func reset() -> void:
@@ -60,6 +99,8 @@ func item_move_void_slot() -> void:
 
 
 func item_changed_other_slot() -> void:
+	if inventory.item_selected.item.slot == inventory.SLOT_BUTTON_VOID:
+		return
 	# Creator second item
 	var one_item = inventory.item_selected.duplicate()
 	var two_item = item_node.duplicate()
@@ -91,6 +132,7 @@ func item_changed_other_slot() -> void:
 
 
 func for_the_same_item() -> bool:
+	
 	if inventory.item_selected.item.path == item_node.item.path:
 		
 		var item_instance = load(item_node.item.path).instantiate()

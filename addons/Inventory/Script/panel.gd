@@ -4,6 +4,7 @@ extends PanelContainer
 @export var slot_type: Inventory_main.TYPE_SLOT
 @export var inventory_main: Inventory_main
 @export var grid_slot: GridContainer
+@export_node_path() var next_system_slot
 
 @export_group("Slot Settings")
 @export var size_slot: Vector2 = Vector2(64,64)
@@ -24,6 +25,7 @@ func _ready() -> void:
 
 
 func receive_new_item(item: Dictionary, type: int) -> void:
+	
 	if type == slot_type:
 		_load_item(item)
 
@@ -33,13 +35,8 @@ func _create_slot(amount_size: int) -> void:
 	for amount in amount_size:
 		
 		var slot_button: Button = Button.new()
-		slot_button.set_script(SCRIPT_SLOT)
 		
-		slot_button.custom_minimum_size = size_slot
-		slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		slot_button.focus_mode = Control.FOCUS_NONE
-		slot_button.inventory = inventory_main
-		slot_button.type = slot_type
+		instance_slot_button(slot_button)
 		
 		grid_slot.add_child(slot_button)
 
@@ -53,11 +50,44 @@ func _load_items(item_array: Array) -> void:
 func _load_item(item: Dictionary) -> void:
 	
 	var new_item = ITEM_TEXTURE.instantiate()
-	var slot = grid_slot.get_child(item.slot)
 	
-	slot.inventory = inventory_main
-	slot.item_node = new_item
-	slot.item_node.inventory = inventory_main
-	slot.item_node.item = item
+	if item.slot == inventory_main.SLOT_BUTTON_VOID:
+		if inventory_main.get_child_count() == 0:
+			
+			var void_button = Button.new()
+			var slot = void_button
+			instance_slot_button(void_button)
+			
+			slot.free_use = true
+			slot.inventory = inventory_main
+			slot.item_node = new_item
+			slot.item_node.inventory = inventory_main
+			slot.item_node.item = item
+			slot.self_modulate.a = 0
+			
+			inventory_main.add_child(void_button)
+			slot.add_child(new_item)
+			
+			inventory_main.slot_changed.emit(slot,true)
+	else:
+		var slot = grid_slot.get_child(item.slot)
+		
+		slot.inventory = inventory_main
+		slot.item_node = new_item
+		slot.item_node.inventory = inventory_main
+		slot.item_node.item = item
+		
+		slot.add_child(new_item)
+
+
+
+
+func instance_slot_button(slot_button: Button) -> void:
+	slot_button.set_script(SCRIPT_SLOT)
 	
-	slot.add_child(new_item)
+	slot_button.button_mask = MOUSE_BUTTON_MASK_RIGHT | MOUSE_BUTTON_MASK_LEFT
+	slot_button.custom_minimum_size = size_slot
+	slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	slot_button.focus_mode = Control.FOCUS_NONE
+	slot_button.inventory = inventory_main
+	slot_button.type = slot_type
