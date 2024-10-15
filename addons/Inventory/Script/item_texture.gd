@@ -32,7 +32,6 @@ func load_visual() -> void:
 
 
 func reload_data() -> void:
-	
 	if item.amount == 0:
 		var type = inventory.panel_item.keys()[get_parent().type]
 		inventory.remove_item(inventory.panel_item[type],item.id)

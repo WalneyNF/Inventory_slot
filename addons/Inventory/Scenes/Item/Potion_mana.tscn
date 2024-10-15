@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://5pp2gucp8uan"]
+
+[ext_resource type="Texture2D" uid="uid://bucs62icjvqsd" path="res://addons/Inventory/Assets/Imagens/mana.png" id="1_jppbo"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/item.gd" id="2_odt5p"]
+
+[node name="Potion_mana" type="TextureRect"]
+custom_minimum_size = Vector2(84, 84)
+offset_right = 84.0
+offset_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1_jppbo")
+expand_mode = 3
+script = ExtResource("2_odt5p")
+type = 1
+icon = ExtResource("1_jppbo")
+item_name = &"Potion Mana"
+max_amount = 4

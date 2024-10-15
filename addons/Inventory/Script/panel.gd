@@ -68,7 +68,7 @@ func _load_item(item: Dictionary) -> void:
 			inventory_main.add_child(void_button)
 			slot.add_child(new_item)
 			
-			inventory_main.slot_changed.emit(slot,true)
+			inventory_main.button_slot_changed.emit(slot,true)
 	else:
 		var slot = grid_slot.get_child(item.slot)
 		

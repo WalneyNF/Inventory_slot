@@ -10,7 +10,7 @@ func slot_changed(slot: Button, move: bool) -> void:
 func _ready() -> void:
 	set_process(false)
 	
-	inventory.slot_changed.connect(slot_changed)
+	inventory.button_slot_changed.connect(slot_changed)
 
 
 func _process(delta: float) -> void:

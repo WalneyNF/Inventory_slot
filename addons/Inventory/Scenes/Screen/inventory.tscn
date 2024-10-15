@@ -9,6 +9,13 @@ script/source = "extends VBoxContainer
 
 @onready var inventory_system: Control = $\"..\"
 
+var items_path: Array = [
+	\"res://addons/Inventory/Scenes/Item/Sword.tscn\",
+	\"res://addons/Inventory/Scenes/Item/Kanoa.tscn\",
+	\"res://addons/Inventory/Scenes/Item/Potion_life.tscn\",
+	\"res://addons/Inventory/Scenes/Item/Potion_mana.tscn\"
+]
+
 func _on_reset_pressed() -> void:
 	get_tree().reload_current_scene()
 
@@ -17,14 +24,29 @@ func _on_reset_pressed() -> void:
 func _process(delta: float) -> void:
 	$List.text = str(inventory_system.inventory.panel_item.inventory.items)
 
-func _on_add_sword_pressed() -> void:
-	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Sword.tscn\")
 
-func _on_add_kanoa_pressed() -> void:
-	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Kanoa.tscn\")
+func _on_add_item_pressed() -> void:
+	if get_child_count() >= 4:
+		get_child(3).queue_free()
+		return
+	
+	var new_panel: PanelContainer = PanelContainer.new()
+	var new_grid: GridContainer = GridContainer.new()
+	
+	new_grid.columns = 2
+	add_child(new_panel)
+	new_panel.add_child(new_grid)
+	
+	for i in items_path:
+		var new_button = Button.new()
+		new_button.custom_minimum_size = Vector2(64,64)
+		
+		new_grid.add_child(new_button)
+		
+		new_button.pressed.connect(item_selected)
 
-func _on_add_potion_pressed() -> void:
-	inventory_system.inventory.add_item(inventory_system.inventory.panel_item.inventory, \"res://addons/Inventory/Scenes/Item/Potion.tscn\",1,false,-1,true)
+func item_selected() -> void:
+	print(\"a\")
 "
 
 [node name="Inventory_system" type="Control"]
@@ -63,7 +85,7 @@ columns = 10
 [node name="Equipped" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_main", "grid_slot")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.388889
+anchor_left = 0.465278
 anchor_top = 0.82716
 anchor_right = 0.791667
 anchor_bottom = 0.925926
@@ -95,18 +117,9 @@ script = SubResource("GDScript_dyddg")
 layout_mode = 2
 text = "Reset"
 
-[node name="Add_sword" type="Button" parent="Debbug"]
+[node name="Add_item" type="Button" parent="Debbug"]
 layout_mode = 2
 text = "Add_sword"
-
-[node name="Add_Kanoa" type="Button" parent="Debbug"]
-layout_mode = 2
-text = "Add_kanoa"
-
-[node name="Add_Potion" type="Button" parent="Debbug"]
-layout_mode = 2
-text = "Add_potion
-"
 
 [node name="List" type="Label" parent="Debbug"]
 visible = false
@@ -116,6 +129,4 @@ text = "asddddddddddddd"
 autowrap_mode = 1
 
 [connection signal="pressed" from="Debbug/Reset" to="Debbug" method="_on_reset_pressed"]
-[connection signal="pressed" from="Debbug/Add_sword" to="Debbug" method="_on_add_sword_pressed"]
-[connection signal="pressed" from="Debbug/Add_Kanoa" to="Debbug" method="_on_add_kanoa_pressed"]
-[connection signal="pressed" from="Debbug/Add_Potion" to="Debbug" method="_on_add_potion_pressed"]
+[connection signal="pressed" from="Debbug/Add_item" to="Debbug" method="_on_add_item_pressed"]

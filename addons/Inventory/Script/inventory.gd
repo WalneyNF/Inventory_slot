@@ -2,7 +2,8 @@ extends Node
 
 class_name Inventory_main
 
-signal slot_changed(slot,move)
+signal button_slot_changed(slot,move)
+signal item_changed_panel(item ,new_type)
 signal new_item(item,system_slot)
 signal new_data(item,system_slot)
 signal new_data_global()
@@ -36,7 +37,7 @@ var panel_item : Dictionary = {
 
 ## Sub functions ================================================================
 func _ready() -> void:
-	slot_changed.connect(_function_slot_changed)
+	button_slot_changed.connect(_function_slot_changed)
 
 ##===============================================================================
 # New functions ================================================================
@@ -107,6 +108,15 @@ func remove_item(dic_item: Dictionary, id: int = -1) -> bool:
 	
 	return false
 
+
+func changed_panel_item(item: Dictionary, out_type: int, new_type:int) -> void:
+	var out_panel: Dictionary = get_panel_type(out_type)
+	var new_panel: Dictionary = get_panel_type(new_type)
+	
+	if out_panel == null or new_data == null: return
+	
+	add_item(new_panel, item.path,item.amount)
+	remove_item(out_panel,item.id)
 #---------------------------------------------------------
 
 
@@ -119,6 +129,12 @@ func _is_item_valid(array_item: Array, path: String) -> bool:
 	return false
 
 func _function_slot_changed(slot, move) -> void:
+	if is_instance_valid(item_selected):
+		
+		if item_selected.item.slot == SLOT_BUTTON_VOID:
+			if item_selected.item.amount == 0:
+				item_selected.get_parent().queue_free()
+	
 	if move:
 		item_selected = slot.item_node
 	else:
