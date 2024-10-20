@@ -80,8 +80,6 @@ func _load_item(item: Dictionary) -> void:
 		slot.add_child(new_item)
 
 
-
-
 func instance_slot_button(slot_button: Button) -> void:
 	slot_button.set_script(SCRIPT_SLOT)
 	
@@ -90,4 +88,5 @@ func instance_slot_button(slot_button: Button) -> void:
 	slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	slot_button.focus_mode = Control.FOCUS_NONE
 	slot_button.inventory = inventory_main
+	slot_button.my_panel = self
 	slot_button.type = slot_type

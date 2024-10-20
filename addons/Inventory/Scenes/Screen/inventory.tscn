@@ -1,53 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0fgcy0fvtoi7"]
+[gd_scene load_steps=6 format=3 uid="uid://d0fgcy0fvtoi7"]
 
 [ext_resource type="Script" path="res://addons/Inventory/Script/inventory_panel.gd" id="1_kpgjp"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/inventory.gd" id="2_8fnwn"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/panel.gd" id="3_u70es"]
-
-[sub_resource type="GDScript" id="GDScript_dyddg"]
-script/source = "extends VBoxContainer
-
-@onready var inventory_system: Control = $\"..\"
-
-var items_path: Array = [
-	\"res://addons/Inventory/Scenes/Item/Sword.tscn\",
-	\"res://addons/Inventory/Scenes/Item/Kanoa.tscn\",
-	\"res://addons/Inventory/Scenes/Item/Potion_life.tscn\",
-	\"res://addons/Inventory/Scenes/Item/Potion_mana.tscn\"
-]
-
-func _on_reset_pressed() -> void:
-	get_tree().reload_current_scene()
-
-
-
-func _process(delta: float) -> void:
-	$List.text = str(inventory_system.inventory.panel_item.inventory.items)
-
-
-func _on_add_item_pressed() -> void:
-	if get_child_count() >= 4:
-		get_child(3).queue_free()
-		return
-	
-	var new_panel: PanelContainer = PanelContainer.new()
-	var new_grid: GridContainer = GridContainer.new()
-	
-	new_grid.columns = 2
-	add_child(new_panel)
-	new_panel.add_child(new_grid)
-	
-	for i in items_path:
-		var new_button = Button.new()
-		new_button.custom_minimum_size = Vector2(64,64)
-		
-		new_grid.add_child(new_button)
-		
-		new_button.pressed.connect(item_selected)
-
-func item_selected() -> void:
-	print(\"a\")
-"
+[ext_resource type="Script" path="res://addons/Inventory/Script/debbug/random_item.gd" id="4_imosm"]
+[ext_resource type="Script" path="res://addons/Inventory/Script/debbug/my_player.gd" id="5_f86xq"]
 
 [node name="Inventory_system" type="Control"]
 layout_mode = 3
@@ -80,7 +37,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
-columns = 10
+columns = 8
 
 [node name="Equipped" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_main", "grid_slot")]
 layout_mode = 1
@@ -104,29 +61,17 @@ theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 10
 
-[node name="Debbug" type="VBoxContainer" parent="."]
+[node name="Random" type="Button" parent="."]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 72.0
-offset_right = 240.0
-offset_bottom = 208.0
-mouse_filter = 2
-script = SubResource("GDScript_dyddg")
+offset_left = 200.0
+offset_top = 224.0
+offset_right = 313.0
+offset_bottom = 255.0
+text = "Random item"
+script = ExtResource("4_imosm")
+items = Array[String](["res://addons/Inventory/Scenes/Item/Kanoa.tscn", "res://addons/Inventory/Scenes/Item/Potion_life.tscn", "res://addons/Inventory/Scenes/Item/Potion_mana.tscn", "res://addons/Inventory/Scenes/Item/Sword.tscn"])
 
-[node name="Reset" type="Button" parent="Debbug"]
-layout_mode = 2
-text = "Reset"
+[node name="my_player" type="Node" parent="."]
+script = ExtResource("5_f86xq")
 
-[node name="Add_item" type="Button" parent="Debbug"]
-layout_mode = 2
-text = "Add_sword"
-
-[node name="List" type="Label" parent="Debbug"]
-visible = false
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-text = "asddddddddddddd"
-autowrap_mode = 1
-
-[connection signal="pressed" from="Debbug/Reset" to="Debbug" method="_on_reset_pressed"]
-[connection signal="pressed" from="Debbug/Add_item" to="Debbug" method="_on_add_item_pressed"]
+[connection signal="item_entered_panel" from="Inventory_main" to="my_player" method="_on_inventory_main_item_entered_panel"]

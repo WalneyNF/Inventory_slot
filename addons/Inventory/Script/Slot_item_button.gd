@@ -3,16 +3,12 @@ extends Button
 var item_node
 var type: int
 var inventory: Inventory_main
+var my_panel: PanelContainer
 var right_mouse: bool
 var free_use: bool
 
-var dedbug_text = Label.new()
-func _process(delta: float) -> void:
-	dedbug_text.text = str(inventory.get_panel_type(type).type)
-
 # Class =====
 func _ready() -> void:
-	add_child(dedbug_text)
 	child_exiting_tree.connect(exit_child)
 	await get_tree().create_timer(0.2).timeout
 
@@ -56,6 +52,8 @@ func _pressed() -> void:
 			item_move_void_slot()
 		
 	else:
+		if shift_item_move(): return
+		
 		if is_instance_valid(item_node):
 			if right_mouse:
 				set_item_right_mouse()
@@ -82,54 +80,54 @@ func set_main_item() -> void:
 
 
 func item_move_void_slot() -> void:
-	var one_item = inventory.item_selected.duplicate()
+	var one_item = inventory.item_selected.item.duplicate()
+	var item_selected_panel_type = inventory.search_panel(one_item.id)
 	
-	one_item.position = Vector2()
-	one_item.inventory = inventory
-	one_item.item = inventory.item_selected.item
-	one_item.item.slot = get_index()
-	
-	add_child(one_item)
-	
-	item_node = one_item
+	if item_selected_panel_type != type:
+		inventory.set_panel_item(one_item, item_selected_panel_type, type, get_index(), true)
+	else:
+		inventory.set_slot_item(inventory.get_panel_type(item_selected_panel_type),one_item,get_index())
 	
 	inventory.item_selected.queue_free()
 	inventory.button_slot_changed.emit(self,false)
-	
-	item_node.z_index = 0
 
 
 func item_changed_other_slot() -> void:
 	if inventory.item_selected.item.slot == inventory.SLOT_BUTTON_VOID:
 		return
 	# Creator second item
-	var one_item = inventory.item_selected.duplicate()
-	var two_item = item_node.duplicate()
+	var one_item = inventory.item_selected.item
+	var two_item = item_node.item
 	
-	one_item.position = Vector2()
-	one_item.inventory = inventory
-	one_item.item = inventory.item_selected.item
-	one_item.item.slot = get_index()
-	one_item.z_index = 0
+	#Changed panel
+	var one_item_type = inventory.search_panel(one_item.id)
+	var two_item_type = inventory.search_panel(two_item.id)
 	
-	two_item.position = Vector2()
-	two_item.inventory = inventory
-	two_item.item = item_node.item
-	two_item.item.slot = inventory.item_selected.get_parent().get_index()
-	two_item.z_index = 0
-	
-	add_child(one_item)
-	inventory.item_selected.get_parent().add_child(two_item)
-	
-	# Delete original
-	inventory.item_selected.queue_free()
-	item_node.queue_free()
-	
-	# Set variable
-	item_node = one_item
-	two_item.get_parent().item_node = two_item
+	if one_item_type != type:
+		inventory.set_panel_item(one_item, one_item_type, two_item_type, two_item.slot, true)
+		inventory.set_panel_item(two_item, two_item_type, one_item_type, one_item.slot, true)
+		
+	else:
+		inventory.changed_slots_items(one_item,two_item)
 	
 	inventory.button_slot_changed.emit(self,false)
+
+
+func shift_item_move() -> bool:
+	if Input.is_key_pressed(KEY_SHIFT):
+		var item = item_node.item
+		var item_panel = inventory.get_panel_type(inventory.search_panel(item.id))
+		var next_type = my_panel.get_node_or_null(my_panel.next_system_slot)
+		
+		if next_type == null:
+			print("Não há um panel como proximo para enviar o item.")
+			return false
+		
+		inventory.set_panel_item(item,type,next_type.slot_type,-1,false)
+		
+		return true
+	
+	return false
 
 
 func for_the_same_item() -> bool:
@@ -155,13 +153,14 @@ func for_the_same_item() -> bool:
 
 
 func set_item_right_mouse() -> void:
+	
 	if item_node.item.amount == 1:
 		set_main_item()
 		inventory.new_data_global.emit()
 	else:
 		item_node.item.amount -= 1
 		
-		inventory.add_item(inventory.get_panel_type(type),item_node.item.path,1,false,inventory.SLOT_BUTTON_VOID)
+		inventory.add_item(inventory.get_panel_type(type),item_node.item.path,1,inventory.SLOT_BUTTON_VOID)
 		inventory.new_data_global.emit()
 	
 	right_mouse = false
