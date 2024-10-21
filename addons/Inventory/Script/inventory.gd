@@ -3,31 +3,36 @@ extends Node
 class_name Inventory_main
 
 
-signal button_slot_changed(slot,move)
-signal item_entered_panel(item ,new_type)
-signal item_exiting_panel(item ,new_type)
-signal new_item(item,system_slot)
-signal new_data(item,system_slot)
+signal new_item(item: ItemResource ,system_slot: PanelItemResource)
+signal new_data(item: ItemResource ,system_slot: PanelItemResource)
+signal discart_item(item: ItemResource ,system_slot: PanelItemResource)
+signal item_entered_panel(item: ItemResource ,new_id: int)
+signal item_exiting_panel(item: ItemResource ,new_id: int)
+signal button_slot_changed(slot: Control,move: bool)
 signal new_data_global()
-signal discart_item(item,system_slot)
+
+@export var panel : PanelResource
 
 enum ITEM_TYPE {GUN,ACCESSORIES}
-enum TYPE_SLOT {INVENTORY,EQUIPPED}
 enum ERROR {
+	SLOT_BUTTON_VOID = -2,
 	VOID = -1,
 	NO_SPACE_FOR_ITEM_IN_SLOTS,
 	ITEM_LEFT_WITH_FULL_SLOTS
 }
 
-const SLOT_BUTTON_VOID: int = -2
-
-var item_selected
-
-@export var panel : PanelResource
+var item_selected: Control
 
 ## Sub functions ================================================================
 func _ready() -> void:
+	set_process_input(false)
+	
 	button_slot_changed.connect(_function_slot_changed)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		item_selected.global_position = event.position - (item_selected.size/2)
+
 
 ##===============================================================================
 # New functions ================================================================
@@ -36,15 +41,13 @@ func _ready() -> void:
 func add_item(dic_item: PanelItemResource, path: String, amount: int = 1, slot: int = -1, unique: bool = false):
 	var item = search_item(dic_item.items,-1,path)
 	
-	
 	if dic_item.items.size() != dic_item.max_slot:
 		if unique:
 			return _append_item(dic_item,path,amount,slot)
 	
-	if slot == SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
-		var _new_item = _append_item(dic_item,path,amount,SLOT_BUTTON_VOID)
-		new_item.emit(_new_item,dic_item.id)
-		
+	
+	if slot == ERROR.SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
+		var _new_item = _append_item(dic_item,path,amount,ERROR.SLOT_BUTTON_VOID)
 		return _new_item
 	
 	
@@ -61,7 +64,9 @@ func add_item(dic_item: PanelItemResource, path: String, amount: int = 1, slot: 
 					_append_item(dic_item,path,1)
 				else:
 					return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,amount-i]
+			
 			return
+		
 		if item.amount == item_instance.max_amount:
 			var now_search_item = search_item_amount_min(dic_item.items, path, item_instance.max_amount)
 			
@@ -88,7 +93,7 @@ func add_item(dic_item: PanelItemResource, path: String, amount: int = 1, slot: 
 				new_data.emit(item,dic_item.id)
 				new_data_global.emit()
 				
-				for new_amount in separate_amount:
+				for new_amount in separate_amount: 
 					add_item(dic_item,path,new_amount,-1,true)
 			
 			return item
@@ -117,7 +122,28 @@ func remove_item(dic_item: PanelItemResource, id: int = -1) -> bool:
 func set_panel_item(item: ItemResource, out_panel_id: int, new_panel_id:int, slot: int = -1, unique: bool = false, out_item_remove: bool = true):
 	var out_panel: PanelItemResource = get_panel_id(out_panel_id)
 	var new_panel: PanelItemResource = get_panel_id(new_panel_id)
+	
 	var new_item: ItemResource = item.duplicate()
+	
+	if new_panel.max_slot == new_panel.items.size() and slot != ERROR.SLOT_BUTTON_VOID:
+		if unique:
+			return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
+		else:
+			var item_instance = load(item.path).instantiate()
+			var search_item = search_item_amount_min(new_panel.items,item.path,item_instance.max_amount)
+			
+			if search_item != null:
+				
+				if item_instance.max_amount > search_item.amount:
+					
+					var size = item_instance.max_amount - search_item.amount
+					search_item.amount = search_item.amount + size
+					item.amount -= size
+					
+					new_data_global.emit()
+					return new_item
+		
+		return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 	
 	if out_item_remove:
 		remove_item(out_panel,item.id)
@@ -156,8 +182,6 @@ func changed_slots_items(item_one: ItemResource, item_two: ItemResource) -> void
 	var panel_one = get_panel_id(search_panel(item_one.id))
 	var panel_two = get_panel_id(search_panel(item_two.id))
 	
-	#add_item(dic_item, item.path,item.amount,false,slot)
-	
 	remove_item(panel_one,item_one.id)
 	remove_item(panel_two,item_two.id)
 	
@@ -184,9 +208,11 @@ func _is_item_valid(array_item: Array, path: String) -> bool:
 	return false
 
 func _function_slot_changed(slot, move) -> void:
+	set_process_input(is_instance_valid(slot) and move == true)
+	
 	if is_instance_valid(item_selected):
 		
-		if item_selected.item.slot == SLOT_BUTTON_VOID:
+		if item_selected.item.slot == ERROR.SLOT_BUTTON_VOID:
 			if item_selected.item.amount == 0:
 				item_selected.get_parent().queue_free()
 	
@@ -209,7 +235,7 @@ func _append_item(dic_item: PanelItemResource, path: String, amount: int, slot: 
 	_new_item.path = path
 	
 	dic_item.items.append(_new_item)
-	new_item.emit(_new_item,dic_item.id)
+	new_item.emit(_new_item,dic_item)
 	
 	return _new_item
 

@@ -1,6 +1,6 @@
 extends Button
 
-@onready var inventory: Inventory_main = $"../Inventory_main"
+@onready var inventory: Inventory_main = $"../../Inventory_main"
 
 @export_dir var items: Array[String] = [
 	

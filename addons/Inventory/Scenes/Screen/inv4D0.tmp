@@ -137,6 +137,14 @@ offset_top = 600.0
 offset_right = 120.0
 offset_bottom = 632.0
 
+[node name="Random" type="Button" parent="Debbug"]
+layout_mode = 0
+offset_right = 113.0
+offset_bottom = 31.0
+text = "Random item"
+script = ExtResource("4_imosm")
+items = Array[String](["res://addons/Inventory/Scenes/Item/Kanoa.tscn", "res://addons/Inventory/Scenes/Item/Potion_life.tscn", "res://addons/Inventory/Scenes/Item/Potion_mana.tscn", "res://addons/Inventory/Scenes/Item/Sword.tscn"])
+
 [node name="my_player" type="Node" parent="Debbug"]
 script = ExtResource("5_f86xq")
 
@@ -147,12 +155,9 @@ offset_bottom = 40.0
 script = ExtResource("9_ah6p7")
 inventory = NodePath("../../Inventory_main")
 
-[node name="Random" type="Button" parent="Debbug"]
+[node name="Label" type="Label" parent="Debbug"]
 layout_mode = 0
-offset_right = 113.0
-offset_bottom = 31.0
-text = "Random item"
-script = ExtResource("4_imosm")
-items = Array[String](["res://addons/Inventory/Scenes/Item/Kanoa.tscn", "res://addons/Inventory/Scenes/Item/Potion_life.tscn", "res://addons/Inventory/Scenes/Item/Potion_mana.tscn", "res://addons/Inventory/Scenes/Item/Sword.tscn"])
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="item_entered_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_entered_panel"]

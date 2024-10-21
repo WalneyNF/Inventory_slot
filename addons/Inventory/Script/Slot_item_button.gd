@@ -10,7 +10,6 @@ var free_use: bool
 # Class =====
 func _ready() -> void:
 	child_exiting_tree.connect(exit_child)
-	await get_tree().create_timer(0.2).timeout
 
 func _gui_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
@@ -24,9 +23,9 @@ func _pressed() -> void:
 			
 			if right_mouse:
 				var items = inventory.get_panel_id(panel_id).items
-				var is_item = inventory.search_item(items,-1,"",inventory.SLOT_BUTTON_VOID)
+				var is_item = inventory.search_item(items,-1,"",inventory.ERROR.SLOT_BUTTON_VOID)
 				
-				if is_item != null:
+				if is_item != null and is_item.path == item_node.item.path:
 					changed_item_right(is_item)
 				else:
 					is_item = inventory.search_item(items,inventory.item_selected.item.id)
@@ -93,15 +92,14 @@ func item_move_void_slot() -> void:
 
 
 func item_changed_other_slot() -> void:
-	if inventory.item_selected.item.slot == inventory.SLOT_BUTTON_VOID:
-		return
-	# Creator second item
 	var one_item = inventory.item_selected.item
 	var two_item = item_node.item
 	
-	#Changed panel
 	var one_item_panel_id = inventory.search_panel(one_item.id)
 	var two_item_panel_id = inventory.search_panel(two_item.id)
+	
+	#Changed panel
+	inventory.button_slot_changed.emit(self,false)
 	
 	if one_item_panel_id != panel_id:
 		inventory.remove_item(inventory.get_panel_id(one_item_panel_id),one_item.id)
@@ -111,12 +109,10 @@ func item_changed_other_slot() -> void:
 		inventory.set_panel_item(two_item, two_item_panel_id, one_item_panel_id, one_item.slot, true, false)
 	else:
 		inventory.changed_slots_items(one_item,two_item)
-	
-	inventory.button_slot_changed.emit(self,false)
 
 
 func shift_item_move() -> bool:
-	if Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_key_pressed(KEY_SHIFT) and is_instance_valid(item_node):
 		var item = item_node.item
 		var item_panel = inventory.get_panel_id(inventory.search_panel(item.id))
 		var next_panel_id = my_panel.get_node_or_null(my_panel.next_system_slot)
@@ -162,7 +158,7 @@ func set_item_right_mouse() -> void:
 	else:
 		item_node.item.amount -= 1
 		
-		inventory.add_item(inventory.get_panel_id(panel_id),item_node.item.path,1,inventory.SLOT_BUTTON_VOID)
+		inventory.add_item(inventory.get_panel_id(panel_id),item_node.item.path,1,inventory.ERROR.SLOT_BUTTON_VOID)
 		inventory.new_data_global.emit()
 	
 	right_mouse = false

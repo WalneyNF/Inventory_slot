@@ -23,9 +23,9 @@ func _ready() -> void:
 			_load_items(panel_slot.items)
 
 
-func receive_new_item(item: ItemResource, panel_id: int) -> void:
+func receive_new_item(item: ItemResource, panel: PanelItemResource) -> void:
 	
-	if panel_id == slot_panel_id:
+	if panel.id == slot_panel_id:
 		_load_item(item)
 
 
@@ -49,24 +49,25 @@ func _load_items(item_array: Array) -> void:
 func _load_item(item: ItemResource) -> void:
 	var new_item = ITEM_TEXTURE.instantiate()
 	
-	if item.slot == inventory.SLOT_BUTTON_VOID:
-		if inventory.get_child_count() == 0:
-			
-			var void_button = Button.new()
-			var slot = void_button
-			instance_slot_button(void_button)
-			
-			slot.free_use = true
-			slot.inventory = inventory
-			slot.item_node = new_item
-			slot.item_node.inventory = inventory
-			slot.item_node.item = item
-			slot.self_modulate.a = 0
-			
-			inventory.add_child(void_button)
-			slot.add_child(new_item)
-			
-			inventory.button_slot_changed.emit(slot,true)
+	if item.slot == inventory.ERROR.SLOT_BUTTON_VOID:
+		await inventory.get_child_count() == 0
+		
+		var void_button = Button.new()
+		var slot = void_button
+		
+		instance_slot_button(void_button)
+		
+		slot.free_use = true
+		slot.inventory = inventory
+		slot.item_node = new_item
+		slot.item_node.inventory = inventory
+		slot.item_node.item = item
+		slot.self_modulate.a = 0
+		
+		inventory.add_child(void_button)
+		slot.add_child(new_item)
+		
+		inventory.button_slot_changed.emit(slot,true)
 	else:
 		var slot = grid_slot.get_child(item.slot)
 		
