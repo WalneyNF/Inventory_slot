@@ -23,6 +23,7 @@ const SLOT_BUTTON_VOID: int = -2
 
 var item_selected
 
+@export var panel : PanelResource
 
 var panel_item : Dictionary = {
 	"inventory" : {
@@ -73,7 +74,10 @@ func add_item(dic_item: Dictionary, path: String, amount: int = 1, slot: int = -
 				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,1]
 			
 			for i in amount:
-				_append_item(dic_item,path,1)
+				if dic_item.items.size() != dic_item.max_slot:
+					_append_item(dic_item,path,1)
+				else:
+					return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,amount-i]
 			return
 		if item.amount == item_instance.max_amount:
 			var now_search_item = search_item_amount_min(dic_item.items, path, item_instance.max_amount)
@@ -127,33 +131,39 @@ func remove_item(dic_item: Dictionary, id: int = -1) -> bool:
 	return false
 
 
-func set_panel_item(item: Dictionary, out_type: int, new_type:int, slot: int = -1, unique: bool = false):
+func set_panel_item(item: Dictionary, out_type: int, new_type:int, slot: int = -1, unique: bool = false, out_item_remove: bool = true):
 	var out_panel: Dictionary = get_panel_type(out_type)
 	var new_panel: Dictionary = get_panel_type(new_type)
+	var new_item: Dictionary = item.duplicate()
+	
+	if out_item_remove:
+		remove_item(out_panel,item.id)
 	
 	if out_panel == null or new_data == null: return
 	
-	var result = add_item(new_panel, item.path,item.amount,slot,unique)
+	var result = add_item(new_panel, new_item.path,new_item.amount,slot,unique)
 	
 	if result is Array:
 		match result[0]:
 			ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS:
 				return
 			ERROR.ITEM_LEFT_WITH_FULL_SLOTS:
-				item.amount = result[1]
+				new_item.amount = result[1]
 				new_data_global.emit()
 				return result
 	
-	remove_item(out_panel,item.id)
 	
-	item_entered_panel.emit(item,new_type)
-	item_exiting_panel.emit(item,out_type)
+	
+	item_entered_panel.emit(new_item,new_type)
+	item_exiting_panel.emit(new_item,out_type)
 
 
 func set_slot_item(dic_item: Dictionary, item: Dictionary, slot: int = -1, unique: bool = true) -> void:
 	
-	add_item(dic_item, item.path,item.amount,slot,unique)
+	var new_item: Dictionary = item.duplicate()
+	
 	remove_item(dic_item,item.id)
+	add_item(dic_item, new_item.path,new_item.amount,slot,unique)
 
 
 func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:

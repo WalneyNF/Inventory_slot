@@ -104,9 +104,11 @@ func item_changed_other_slot() -> void:
 	var two_item_type = inventory.search_panel(two_item.id)
 	
 	if one_item_type != type:
-		inventory.set_panel_item(one_item, one_item_type, two_item_type, two_item.slot, true)
-		inventory.set_panel_item(two_item, two_item_type, one_item_type, one_item.slot, true)
+		inventory.remove_item(inventory.get_panel_type(one_item_type),one_item.id)
+		inventory.remove_item(inventory.get_panel_type(two_item_type),two_item.id)
 		
+		inventory.set_panel_item(one_item, one_item_type, two_item_type, two_item.slot, true, false)
+		inventory.set_panel_item(two_item, two_item_type, one_item_type, one_item.slot, true, false)
 	else:
 		inventory.changed_slots_items(one_item,two_item)
 	
