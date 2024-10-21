@@ -9,7 +9,7 @@ enum AMOUNT_ANCHOR {LEFT_UP,LEFT_DOWN,RIGHT_UP,RIGHT_DOWN}
 @onready var amount_text: Label = $Amount
 
 var inventory: Inventory_main
-var item: Dictionary
+var item: ItemResource
 var item_scene
 
 
@@ -33,8 +33,8 @@ func load_visual() -> void:
 
 func reload_data() -> void:
 	if item.amount == 0:
-		var type = inventory.panel_item.keys()[get_parent().type]
-		inventory.remove_item(inventory.panel_item[type],item.id)
+		var my_panel = inventory.get_panel_id(get_parent().panel_id)
+		inventory.remove_item(my_panel,item.id)
 	
 	amount_text.text = str(item.amount)
 	
@@ -46,7 +46,7 @@ func reload_data() -> void:
 	)
 
 
-func remove_item(_item: Dictionary,_type: int) -> void:
+func remove_item(_item: ItemResource,_id: int) -> void:
 	if _item.id == item.id:
 		queue_free()
 

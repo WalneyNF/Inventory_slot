@@ -25,24 +25,6 @@ var item_selected
 
 @export var panel : PanelResource
 
-var panel_item : Dictionary = {
-	"inventory" : {
-		"type" : TYPE_SLOT.INVENTORY,
-		"max_slot" : 20,
-		"items" : [
-			{"id": 0, "slot" : 0, "amount" : 1, "path": "res://addons/Inventory/Scenes/Item/Sword.tscn"},
-			{"id": 2, "slot" : 1, "amount" : 2, "path": "res://addons/Inventory/Scenes/Item/Kanoa.tscn"}
-		]
-	},
-	
-	"equipped" : {
-		"type" : TYPE_SLOT.EQUIPPED,
-		"max_slot" : 5,
-		"items" : [
-			]
-		}
-	}
-
 ## Sub functions ================================================================
 func _ready() -> void:
 	button_slot_changed.connect(_function_slot_changed)
@@ -51,7 +33,7 @@ func _ready() -> void:
 # New functions ================================================================
 
 ## Main functions ----------------------------------------
-func add_item(dic_item: Dictionary, path: String, amount: int = 1, slot: int = -1, unique: bool = false):
+func add_item(dic_item: PanelItemResource, path: String, amount: int = 1, slot: int = -1, unique: bool = false):
 	var item = search_item(dic_item.items,-1,path)
 	
 	
@@ -61,15 +43,16 @@ func add_item(dic_item: Dictionary, path: String, amount: int = 1, slot: int = -
 	
 	if slot == SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
 		var _new_item = _append_item(dic_item,path,amount,SLOT_BUTTON_VOID)
-		new_item.emit(_new_item,dic_item.type)
+		new_item.emit(_new_item,dic_item.id)
 		
 		return _new_item
 	
 	
-	if item is Dictionary:
+	if item is ItemResource:
 		var item_instance = load(path).instantiate()
 		
 		if item_instance.max_amount == 1:
+			
 			if dic_item.items.size() == dic_item.max_slot:
 				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,1]
 			
@@ -102,7 +85,7 @@ func add_item(dic_item: Dictionary, path: String, amount: int = 1, slot: int = -
 				
 				item.amount = item_instance.max_amount
 				
-				new_data.emit(item,dic_item.type)
+				new_data.emit(item,dic_item.id)
 				new_data_global.emit()
 				
 				for new_amount in separate_amount:
@@ -113,28 +96,28 @@ func add_item(dic_item: Dictionary, path: String, amount: int = 1, slot: int = -
 		else:
 			item.amount = item.amount + amount
 			
-			new_data.emit(item,dic_item.type)
+			new_data.emit(item,dic_item.id)
 			new_data_global.emit()
 			return item
 	
 	return _append_item(dic_item,path,amount,slot)
 
 
-func remove_item(dic_item: Dictionary, id: int = -1) -> bool:
+func remove_item(dic_item: PanelItemResource, id: int = -1) -> bool:
 	
 	for items in dic_item.items:
 		if items.id == id:
 			dic_item.items.erase(items)
-			discart_item.emit(items,dic_item.type)
+			discart_item.emit(items,dic_item.id)
 			return true
 	
 	return false
 
 
-func set_panel_item(item: Dictionary, out_type: int, new_type:int, slot: int = -1, unique: bool = false, out_item_remove: bool = true):
-	var out_panel: Dictionary = get_panel_type(out_type)
-	var new_panel: Dictionary = get_panel_type(new_type)
-	var new_item: Dictionary = item.duplicate()
+func set_panel_item(item: ItemResource, out_panel_id: int, new_panel_id:int, slot: int = -1, unique: bool = false, out_item_remove: bool = true):
+	var out_panel: PanelItemResource = get_panel_id(out_panel_id)
+	var new_panel: PanelItemResource = get_panel_id(new_panel_id)
+	var new_item: ItemResource = item.duplicate()
 	
 	if out_item_remove:
 		remove_item(out_panel,item.id)
@@ -154,24 +137,24 @@ func set_panel_item(item: Dictionary, out_type: int, new_type:int, slot: int = -
 	
 	
 	
-	item_entered_panel.emit(new_item,new_type)
-	item_exiting_panel.emit(new_item,out_type)
+	item_entered_panel.emit(new_item,new_panel_id)
+	item_exiting_panel.emit(new_item,out_panel_id)
 
 
-func set_slot_item(dic_item: Dictionary, item: Dictionary, slot: int = -1, unique: bool = true) -> void:
+func set_slot_item(dic_item: PanelItemResource, item: ItemResource, slot: int = -1, unique: bool = true) -> void:
 	
-	var new_item: Dictionary = item.duplicate()
+	var new_item: ItemResource = item.duplicate()
 	
 	remove_item(dic_item,item.id)
 	add_item(dic_item, new_item.path,new_item.amount,slot,unique)
 
 
-func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
+func changed_slots_items(item_one: ItemResource, item_two: ItemResource) -> void:
 	var one = item_one.duplicate()
 	var two = item_two.duplicate()
 	
-	var panel_one = get_panel_type(search_panel(item_one.id))
-	var panel_two = get_panel_type(search_panel(item_two.id))
+	var panel_one = get_panel_id(search_panel(item_one.id))
+	var panel_two = get_panel_id(search_panel(item_two.id))
 	
 	#add_item(dic_item, item.path,item.amount,false,slot)
 	
@@ -183,10 +166,10 @@ func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 
 
 func search_panel(item_id: int) -> int:
-	for panels in panel_item:
-		for items in panel_item.get(panels).items:
+	for panels in panel.panel_item:
+		for items in panels.items:
 			if items.id == item_id:
-				return panel_item.get(panels).type
+				return panels.id
 	
 	return -1
 #---------------------------------------------------------
@@ -212,18 +195,23 @@ func _function_slot_changed(slot, move) -> void:
 	else:
 		item_selected = null
 
-func _append_item(dic_item: Dictionary, path: String, amount: int, slot: int = ERROR.VOID):
+func _append_item(dic_item: PanelItemResource, path: String, amount: int, slot: int = ERROR.VOID):
 	var now_slot = slot
 	
 	if now_slot == ERROR.VOID:
 		now_slot = search_void_slot(dic_item)
 	
-	var new_create_item = {"id": randi(),"amount": amount, "slot" : now_slot, "path": path}
+	var _new_item = ItemResource.new()
 	
-	dic_item.items.append(new_create_item)
-	new_item.emit(new_create_item,dic_item.type)
+	_new_item.id = randi()
+	_new_item.amount = amount
+	_new_item.slot = now_slot
+	_new_item.path = path
 	
-	return new_create_item
+	dic_item.items.append(_new_item)
+	new_item.emit(_new_item,dic_item.id)
+	
+	return _new_item
 
 func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 	var amount_slots = float(amount) / max_amount
@@ -250,27 +238,27 @@ func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 #---------------------------------------------------------
 
 # Get ---------------------------------------------------
-func get_panel_type(type: int):
-	for panels in panel_item:
+func get_panel_id(id: int):
+	for panels in panel.panel_item:
 		
-		if panel_item.get(panels).type == type:
-			return panel_item.get(panels)
+		if panels.id == id:
+			return panels
 	
 	return null
 
 # Searchs -----------------------------------------------
-func search_item(array_item: Array, id: int = -1, path : String = "",slot: int = -1):
+func search_item(array_items: Array, id: int = -1, path : String = "",slot: int = -1):
 	if slot != -1:
-		for item in array_item:
+		for item in array_items:
 			if item.slot == slot:
 				return item
 	
 	if id == -1 and path != "":
-		for item in array_item:
+		for item in array_items:
 			if item.path == path:
 				return item
 	else:
-		for item in array_item:
+		for item in array_items:
 			if item.id == id:
 				return item
 	
@@ -284,7 +272,7 @@ func search_item_amount_min(array_item: Array, path: String, max_amount:int):
 	
 	return null
 
-func search_void_slot(dic_item: Dictionary) -> int:
+func search_void_slot(dic_item: PanelItemResource) -> int:
 	var all_slot = []
 	
 	for item in dic_item.items:

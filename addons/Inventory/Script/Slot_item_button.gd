@@ -1,7 +1,7 @@
 extends Button
 
 var item_node
-var type: int
+var panel_id: int
 var inventory: Inventory_main
 var my_panel: PanelContainer
 var right_mouse: bool
@@ -23,7 +23,7 @@ func _pressed() -> void:
 		if is_instance_valid(item_node):
 			
 			if right_mouse:
-				var items = inventory.get_panel_type(type).items
+				var items = inventory.get_panel_id(panel_id).items
 				var is_item = inventory.search_item(items,-1,"",inventory.SLOT_BUTTON_VOID)
 				
 				if is_item != null:
@@ -81,12 +81,12 @@ func set_main_item() -> void:
 
 func item_move_void_slot() -> void:
 	var one_item = inventory.item_selected.item.duplicate()
-	var item_selected_panel_type = inventory.search_panel(one_item.id)
+	var item_selected_panel_id = inventory.search_panel(one_item.id)
 	
-	if item_selected_panel_type != type:
-		inventory.set_panel_item(one_item, item_selected_panel_type, type, get_index(), true)
+	if item_selected_panel_id != panel_id:
+		inventory.set_panel_item(one_item, item_selected_panel_id, panel_id, get_index(), true)
 	else:
-		inventory.set_slot_item(inventory.get_panel_type(item_selected_panel_type),one_item,get_index())
+		inventory.set_slot_item(inventory.get_panel_id(item_selected_panel_id),one_item,get_index())
 	
 	inventory.item_selected.queue_free()
 	inventory.button_slot_changed.emit(self,false)
@@ -100,15 +100,15 @@ func item_changed_other_slot() -> void:
 	var two_item = item_node.item
 	
 	#Changed panel
-	var one_item_type = inventory.search_panel(one_item.id)
-	var two_item_type = inventory.search_panel(two_item.id)
+	var one_item_panel_id = inventory.search_panel(one_item.id)
+	var two_item_panel_id = inventory.search_panel(two_item.id)
 	
-	if one_item_type != type:
-		inventory.remove_item(inventory.get_panel_type(one_item_type),one_item.id)
-		inventory.remove_item(inventory.get_panel_type(two_item_type),two_item.id)
+	if one_item_panel_id != panel_id:
+		inventory.remove_item(inventory.get_panel_id(one_item_panel_id),one_item.id)
+		inventory.remove_item(inventory.get_panel_id(two_item_panel_id),two_item.id)
 		
-		inventory.set_panel_item(one_item, one_item_type, two_item_type, two_item.slot, true, false)
-		inventory.set_panel_item(two_item, two_item_type, one_item_type, one_item.slot, true, false)
+		inventory.set_panel_item(one_item, one_item_panel_id, two_item_panel_id, two_item.slot, true, false)
+		inventory.set_panel_item(two_item, two_item_panel_id, one_item_panel_id, one_item.slot, true, false)
 	else:
 		inventory.changed_slots_items(one_item,two_item)
 	
@@ -118,14 +118,14 @@ func item_changed_other_slot() -> void:
 func shift_item_move() -> bool:
 	if Input.is_key_pressed(KEY_SHIFT):
 		var item = item_node.item
-		var item_panel = inventory.get_panel_type(inventory.search_panel(item.id))
-		var next_type = my_panel.get_node_or_null(my_panel.next_system_slot)
+		var item_panel = inventory.get_panel_id(inventory.search_panel(item.id))
+		var next_panel_id = my_panel.get_node_or_null(my_panel.next_system_slot)
 		
-		if next_type == null:
+		if next_panel_id == null:
 			print("Não há um panel como proximo para enviar o item.")
 			return false
 		
-		inventory.set_panel_item(item,type,next_type.slot_type,-1,false)
+		inventory.set_panel_item(item,panel_id,next_panel_id.slot_panel_id,-1,false)
 		
 		return true
 	
@@ -162,13 +162,13 @@ func set_item_right_mouse() -> void:
 	else:
 		item_node.item.amount -= 1
 		
-		inventory.add_item(inventory.get_panel_type(type),item_node.item.path,1,inventory.SLOT_BUTTON_VOID)
+		inventory.add_item(inventory.get_panel_id(panel_id),item_node.item.path,1,inventory.SLOT_BUTTON_VOID)
 		inventory.new_data_global.emit()
 	
 	right_mouse = false
 
 
-func changed_item_right(is_item: Dictionary) -> bool:
+func changed_item_right(is_item: ItemResource) -> bool:
 	
 	if item_node.item.amount == 1:
 		item_node.item.amount += is_item.amount
