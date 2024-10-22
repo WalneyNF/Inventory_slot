@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://q6fx05lnjbw6"]
 
-[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/Inventory/Assets/Imagens/sword.png" id="1_u2gb0"]
-[ext_resource type="Script" path="res://addons/Inventory/Script/item_texture.gd" id="2_b3bfb"]
+[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/Inventory_biely/assets/imagens/sword.png" id="1_u2gb0"]
+[ext_resource type="Script" path="res://addons/Inventory_biely/script/item_texture.gd" id="2_b3bfb"]
 
 [node name="Item_texture" type="TextureRect"]
 anchors_preset = 15

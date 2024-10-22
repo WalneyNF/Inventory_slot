@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bucs62icjvqsd"
-path="res://.godot/imported/mana.png-c492d2faf21e43ef5717de3fcb4d2081.ctex"
+uid="uid://duojnn1y01u2x"
+path="res://.godot/imported/life.png-90e47ac64bd993ec8b2200f4d5fad9db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Inventory/Assets/Imagens/mana.png"
-dest_files=["res://.godot/imported/mana.png-c492d2faf21e43ef5717de3fcb4d2081.ctex"]
+source_file="res://addons/Inventory_biely/assets/imagens/life.png"
+dest_files=["res://.godot/imported/life.png-90e47ac64bd993ec8b2200f4d5fad9db.ctex"]
 
 [params]
 

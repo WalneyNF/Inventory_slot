@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5pp2gucp8uan"]
 
-[ext_resource type="Texture2D" uid="uid://bucs62icjvqsd" path="res://addons/Inventory/Assets/Imagens/mana.png" id="1_jppbo"]
-[ext_resource type="Script" path="res://addons/Inventory/Script/item.gd" id="2_odt5p"]
+[ext_resource type="Texture2D" uid="uid://bucs62icjvqsd" path="res://addons/Inventory_biely/assets/imagens/mana.png" id="1_jppbo"]
+[ext_resource type="Script" path="res://addons/Inventory_biely/script/item.gd" id="2_odt5p"]
 
 [node name="Potion_mana" type="TextureRect"]
 custom_minimum_size = Vector2(84, 84)

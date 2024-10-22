@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x03imjta0clc"
-path="res://.godot/imported/kanoa.png-3beebb3edb3c18fc72fb935862cfb475.ctex"
+uid="uid://bucs62icjvqsd"
+path="res://.godot/imported/mana.png-c501853b29e0cc172023240df74d4f8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Inventory/Assets/Imagens/kanoa.png"
-dest_files=["res://.godot/imported/kanoa.png-3beebb3edb3c18fc72fb935862cfb475.ctex"]
+source_file="res://addons/Inventory_biely/assets/imagens/mana.png"
+dest_files=["res://.godot/imported/mana.png-c501853b29e0cc172023240df74d4f8e.ctex"]
 
 [params]
 

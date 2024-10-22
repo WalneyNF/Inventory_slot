@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duojnn1y01u2x"
-path="res://.godot/imported/life.png-8397dc9bf002ec0f236e8e6da21a8ae7.ctex"
+uid="uid://x03imjta0clc"
+path="res://.godot/imported/kanoa.png-dc2af544c1d91a99480ff79f43ede7e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Inventory/Assets/Imagens/life.png"
-dest_files=["res://.godot/imported/life.png-8397dc9bf002ec0f236e8e6da21a8ae7.ctex"]
+source_file="res://addons/Inventory_biely/assets/imagens/kanoa.png"
+dest_files=["res://.godot/imported/kanoa.png-dc2af544c1d91a99480ff79f43ede7e5.ctex"]
 
 [params]
 
