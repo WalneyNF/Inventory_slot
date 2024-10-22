@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0fgcy0fvtoi7"]
+[gd_scene load_steps=13 format=3 uid="uid://d0fgcy0fvtoi7"]
 
 [ext_resource type="Script" path="res://addons/Inventory/Script/inventory.gd" id="2_8fnwn"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/panel.gd" id="3_u70es"]
@@ -7,47 +7,32 @@
 [ext_resource type="Script" path="res://addons/Inventory/Script/resource/panel_resource.gd" id="4_m6wyj"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/resource/item_resource.gd" id="4_xhajt"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/debbug/my_player.gd" id="5_f86xq"]
-[ext_resource type="Script" path="res://addons/Inventory/Script/debbug/panel_tittle.gd" id="7_othof"]
 [ext_resource type="Script" path="res://addons/Inventory/Script/debbug/notification.gd" id="9_ah6p7"]
 
-[sub_resource type="Resource" id="Resource_cb6ky"]
+[sub_resource type="Resource" id="Resource_g2imd"]
 script = ExtResource("4_xhajt")
 id = 0
 slot = 0
-amount = 1
-path = "res://addons/Inventory/Scenes/Item/Sword.tscn"
-
-[sub_resource type="Resource" id="Resource_kuwnd"]
-script = ExtResource("4_xhajt")
-id = 1
-slot = 1
 amount = 4
-path = "res://addons/Inventory/Scenes/Item/Potion_life.tscn"
+path = "res://addons/Inventory/Scenes/Item/Kanoa.tscn"
 
-[sub_resource type="Resource" id="Resource_s4r2y"]
-script = ExtResource("4_xhajt")
-id = 2
-slot = 2
-amount = 3
-path = "res://addons/Inventory/Scenes/Item/Potion_mana.tscn"
-
-[sub_resource type="Resource" id="Resource_nad3r"]
+[sub_resource type="Resource" id="Resource_4g14l"]
 script = ExtResource("3_ubu6c")
-panel_name = &"inventory"
+panel_name = &"Mochila"
 id = 0
-max_slot = 20
-items = Array[ExtResource("4_xhajt")]([SubResource("Resource_cb6ky"), SubResource("Resource_kuwnd"), SubResource("Resource_s4r2y")])
+max_slot = 15
+items = Array[ExtResource("4_xhajt")]([SubResource("Resource_g2imd")])
 
-[sub_resource type="Resource" id="Resource_nsolx"]
+[sub_resource type="Resource" id="Resource_fpq0b"]
 script = ExtResource("3_ubu6c")
-panel_name = &"equipped"
+panel_name = &"Equipamentos"
 id = 1
 max_slot = 5
 items = Array[ExtResource("4_xhajt")]([])
 
-[sub_resource type="Resource" id="Resource_3qp0d"]
+[sub_resource type="Resource" id="Resource_tp4vf"]
 script = ExtResource("4_m6wyj")
-panel_item = Array[ExtResource("3_ubu6c")]([SubResource("Resource_nad3r"), SubResource("Resource_nsolx")])
+panel_item = Array[ExtResource("3_ubu6c")]([SubResource("Resource_4g14l"), SubResource("Resource_fpq0b")])
 
 [node name="Inventory_system" type="Control"]
 layout_mode = 3
@@ -59,83 +44,15 @@ grow_vertical = 2
 
 [node name="Inventory_main" type="Node" parent="."]
 script = ExtResource("2_8fnwn")
-panel = SubResource("Resource_3qp0d")
-
-[node name="Inventory" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory", "grid_slot")]
-self_modulate = Color(0.246869, 0.51049, 0.763685, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.611111
-anchor_top = 0.0987654
-anchor_right = 0.9375
-anchor_bottom = 0.564815
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_u70es")
-inventory = NodePath("../Inventory_main")
-grid_slot = NodePath("Vbox/Grid")
-next_system_slot = NodePath("../Equipped")
-metadata/_edit_use_anchors_ = true
-
-[node name="Vbox" type="VBoxContainer" parent="Inventory"]
-layout_mode = 2
-
-[node name="Tittle" type="Label" parent="Inventory/Vbox" node_paths=PackedStringArray("panel", "inventory")]
-layout_mode = 2
-text = "Tittle"
-horizontal_alignment = 1
-uppercase = true
-script = ExtResource("7_othof")
-panel = NodePath("../..")
-inventory = NodePath("../../../Inventory_main")
-
-[node name="Grid" type="GridContainer" parent="Inventory/Vbox"]
-layout_mode = 2
-theme_override_constants/h_separation = 15
-theme_override_constants/v_separation = 15
-columns = 5
-
-[node name="Equipped" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory", "grid_slot")]
-self_modulate = Color(0.353148, 0.562847, 0.261679, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.611111
-anchor_top = 0.790123
-anchor_right = 0.9375
-anchor_bottom = 0.888889
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_u70es")
-slot_panel_id = 1
-inventory = NodePath("../Inventory_main")
-grid_slot = NodePath("Vbox/Grid")
-next_system_slot = NodePath("../Inventory")
-metadata/_edit_use_anchors_ = true
-
-[node name="Vbox" type="VBoxContainer" parent="Equipped"]
-layout_mode = 2
-
-[node name="Tittle" type="Label" parent="Equipped/Vbox" node_paths=PackedStringArray("panel", "inventory")]
-layout_mode = 2
-text = "tittle"
-horizontal_alignment = 1
-uppercase = true
-script = ExtResource("7_othof")
-panel = NodePath("../..")
-inventory = NodePath("../../../Inventory_main")
-
-[node name="Grid" type="GridContainer" parent="Equipped/Vbox"]
-layout_mode = 2
-theme_override_constants/h_separation = 15
-theme_override_constants/v_separation = 15
-columns = 10
+panel = SubResource("Resource_tp4vf")
 
 [node name="Debbug" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 8.0
-offset_top = 600.0
-offset_right = 120.0
-offset_bottom = 632.0
+anchor_left = 0.0138889
+anchor_top = 0.925926
+anchor_right = 0.111111
+anchor_bottom = 0.975309
+metadata/_edit_use_anchors_ = true
 
 [node name="my_player" type="Node" parent="Debbug"]
 script = ExtResource("5_f86xq")
@@ -146,6 +63,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_ah6p7")
 inventory = NodePath("../../Inventory_main")
+use = false
 
 [node name="Random" type="Button" parent="Debbug"]
 layout_mode = 0
@@ -154,5 +72,31 @@ offset_bottom = 31.0
 text = "Random item"
 script = ExtResource("4_imosm")
 items = Array[String](["res://addons/Inventory/Scenes/Item/Kanoa.tscn", "res://addons/Inventory/Scenes/Item/Potion_life.tscn", "res://addons/Inventory/Scenes/Item/Potion_mana.tscn", "res://addons/Inventory/Scenes/Item/Sword.tscn"])
+
+[node name="Mochila" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 192.0
+offset_right = 456.0
+offset_bottom = 415.0
+script = ExtResource("3_u70es")
+inventory_system = NodePath("../Inventory_main")
+next_system_slot = NodePath("../Equip")
+tittle_alignment = 1
+tittle_uppercase = true
+
+[node name="Equip" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 136.0
+offset_right = 796.0
+offset_bottom = 491.0
+script = ExtResource("3_u70es")
+inventory_system = NodePath("../Inventory_main")
+next_system_slot = NodePath("../Mochila")
+slot_panel_id = 1
+container_slot = 2
+tittle_alignment = 1
+tittle_uppercase = true
 
 [connection signal="item_entered_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_entered_panel"]

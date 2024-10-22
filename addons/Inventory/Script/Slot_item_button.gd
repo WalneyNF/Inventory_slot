@@ -115,10 +115,10 @@ func shift_item_move() -> bool:
 	if Input.is_key_pressed(KEY_SHIFT) and is_instance_valid(item_node):
 		var item = item_node.item
 		var item_panel = inventory.get_panel_id(inventory.search_panel(item.id))
-		var next_panel_id = my_panel.get_node_or_null(my_panel.next_system_slot)
+		var next_panel_id = my_panel.next_system_slot
 		
 		if next_panel_id == null:
-			print("Não há um panel como proximo para enviar o item.")
+			print("There is no panel as next to send the item.")
 			return false
 		
 		inventory.set_panel_item(item,panel_id,next_panel_id.slot_panel_id,-1,false)

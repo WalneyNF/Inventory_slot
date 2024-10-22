@@ -1,15 +1,13 @@
 extends Control
 
 @export var inventory: Inventory_main
+@export var use: bool = true
 
 func _ready() -> void:
-	
 	inventory.item_entered_panel.connect(item_entered_panel)
 	inventory.new_item.connect(new_item)
 	inventory.discart_item.connect(discart_item)
 	inventory.new_data_global.connect(new_data_global)
-	
-	create_popup("teste","gozei")
 
 
 func new_item(item: ItemResource ,system_slot: PanelItemResource) -> void:
@@ -29,6 +27,8 @@ signal button_slot_changed(slot: Control,move: bool)
 
 
 func create_popup(_tittle: StringName,_text : String) -> void:
+	if use == false: return
+	
 	var tittle = Label.new()
 	var text = Label.new()
 	
@@ -49,7 +49,7 @@ func create_popup(_tittle: StringName,_text : String) -> void:
 	
 	panel.size = Vector2(
 		200,
-		100
+		50
 	)
 	panel.global_position = Vector2(
 		25,
@@ -58,6 +58,6 @@ func create_popup(_tittle: StringName,_text : String) -> void:
 	
 	create_tween().tween_property(panel,"global_position:y",(get_viewport().size.y - (panel.size.y * get_child_count()) - 25),0.3).set_trans(Tween.TRANS_CUBIC)
 	await get_tree().create_timer(2).timeout
-	create_tween().tween_property(panel,"global_position:y",get_viewport().size.y,0.3).set_trans(Tween.TRANS_CUBIC) == null
+	create_tween().tween_property(panel,"modulate:a",0,0.3).set_trans(Tween.TRANS_CUBIC) == null
 	await get_tree().create_timer(0.3).timeout
 	panel.queue_free()
