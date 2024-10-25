@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bguevobhm7bud"
-path="res://.godot/imported/sword.png-d1ab83267cdca1f27575328e7a5a89f0.ctex"
+path="res://.godot/imported/sword.png-da42b23fb849eaf35c2070e2c884a874.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Inventory_biely/assets/imagens/sword.png"
-dest_files=["res://.godot/imported/sword.png-d1ab83267cdca1f27575328e7a5a89f0.ctex"]
+source_file="res://addons/inventory_biely/assets/imagens/sword.png"
+dest_files=["res://.godot/imported/sword.png-da42b23fb849eaf35c2070e2c884a874.ctex"]
 
 [params]
 

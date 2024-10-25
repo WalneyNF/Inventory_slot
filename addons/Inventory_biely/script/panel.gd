@@ -74,8 +74,8 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 
 @onready var inventory: Inventory_main = get_node_or_null(inventory_system)
 
-const SCRIPT_SLOT: Script = preload("res://addons/Inventory_biely/script/slot_item_button.gd")
-const ITEM_TEXTURE: PackedScene = preload("res://addons/Inventory_biely/scenes/screen/item_texture.tscn")
+const SCRIPT_SLOT: Script = preload("res://addons/inventory_biely/script/slot_item_button.gd")
+const ITEM_TEXTURE: PackedScene = preload("res://addons/inventory_biely/scenes/screen/item_texture.tscn")
 
 
 var vbox_panel: VBoxContainer = VBoxContainer.new()

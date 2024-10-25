@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1gfeqy0klscu"]
 
-[ext_resource type="Texture2D" uid="uid://x03imjta0clc" path="res://addons/Inventory_biely/assets/imagens/kanoa.png" id="1_6bteu"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/item.gd" id="2_j361l"]
+[ext_resource type="Texture2D" uid="uid://x03imjta0clc" path="res://addons/inventory_biely/assets/imagens/kanoa.png" id="1_6bteu"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/item.gd" id="2_j361l"]
 
 [node name="Kanoa" type="TextureRect"]
 custom_minimum_size = Vector2(84, 84)

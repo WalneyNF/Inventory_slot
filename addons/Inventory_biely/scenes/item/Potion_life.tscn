@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bytsrfiemtcme"]
 
-[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/Inventory_biely/assets/imagens/life.png" id="1_ng5v2"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/item.gd" id="2_tq1ft"]
+[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/inventory_biely/assets/imagens/life.png" id="1_ng5v2"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/item.gd" id="2_tq1ft"]
 
 [node name="Potion_life" type="TextureRect"]
 custom_minimum_size = Vector2(84, 84)

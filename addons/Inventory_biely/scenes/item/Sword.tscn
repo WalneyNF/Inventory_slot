@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cd2a4mksncxgr"]
 
-[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/Inventory_biely/assets/imagens/sword.png" id="1_sirxn"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/item.gd" id="2_lxu76"]
+[ext_resource type="Texture2D" uid="uid://bguevobhm7bud" path="res://addons/inventory_biely/assets/imagens/sword.png" id="1_sirxn"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/item.gd" id="2_lxu76"]
 
 [node name="Sword" type="TextureRect"]
 custom_minimum_size = Vector2(84, 84)

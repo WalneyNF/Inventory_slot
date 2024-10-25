@@ -1,20 +1,19 @@
 [gd_scene load_steps=13 format=3 uid="uid://d0fgcy0fvtoi7"]
 
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/inventory.gd" id="1_de3kf"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/resource/panel_item_resource.gd" id="2_kexi3"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/resource/item_resource.gd" id="3_kewaj"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/resource/panel_resource.gd" id="4_1dflr"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/debbug/my_player.gd" id="5_pxtjy"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/debbug/notification.gd" id="6_f3xgp"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/debbug/random_item.gd" id="7_6bfnc"]
-[ext_resource type="Script" path="res://addons/Inventory_biely/script/panel.gd" id="8_cp2un"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/inventory.gd" id="1_de3kf"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/panel_item_resource.gd" id="2_kexi3"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/item_resource.gd" id="3_kewaj"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/panel_resource.gd" id="4_1dflr"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/my_player.gd" id="5_pxtjy"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/notification.gd" id="6_f3xgp"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/random_item.gd" id="7_6bfnc"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/panel.gd" id="8_cp2un"]
 
 [sub_resource type="Resource" id="Resource_g2imd"]
 script = ExtResource("3_kewaj")
-id = 0
 slot = 0
 amount = 4
-path = "res://addons/Inventory_biely/scenes/item/Kanoa.tscn"
+path = "res://addons/inventory_biely/scenes/item/Kanoa.tscn"
 
 [sub_resource type="Resource" id="Resource_4g14l"]
 script = ExtResource("2_kexi3")
@@ -71,7 +70,7 @@ offset_right = 113.0
 offset_bottom = 31.0
 text = "Random item"
 script = ExtResource("7_6bfnc")
-items = Array[String](["res://addons/Inventory_biely/scenes/item", "res://addons/Inventory_biely/scenes/item", "res://addons/Inventory_biely/scenes/item", "res://addons/Inventory_biely/scenes/item"])
+items = Array[String](["res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item"])
 
 [node name="Mochila" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
 layout_mode = 0
