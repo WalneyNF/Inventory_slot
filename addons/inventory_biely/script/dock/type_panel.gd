@@ -6,11 +6,6 @@ const PATH = "res://addons/inventory_biely/json/inventory.json"
 const LIFE = "res://addons/inventory_biely/assets/imagens/life.png"
 var start_update: bool
 
-func _ready() -> void:
-	if Engine.is_editor_hint():
-		var feature_profile := EditorFeatureProfile.new()
-		feature_profile.set_disable_class("TypePanel", true)
-
 
 func changed_class_name(_inventory: Dictionary,_out_class_name: String,_new_class_name: String) -> void:
 	
@@ -43,6 +38,7 @@ func search_item(_inventory: Dictionary,_class_name: String,_item_name: String):
 	
 	printerr("Item ",_item_name," não foi encontrado!")
 
+
 func pull_inventory() -> Dictionary:
 	if FileAccess.file_exists(PATH):
 		var file = FileAccess.open(PATH,FileAccess.READ)
@@ -62,7 +58,7 @@ func push_inventory(dic: Dictionary) -> void:
 	file.close()
 
 
-func new_item(_inventory: Dictionary,_class_name: String,icon_path: String = LIFE,amount: int = 1,item_path_scene: String = "res://") -> void:
+func new_item(_inventory: Dictionary,_class_name: String,icon_path: String = LIFE,amount: int = 1,path_scene: String = "res://") -> void:
 	
 	for _class in _inventory:
 		if _class == _class_name:
@@ -70,7 +66,7 @@ func new_item(_inventory: Dictionary,_class_name: String,icon_path: String = LIF
 			_inventory.get(_class)[str("new_item_",_inventory.get(_class).size())] = {
 				"icon" : icon_path,
 				"max_amount" : amount,
-				"item_path_scene" : item_path_scene
+				"path_scene" : path_scene
 			}
 
 

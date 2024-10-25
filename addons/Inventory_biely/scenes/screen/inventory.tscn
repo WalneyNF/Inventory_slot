@@ -9,10 +9,10 @@
 [ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/random_item.gd" id="7_6bfnc"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/panel.gd" id="8_cp2un"]
 
-[sub_resource type="Resource" id="Resource_g2imd"]
+[sub_resource type="Resource" id="Resource_5peyr"]
 script = ExtResource("3_kewaj")
 slot = 0
-amount = 4
+amount = 5
 path = "res://addons/inventory_biely/scenes/item/Kanoa.tscn"
 
 [sub_resource type="Resource" id="Resource_4g14l"]
@@ -20,7 +20,7 @@ script = ExtResource("2_kexi3")
 panel_name = &"Mochila"
 id = 0
 max_slot = 15
-items = Array[ExtResource("3_kewaj")]([SubResource("Resource_g2imd")])
+items = Array[ExtResource("3_kewaj")]([SubResource("Resource_5peyr")])
 
 [sub_resource type="Resource" id="Resource_fpq0b"]
 script = ExtResource("2_kexi3")
@@ -70,26 +70,27 @@ offset_right = 113.0
 offset_bottom = 31.0
 text = "Random item"
 script = ExtResource("7_6bfnc")
-items = Array[String](["res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item", "res://addons/inventory_biely/scenes/item"])
+items = Array[String](["res://addons/inventory_biely/scenes/item/Kanoa.tscn", "res://addons/inventory_biely/scenes/item/Potion_life.tscn", "res://addons/inventory_biely/scenes/item/Potion_mana.tscn", "res://addons/inventory_biely/scenes/item/Sword.tscn"])
 
 [node name="Mochila" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 192.0
-offset_right = 456.0
-offset_bottom = 415.0
+anchor_left = 0.111111
+anchor_top = 0.296296
+anchor_right = 0.395833
+anchor_bottom = 0.640432
 script = ExtResource("8_cp2un")
 inventory_system = NodePath("../Inventory_main")
 next_system_slot = NodePath("../Equip")
 tittle_alignment = 1
 tittle_uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Equip" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
 layout_mode = 0
-offset_left = 576.0
-offset_top = 136.0
-offset_right = 796.0
-offset_bottom = 491.0
+anchor_left = 0.5
+anchor_top = 0.209877
+anchor_right = 0.690972
+anchor_bottom = 0.757716
 script = ExtResource("8_cp2un")
 inventory_system = NodePath("../Inventory_main")
 next_system_slot = NodePath("../Mochila")
@@ -97,6 +98,7 @@ slot_panel_id = 1
 container_slot = 2
 tittle_alignment = 1
 tittle_uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [connection signal="item_entered_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_entered_panel"]
 [connection signal="item_exiting_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_exiting_panel"]

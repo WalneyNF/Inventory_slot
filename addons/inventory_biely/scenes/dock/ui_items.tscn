@@ -62,5 +62,5 @@ layout_mode = 2
 text = "New Class"
 
 [connection signal="change_class" from="." to="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass" method="_on_ui_items_change_class"]
-[connection signal="resized" from="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class" to="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class" method="_on_resized"]
+[connection signal="change_item" from="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class" to="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class/Vbox/PanelItems/Items" method="_on_class_change_item"]
 [connection signal="pressed" from="Panel/Scroll/Vbox/ItemBar/new_class" to="." method="_on_new_class_pressed"]

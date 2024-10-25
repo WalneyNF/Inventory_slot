@@ -112,6 +112,7 @@ func remove_item(dic_item: PanelItemResource, id: int = -1) -> bool:
 	for items in dic_item.items:
 		if items.id == id:
 			dic_item.items.erase(items)
+			
 			discart_item.emit(items,dic_item.id)
 			return true
 	
@@ -121,8 +122,7 @@ func remove_item(dic_item: PanelItemResource, id: int = -1) -> bool:
 func set_panel_item(item: ItemResource, out_panel_id: int, new_panel_id:int, slot: int = -1, unique: bool = false, out_item_remove: bool = true):
 	var out_panel: PanelItemResource = get_panel_id(out_panel_id)
 	var new_panel: PanelItemResource = get_panel_id(new_panel_id)
-	
-	var new_item: ItemResource = item.duplicate()
+	var new_item: ItemResource = item
 	
 	if new_panel.max_slot == new_panel.items.size() and slot != ERROR.SLOT_BUTTON_VOID:
 		if unique:
@@ -168,15 +168,16 @@ func set_panel_item(item: ItemResource, out_panel_id: int, new_panel_id:int, slo
 
 func set_slot_item(dic_item: PanelItemResource, item: ItemResource, slot: int = -1, unique: bool = true) -> void:
 	
-	var new_item: ItemResource = item.duplicate()
+	var new_item: ItemResource = item
 	
+	#print(item.id)
 	remove_item(dic_item,item.id)
 	add_item(dic_item, new_item.path,new_item.amount,slot,new_item.id,unique)
 
 
 func changed_slots_items(item_one: ItemResource, item_two: ItemResource) -> void:
-	var one = item_one.duplicate()
-	var two = item_two.duplicate()
+	var one = item_one
+	var two = item_two
 	
 	var panel_one = get_panel_id(search_panel(item_one.id))
 	var panel_two = get_panel_id(search_panel(item_two.id))
@@ -207,6 +208,7 @@ func _is_item_valid(array_item: Array, path: String) -> bool:
 	return false
 
 func _function_slot_changed(slot, move) -> void:
+	
 	set_process_input(is_instance_valid(slot) and move == true)
 	
 	if is_instance_valid(item_selected):
@@ -235,7 +237,6 @@ func _append_item(dic_item: PanelItemResource, path: String, amount: int, slot: 
 	_new_item.amount = amount
 	_new_item.slot = now_slot
 	_new_item.path = path
-	
 	dic_item.items.append(_new_item)
 	new_item.emit(_new_item,dic_item)
 	

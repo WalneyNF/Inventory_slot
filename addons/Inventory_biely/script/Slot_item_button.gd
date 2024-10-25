@@ -6,7 +6,6 @@ var inventory: Inventory_main
 var my_panel: PanelContainer
 var right_mouse: bool
 var free_use: bool
-
 # Class =====
 func _ready() -> void:
 	child_exiting_tree.connect(exit_child)
@@ -22,6 +21,7 @@ func _pressed() -> void:
 		if is_instance_valid(item_node):
 			
 			if right_mouse:
+				
 				var items = inventory.get_panel_id(panel_id).items
 				var is_item = inventory.search_item(items,-1,"",inventory.ERROR.SLOT_BUTTON_VOID)
 				
@@ -79,7 +79,8 @@ func set_main_item() -> void:
 
 
 func item_move_void_slot() -> void:
-	var one_item = inventory.item_selected.item.duplicate()
+	
+	var one_item = inventory.item_selected.item
 	var item_selected_panel_id = inventory.search_panel(one_item.id)
 	
 	if item_selected_panel_id != panel_id:

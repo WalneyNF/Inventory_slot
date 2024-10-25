@@ -47,6 +47,7 @@ func reload_data() -> void:
 
 
 func remove_item(_item: ItemResource,_id: int) -> void:
+	
 	if _item.id == item.id:
 		queue_free()
 

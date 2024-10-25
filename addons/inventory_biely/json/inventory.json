@@ -1,26 +1,16 @@
 {
-	"Guns": {
-		"Kanoa": {
-			"icon": "res://addons/inventory_biely/assets/imagens/kanoa.png",
-			"item_path_scene": "res://addons/Inventory_biely/scenes/item/Kanoa.tscn",
-			"max_amount": 16
-		},
-		"Sword": {
-			"icon": "res://addons/inventory_biely/assets/imagens/sword.png",
-			"item_path_scene": "res://",
-			"max_amount": 1
-		}
-	},
 	"Potion": {
 		"Potion_life": {
 			"icon": "res://addons/inventory_biely/assets/imagens/life.png",
-			"item_path_scene": "res://addons/Inventory_biely/scenes/item/Potion_life.tscn",
-			"max_amount": 4
+			"item_path_scene": "res://addons/inventory_biely/scenes/item/Potion_life.tscn",
+			"max_amount": 5,
+			"path_scene": "res://"
 		},
 		"Potion_mana": {
 			"icon": "res://addons/inventory_biely/assets/imagens/mana.png",
-			"item_path_scene": "res://addons/Inventory_biely/scenes/item/Potion_mana.tscn",
-			"max_amount": 4
+			"item_path_scene": "res://addons/Inventory_biely/scenes/item/Potion_life.tscn",
+			"max_amount": 3,
+			"path_scene": "res://"
 		}
 	}
 }

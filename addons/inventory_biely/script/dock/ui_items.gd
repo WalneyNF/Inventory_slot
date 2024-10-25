@@ -16,6 +16,9 @@ func _ready() -> void:
 		
 		file.store_string(JSON.stringify({"void": {}}))
 		file.close()
+	else:
+		var feature_profile := EditorFeatureProfile.new()
+		feature_profile.set_disable_class("TypePanel", true)
 	
 	change_class.emit()
 

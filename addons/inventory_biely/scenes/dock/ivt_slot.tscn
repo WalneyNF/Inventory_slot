@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8w5wbmaey2hq"]
+
+[ext_resource type="PackedScene" uid="uid://btombktb6cfqk" path="res://addons/inventory_biely/scenes/dock/ui_items.tscn" id="1_fk0lr"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/dock/ivt_slot.gd" id="1_tkquw"]
+
+[node name="IVTSlot" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.333333
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tkquw")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panels" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="InventoryMain" type="PanelContainer" parent="Panels"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Panels/InventoryMain"]
+layout_mode = 2
+
+[node name="InvMainButton" type="Button" parent="Panels/InventoryMain/Vbox"]
+layout_mode = 2
+text = "Inventory settings"
+
+[node name="Settings" type="PanelContainer" parent="Panels/InventoryMain/Vbox"]
+layout_mode = 2
+
+[node name="hs" type="HSeparator" parent="Panels"]
+layout_mode = 2
+
+[node name="UiPanel" type="PanelContainer" parent="Panels"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Vbox" type="VBoxContainer" parent="Panels/UiPanel"]
+layout_mode = 2
+
+[node name="UiButton" type="Button" parent="Panels/UiPanel/Vbox"]
+layout_mode = 2
+text = "Items inventory"
+
+[node name="UiItems" parent="Panels/UiPanel/Vbox" instance=ExtResource("1_fk0lr")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="Panels/InventoryMain/Vbox/InvMainButton" to="." method="_on_inv_main_button_pressed"]
+[connection signal="pressed" from="Panels/UiPanel/Vbox/UiButton" to="." method="_on_ui_button_pressed"]
