@@ -8,22 +8,21 @@ enum AMOUNT_ANCHOR {LEFT_UP,LEFT_DOWN,RIGHT_UP,RIGHT_DOWN}
 
 @onready var amount_text: Label = $Amount
 
-var inventory: Inventory_main
-var item: ItemResource
-var item_scene
+var item: Dictionary
+var panel_slot: Dictionary
 
 
 func _ready() -> void:
-	item_scene = load(item.path).instantiate()
-	inventory.new_data_global.connect(reload_data)
-	inventory.discart_item.connect(remove_item)
+	Inventory.new_data_global.connect(reload_data)
+	Inventory.discart_item.connect(remove_item)
 	
 	load_visual()
 
 
 func load_visual() -> void:
-	var item_instance = load(item.path).instantiate()
-	texture = item_instance.icon
+	var item_panel = TypePanel.search_item_id(panel_slot.id,item.unique_id)
+	print(item_panel)
+	texture = load(item_panel.icon)
 	
 	amount_text.text = str(item.amount)
 	
@@ -33,20 +32,20 @@ func load_visual() -> void:
 
 func reload_data() -> void:
 	if item.amount == 0:
-		var my_panel = inventory.get_panel_id(get_parent().panel_id)
-		inventory.remove_item(my_panel,item.id)
+		var my_panel = Inventory.get_panel_id(get_parent().panel_id)
+		Inventory.remove_item(my_panel,item.id)
 	
 	amount_text.text = str(item.amount)
 	
 	amount_text.visible = bool( int(amount_shown_being_one) + int(item.amount > 1))
 	
 	get_parent().tooltip_text = str(
-		item_scene.item_name,'\n',
-		"Amount: ",item.amount,"/",item_scene.max_amount,
+		TypePanel.get_item_name(item.unique_id),'\n',
+		"Amount: ",item.amount,"/",TypePanel.search_item_id(panel_slot.id,item.unique_id).max_amount,
 	)
 
 
-func remove_item(_item: ItemResource,_id: int) -> void:
+func remove_item(_item: Dictionary,_id: int) -> void:
 	
 	if _item.id == item.id:
 		queue_free()

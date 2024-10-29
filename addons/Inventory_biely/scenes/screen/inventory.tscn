@@ -1,37 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0fgcy0fvtoi7"]
+[gd_scene load_steps=5 format=3 uid="uid://d0fgcy0fvtoi7"]
 
-[ext_resource type="Script" path="res://addons/inventory_biely/script/inventory.gd" id="1_de3kf"]
-[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/panel_item_resource.gd" id="2_kexi3"]
-[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/item_resource.gd" id="3_kewaj"]
-[ext_resource type="Script" path="res://addons/inventory_biely/script/resource/panel_resource.gd" id="4_1dflr"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/my_player.gd" id="5_pxtjy"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/notification.gd" id="6_f3xgp"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/debbug/random_item.gd" id="7_6bfnc"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/panel.gd" id="8_cp2un"]
-
-[sub_resource type="Resource" id="Resource_5peyr"]
-script = ExtResource("3_kewaj")
-slot = 0
-amount = 5
-path = "res://addons/inventory_biely/scenes/item/Kanoa.tscn"
-
-[sub_resource type="Resource" id="Resource_4g14l"]
-script = ExtResource("2_kexi3")
-panel_name = &"Mochila"
-id = 0
-max_slot = 15
-items = Array[ExtResource("3_kewaj")]([SubResource("Resource_5peyr")])
-
-[sub_resource type="Resource" id="Resource_fpq0b"]
-script = ExtResource("2_kexi3")
-panel_name = &"Equipamentos"
-id = 1
-max_slot = 5
-items = Array[ExtResource("3_kewaj")]([])
-
-[sub_resource type="Resource" id="Resource_tp4vf"]
-script = ExtResource("4_1dflr")
-panel_item = Array[ExtResource("2_kexi3")]([SubResource("Resource_4g14l"), SubResource("Resource_fpq0b")])
 
 [node name="Inventory_system" type="Control"]
 layout_mode = 3
@@ -40,10 +12,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Inventory_main" type="Node" parent="."]
-script = ExtResource("1_de3kf")
-panel = SubResource("Resource_tp4vf")
 
 [node name="Debbug" type="Control" parent="."]
 anchors_preset = 0
@@ -56,12 +24,11 @@ metadata/_edit_use_anchors_ = true
 [node name="my_player" type="Node" parent="Debbug"]
 script = ExtResource("5_pxtjy")
 
-[node name="Notification" type="Control" parent="Debbug" node_paths=PackedStringArray("inventory")]
+[node name="Notification" type="Control" parent="Debbug"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("6_f3xgp")
-inventory = NodePath("../../Inventory_main")
 use = false
 
 [node name="Random" type="Button" parent="Debbug"]
@@ -70,16 +37,14 @@ offset_right = 113.0
 offset_bottom = 31.0
 text = "Random item"
 script = ExtResource("7_6bfnc")
-items = Array[String](["res://addons/inventory_biely/scenes/item/Kanoa.tscn", "res://addons/inventory_biely/scenes/item/Potion_life.tscn", "res://addons/inventory_biely/scenes/item/Potion_mana.tscn", "res://addons/inventory_biely/scenes/item/Sword.tscn"])
 
-[node name="Mochila" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
+[node name="Inventory" type="PanelContainer" parent="." node_paths=PackedStringArray("next_system_slot")]
 layout_mode = 0
 anchor_left = 0.111111
 anchor_top = 0.296296
 anchor_right = 0.395833
 anchor_bottom = 0.640432
 script = ExtResource("8_cp2un")
-inventory_system = NodePath("../Inventory_main")
 next_system_slot = NodePath("../Equip")
 tittle_alignment = 1
 tittle_uppercase = true
@@ -92,13 +57,9 @@ anchor_top = 0.209877
 anchor_right = 0.690972
 anchor_bottom = 0.757716
 script = ExtResource("8_cp2un")
-inventory_system = NodePath("../Inventory_main")
-next_system_slot = NodePath("../Mochila")
+next_system_slot = NodePath("../Inventory")
 slot_panel_id = 1
 container_slot = 2
 tittle_alignment = 1
 tittle_uppercase = true
 metadata/_edit_use_anchors_ = true
-
-[connection signal="item_entered_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_entered_panel"]
-[connection signal="item_exiting_panel" from="Inventory_main" to="Debbug/my_player" method="_on_inventory_main_item_exiting_panel"]

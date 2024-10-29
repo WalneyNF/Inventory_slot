@@ -3,64 +3,53 @@
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/ui_items.gd" id="1_oepok"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/list_class.gd" id="2_yfqgh"]
 
-[node name="UiItems" type="Control"]
-layout_mode = 3
+[node name="UiItems" type="PanelContainer"]
+anchors_preset = -1
 anchor_right = 0.333333
-anchor_bottom = 1.0
+anchor_bottom = 0.462963
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oepok")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Scroll" type="ScrollContainer" parent="Panel"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Vbox" type="VBoxContainer" parent="Panel/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ItemBar" type="VBoxContainer" parent="Panel/Scroll/Vbox"]
+[node name="ItemBar" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Items" type="Panel" parent="Panel/Scroll/Vbox/ItemBar"]
+[node name="hbox" type="HBoxContainer" parent="Panel/ItemBar"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Scroll" type="ScrollContainer" parent="Panel/Scroll/Vbox/ItemBar/Items"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
+[node name="vs" type="VSeparator" parent="Panel/ItemBar/hbox"]
+layout_mode = 2
 
-[node name="ListClass" type="VBoxContainer" parent="Panel/Scroll/Vbox/ItemBar/Items/Scroll"]
+[node name="Items" type="PanelContainer" parent="Panel/ItemBar/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ListClass" type="VBoxContainer" parent="Panel/ItemBar/hbox/Items"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_yfqgh")
 
-[node name="new_class" type="Button" parent="Panel/Scroll/Vbox/ItemBar"]
-custom_minimum_size = Vector2(0, 50)
+[node name="new_class" type="Button" parent="Panel/ItemBar"]
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
 text = "New Class"
 
-[connection signal="change_class" from="." to="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass" method="_on_ui_items_change_class"]
-[connection signal="change_item" from="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class" to="Panel/Scroll/Vbox/ItemBar/Items/Scroll/ListClass/Class/Vbox/PanelItems/Items" method="_on_class_change_item"]
-[connection signal="pressed" from="Panel/Scroll/Vbox/ItemBar/new_class" to="." method="_on_new_class_pressed"]
+[connection signal="change_class" from="." to="Panel/ItemBar/hbox/Items/ListClass" method="_on_ui_items_change_class"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/Class" to="Panel/ItemBar/hbox/Items/ListClass/Class/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17376" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17376/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17392" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17392/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="pressed" from="Panel/ItemBar/new_class" to="." method="_on_new_class_pressed"]

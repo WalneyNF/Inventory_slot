@@ -10,11 +10,11 @@ func load_items() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	if FileAccess.file_exists(TypePanel.PATH):
+	if FileAccess.file_exists(TypePanel.ITEM_PATH):
 		for child in get_children():
 			child.queue_free()
 		
-		var file = FileAccess.open(TypePanel.PATH,FileAccess.READ)
+		var file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.READ)
 		var all_class = JSON.parse_string(file.get_as_text())
 		
 		file.close()
@@ -34,7 +34,7 @@ func _on_class_change_item() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	var file = FileAccess.open(TypePanel.PATH,FileAccess.READ)
+	var file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.READ)
 	var all_class = JSON.parse_string(file.get_as_text())
 	
 	file.close()

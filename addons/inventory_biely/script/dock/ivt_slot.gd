@@ -1,13 +1,27 @@
 @tool
 extends PanelContainer
 
-@onready var ui_items: Control = $Panels/UiPanel/Vbox/UiItems
-@onready var settings: PanelContainer = $Panels/InventoryMain/Vbox/Settings
+@onready var panels: VBoxContainer = $Scroll/Panels
+
+const SLOT_ALL = preload("res://addons/inventory_biely/scenes/dock/slot_all.tscn")
+const THEME_DEFAULT = preload("res://addons/inventory_biely/assets/.themes/default.tres")
 
 
-func _on_inv_main_button_pressed() -> void:
-	settings.visible = !settings.visible
+func _ready() -> void:
+	var new_slotall = SLOT_ALL.instantiate()
+	
+	panels.add_child(new_slotall)
+
+func _on_reload_plugin_pressed() -> void:
+	panels.get_child(1).queue_free()
+	
+	_ready()
 
 
-func _on_ui_button_pressed() -> void:
-	ui_items.visible = !ui_items.visible
+func _on_remove_theme_pressed() -> void:
+	if theme == null:
+		theme = THEME_DEFAULT
+		
+		return
+	
+	theme = null

@@ -1,0 +1,12 @@
+{
+	"Equipped": {
+		"class_unique": -1,
+		"id": 1,
+		"slot_amount": 4
+	},
+	"Inventory": {
+		"class_unique": -1,
+		"id": 0,
+		"slot_amount": 15
+	}
+}

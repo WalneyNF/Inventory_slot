@@ -18,7 +18,6 @@ enum CONTAINER_SLOT {
 enum ALIGNMENT {LEFT, CENTER, RIGHT}
 
 @export_group("Node Selector")
-@export_node_path("Inventory_main") var inventory_system: NodePath
 @export var next_system_slot: PanelSlot
 
 @export_group("Panel Slot")
@@ -26,7 +25,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 	set(value):
 		slot_panel_id = value
 		if !Engine.is_editor_hint():
-			if inventory == null: return
+			if Inventory == null: return
 		
 		update_tittle_name()
 
@@ -72,8 +71,6 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		tittle_uppercase = value
 		name_label.uppercase = tittle_uppercase
 
-@onready var inventory: Inventory_main = get_node_or_null(inventory_system)
-
 const SCRIPT_SLOT: Script = preload("res://addons/inventory_biely/script/slot_item_button.gd")
 const ITEM_TEXTURE: PackedScene = preload("res://addons/inventory_biely/scenes/screen/item_texture.tscn")
 
@@ -89,7 +86,7 @@ func _ready() -> void:
 	update_tittle()
 	
 	if !Engine.is_editor_hint():
-		inventory.new_item.connect(receive_new_item)
+		Inventory.new_item.connect(receive_new_item)
 
 
 ## Visual ================================================
@@ -129,7 +126,8 @@ func update_visual_panel_slot() -> void:
 	vbox_panel.name = "VboxPanel"
 	grid_slot.name = "GridSlot"
 	
-	if !Engine.is_editor_hint() and inventory == null: return
+	#if !Engine.is_editor_hint(): return
+	
 	update_slots()
 
 
@@ -147,9 +145,13 @@ func update_tittle() -> void:
 
 
 func update_tittle_name() -> void:
-	for panels in get_node(inventory_system).panel.panel_item:
-		if panels.id == slot_panel_id:
-			name_label.text = panels.panel_name
+	var all_panel = Inventory.get_all_panels()
+	
+	for panel_slot in all_panel:
+		var panel = all_panel.get(panel_slot)
+		
+		if panel.id == slot_panel_id:
+			name_label.text = panel_slot
 
 
 func update_tittle_alignment() -> void:
@@ -162,18 +164,21 @@ func update_tittle_alignment() -> void:
 			name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 
-func update_slots() -> void:
-	for panel_slot in get_node(inventory_system).panel.panel_item:
-		
-		if panel_slot.id == slot_panel_id:
-			_create_slot(panel_slot.max_slot)
+func update_slots() -> void: # Mudar
+	var all_panel = Inventory.get_all_panels()
+	
+	for panel_slot in all_panel:
+		var panel = all_panel.get(panel_slot)
+		#print(panel.id == slot_panel_id)
+		if panel.id == slot_panel_id:
+			_create_slot(panel.slot_amount)
 			
 			if !Engine.is_editor_hint():
-				_load_items(panel_slot.items)
+				_load_items(TypePanel.list_all_inventory_item(slot_panel_id))
 
 
 ## Slots System ====================================
-func receive_new_item(item: ItemResource, panel: PanelItemResource) -> void:
+func receive_new_item(item: Dictionary, panel: Dictionary) -> void:
 	
 	if panel.id == slot_panel_id:
 		_load_item(item)
@@ -196,11 +201,11 @@ func _load_items(item_array: Array) -> void:
 		_load_item(item)
 
 
-func _load_item(item: ItemResource) -> void:
+func _load_item(item: Dictionary) -> void:
 	var new_item = ITEM_TEXTURE.instantiate()
 	
 	if item.slot == Inventory_main.ERROR.SLOT_BUTTON_VOID:
-		await inventory.get_child_count() == 0
+		await Inventory.get_child_count() == 0
 		
 		var void_button = Button.new()
 		var slot = void_button
@@ -208,23 +213,22 @@ func _load_item(item: ItemResource) -> void:
 		instance_slot_button(void_button)
 		
 		slot.free_use = true
-		slot.inventory = inventory
+		slot.inventory = Inventory
 		slot.item_node = new_item
-		slot.item_node.inventory = inventory
+		slot.item_node.inventory = Inventory
 		slot.item_node.item = item
 		slot.self_modulate.a = 0
 		
-		inventory.add_child(void_button)
+		Inventory.add_child(void_button)
 		slot.add_child(new_item)
 		
-		inventory.button_slot_changed.emit(slot,true)
+		Inventory.button_slot_changed.emit(slot,true)
 	else:
 		var slot = grid_slot.get_child(item.slot)
 		
-		slot.inventory = inventory
 		slot.item_node = new_item
-		slot.item_node.inventory = inventory
 		slot.item_node.item = item
+		slot.item_node.panel_slot = Inventory.get_panel_id(slot_panel_id)
 		
 		slot.add_child(new_item)
 
@@ -232,7 +236,6 @@ func _load_item(item: ItemResource) -> void:
 func instance_slot_button(slot_button: Button) -> void:
 	if !Engine.is_editor_hint():
 		slot_button.set_script(SCRIPT_SLOT)
-		slot_button.inventory = inventory
 		slot_button.my_panel = self
 		slot_button.panel_id = slot_panel_id
 	

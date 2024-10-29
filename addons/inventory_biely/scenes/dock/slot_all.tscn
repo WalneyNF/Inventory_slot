@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciub2lw5yi8r4"]
+
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_biely/assets/.icons/slot_show_button.tres" id="1_ut75d"]
+[ext_resource type="Script" path="res://addons/inventory_biely/script/dock/top_bar.gd" id="2_1i1wx"]
+[ext_resource type="PackedScene" uid="uid://c75p37f035d7p" path="res://addons/inventory_biely/scenes/dock/panel_slot_controller.tscn" id="3_3o5lx"]
+[ext_resource type="PackedScene" uid="uid://btombktb6cfqk" path="res://addons/inventory_biely/scenes/dock/ui_items.tscn" id="4_3or6b"]
+
+[node name="SlotAll" type="VBoxContainer"]
+size_flags_vertical = 3
+
+[node name="InventoryMain" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Vbox" type="VBoxContainer" parent="InventoryMain"]
+layout_mode = 2
+
+[node name="InvMainButton" type="Button" parent="InventoryMain/Vbox" node_paths=PackedStringArray("NodeVisible")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Slot settings"
+icon = ExtResource("1_ut75d")
+icon_alignment = 1
+vertical_icon_alignment = 2
+script = ExtResource("2_1i1wx")
+NodeVisible = NodePath("../Settings")
+
+[node name="Settings" type="PanelContainer" parent="InventoryMain/Vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="InventoryMain/Vbox/Settings"]
+layout_mode = 2
+
+[node name="PanelSlotController" parent="InventoryMain/Vbox/Settings/vbox" instance=ExtResource("3_3o5lx")]
+layout_mode = 2
+
+[node name="hs" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="UiPanel" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="UiPanel"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="UiButton" type="Button" parent="UiPanel/Vbox" node_paths=PackedStringArray("NodeVisible")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Class / Items"
+icon = ExtResource("1_ut75d")
+icon_alignment = 1
+vertical_icon_alignment = 2
+script = ExtResource("2_1i1wx")
+NodeVisible = NodePath("../UiItems")
+
+[node name="UiItems" parent="UiPanel/Vbox" instance=ExtResource("4_3or6b")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

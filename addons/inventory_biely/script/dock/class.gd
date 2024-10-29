@@ -4,11 +4,10 @@ extends TypePanel
 
 @onready var edit_name: LineEdit = %edit_name
 @onready var name_class: Button = %name_class
-@onready var items: VBoxContainer = $Vbox/PanelItems/Items
+@onready var items: VBoxContainer = $Vbox/PanelItems/Vbox/Hbox/Items
 @onready var top_bar: PanelContainer = $Vbox/TopBar
-@onready var id_unique: Label = $Vbox/TopBar/Hbox/id_unique
+@onready var panel_items: PanelContainer = $Vbox/PanelItems
 
-var path = "res://addons/inventory_biely/json/inventory.json"
 var load_items: bool = true
 
 signal change_item
@@ -47,6 +46,7 @@ func _on_edit_name_text_submitted(new_text: String) -> void:
 
 func _on_new_item_pressed() -> void:
 	var inventory = pull_inventory()
+	
 	new_item(inventory,name_class.text)
 	push_inventory(inventory)
 	

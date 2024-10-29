@@ -1,27 +1,27 @@
 extends Control
 
-@export var inventory: Inventory_main
 @export var use: bool = true
 
 func _ready() -> void:
-	inventory.item_entered_panel.connect(item_entered_panel)
-	inventory.new_item.connect(new_item)
-	inventory.discart_item.connect(discart_item)
-	inventory.new_data_global.connect(new_data_global)
+	pass
+	#Inventory.item_entered_panel.connect(item_entered_panel)
+	#Inventory.new_item.connect(new_item)
+	#Inventory.discart_item.connect(discart_item)
+	#Inventory.new_data_global.connect(new_data_global)
 
 
-func new_item(item: ItemResource ,system_slot: PanelItemResource) -> void:
+func new_item(item: Dictionary ,system_slot: Dictionary) -> void:
 	create_popup("New Item",str(item.path.get_basename().split(item.path.get_extension())))
-func item_entered_panel(item: ItemResource ,new_id: int) -> void:
-	create_popup("Item entered Panel",str(item.path.get_file()," - ",inventory.get_panel_id(new_id).panel_name))
-func discart_item(item: ItemResource ,new_id: int) -> void:
-	create_popup("Discart item",str(item.path.get_file()," - ",inventory.get_panel_id(new_id).panel_name))
+func item_entered_panel(item: Dictionary ,new_id: int) -> void:
+	create_popup("Item entered Panel",str(item.path.get_file()," - ",Inventory.get_panel_id(new_id).panel_name))
+func discart_item(item: Dictionary ,new_id: int) -> void:
+	create_popup("Discart item",str(item.path.get_file()," - ",Inventory.get_panel_id(new_id).panel_name))
 func new_data_global() -> void:
 	create_popup("Reload data global","reload")
 
 #signal new_item(item: ItemResource ,system_slot: PanelItemResource)
 #signal item_entered_panel()
-signal item_exiting_panel(item: ItemResource ,new_id: int)
+signal item_exiting_panel(item: Dictionary ,new_id: int)
 signal button_slot_changed(slot: Control,move: bool)
 
 

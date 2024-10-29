@@ -8,17 +8,24 @@ enum SELECTION {ICON,SCENE}
 @onready var edit_item_name: LineEdit = %item_name
 @onready var scene: Button = %scene
 @onready var id_unique: Button = $Vbox/TopBar/Hbox/id_unique
-@onready var top_bar: PanelContainer = $Vbox/Hbox/Panel/Vbox/TopBar
+@onready var top_bar: PanelContainer = $Vbox/TopBar
+@onready var hbox: HBoxContainer = $Vbox/Hbox
+
 
 var item_name: String
 var selection: int
+
+
+func _ready() -> void:
+	hbox.hide()
+
 
 func start(_item_name: String,_icon_path: String) -> void:
 	icon.icon = load(_icon_path)
 	item_name = _item_name
 	
 	edit_item_name.text = _item_name
-	id_unique.text = str(get_index())
+	id_unique.text = str(get_index()," - ",item_name)
 
 
 
@@ -60,9 +67,9 @@ func _on_icon_pressed() -> void:
 
 func _on_id_unique_gui_input(event: InputEvent) -> void:
 	move_panel(event,self,top_bar,get_parent())
+	
+	id_unique.text = str(get_index()," - ",item_name)
 
-func _on_id_unique_pressed() -> void:
-	$Vbox/Hbox.visible = !$Vbox/Hbox.visible
 
 
 func _on_delete_pressed() -> void:
@@ -80,6 +87,7 @@ func _on_item_name_text_submitted(new_text: String) -> void:
 	push_inventory(inventory)
 	
 	item_name = new_text
+	id_unique.text = str(get_index()," - ",item_name)
 
 func _on_max_amount_value_changed(value: float) -> void:
 	var inventory = pull_inventory()
