@@ -89,6 +89,16 @@ static func get_item_name(unique_id_item: int) -> StringName:
 	
 	return ""
 
+static func push_item_inventory(_item_name: String, _item_inventory: Dictionary) -> void:
+	var _all_items = pull_inventory(ITEMS_PATH)
+	
+	if _item_inventory == {}:
+		_all_items.erase(_item_name)
+	else:
+		_all_items[_item_name] = _item_inventory
+	
+	push_inventory(_all_items,ITEMS_PATH)
+
 static func pull_inventory(path: String = ITEM_PATH) -> Dictionary:
 	if FileAccess.file_exists(path):
 		var file = FileAccess.open(path,FileAccess.READ)
@@ -204,16 +214,16 @@ static func list_all_item(panel_id: int = -1) -> Array:
 	
 	return all_items
 
-static func list_all_inventory_item(panel_id) -> Array:
-	var inventory = pull_inventory(ITEMS_PATH)
+static func list_all_inventory_item(_panel_id: int) -> Array:
+	var _inventory = pull_inventory(ITEMS_PATH)
 	
 	var all_items: Array
 	
-	for items in inventory:
-		if panel_id == -1:
-			all_items.append(inventory.get(items))
+	for _items in _inventory:
+		if _panel_id == -1:
+			all_items.append(_inventory.get(_items))
 		else:
-			if panel_id == inventory.get(items).panel_id:
-				all_items.append(inventory.get(items))
+			if _panel_id == _inventory.get(_items).panel_id:
+				all_items.append(_inventory.get(_items))
 	
 	return all_items

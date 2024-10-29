@@ -8,7 +8,7 @@ enum AMOUNT_ANCHOR {LEFT_UP,LEFT_DOWN,RIGHT_UP,RIGHT_DOWN}
 
 @onready var amount_text: Label = $Amount
 
-var item: Dictionary
+var item_inventory: Dictionary
 var panel_slot: Dictionary
 
 
@@ -20,35 +20,36 @@ func _ready() -> void:
 
 
 func load_visual() -> void:
-	var item_panel = TypePanel.search_item_id(panel_slot.id,item.unique_id)
-	print(item_panel)
+	#print(panel_slot)
+	var item_panel = TypePanel.search_item_id(panel_slot.id,item_inventory.unique_id)
+	
 	texture = load(item_panel.icon)
 	
-	amount_text.text = str(item.amount)
+	amount_text.text = str(item_inventory.amount)
 	
 	reload_data()
 	anchor_visual_amount()
 
 
 func reload_data() -> void:
-	if item.amount == 0:
-		var my_panel = Inventory.get_panel_id(get_parent().panel_id)
-		Inventory.remove_item(my_panel,item.id)
+	if item_inventory.amount == 0:
+		Inventory.remove_item(panel_slot,item_inventory.id)
 	
-	amount_text.text = str(item.amount)
+	amount_text.text = str(item_inventory.amount)
 	
-	amount_text.visible = bool( int(amount_shown_being_one) + int(item.amount > 1))
+	amount_text.visible = bool( int(amount_shown_being_one) + int(item_inventory.amount > 1))
 	
 	get_parent().tooltip_text = str(
-		TypePanel.get_item_name(item.unique_id),'\n',
-		"Amount: ",item.amount,"/",TypePanel.search_item_id(panel_slot.id,item.unique_id).max_amount,
+		TypePanel.get_item_name(item_inventory.unique_id),'\n',
+		"Amount: ",item_inventory.amount,"/",TypePanel.search_item_id(panel_slot.id,item_inventory.unique_id).max_amount,
 	)
 
 
-func remove_item(_item: Dictionary,_id: int) -> void:
+func remove_item(_item_inventory: Dictionary,panel_id: int) -> void:
 	
-	if _item.id == item.id:
+	if _item_inventory.id == item_inventory.id:
 		queue_free()
+		#print(_item_inventory)
 
 
 func anchor_visual_amount() -> void:

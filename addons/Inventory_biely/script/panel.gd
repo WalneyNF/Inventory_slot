@@ -178,10 +178,10 @@ func update_slots() -> void: # Mudar
 
 
 ## Slots System ====================================
-func receive_new_item(item: Dictionary, panel: Dictionary) -> void:
-	
-	if panel.id == slot_panel_id:
-		_load_item(item)
+
+func receive_new_item(item_panel: Dictionary, item_inventory: Dictionary, panel_slot: Dictionary) -> void:
+	if panel_slot.id == slot_panel_id:
+		_load_item(item_inventory)
 
 
 func _create_slot(amount_size: int) -> void:
@@ -195,16 +195,16 @@ func _create_slot(amount_size: int) -> void:
 		grid_slot.add_child(slot_button)
 
 
-func _load_items(item_array: Array) -> void:
+func _load_items(item_inventory_array: Array) -> void:
 	
-	for item in item_array:
-		_load_item(item)
+	for item_inventory in item_inventory_array:
+		_load_item(item_inventory)
 
 
-func _load_item(item: Dictionary) -> void:
+func _load_item(item_inventory: Dictionary) -> void:
 	var new_item = ITEM_TEXTURE.instantiate()
 	
-	if item.slot == Inventory_main.ERROR.SLOT_BUTTON_VOID:
+	if item_inventory.slot == Inventory_main.ERROR.SLOT_BUTTON_VOID:
 		await Inventory.get_child_count() == 0
 		
 		var void_button = Button.new()
@@ -213,21 +213,20 @@ func _load_item(item: Dictionary) -> void:
 		instance_slot_button(void_button)
 		
 		slot.free_use = true
-		slot.inventory = Inventory
 		slot.item_node = new_item
-		slot.item_node.inventory = Inventory
-		slot.item_node.item = item
+		slot.item_node.item_inventory = item_inventory
 		slot.self_modulate.a = 0
+		new_item.panel_slot = Inventory.get_panel_id(-2)
 		
 		Inventory.add_child(void_button)
 		slot.add_child(new_item)
 		
 		Inventory.button_slot_changed.emit(slot,true)
 	else:
-		var slot = grid_slot.get_child(item.slot)
+		var slot = grid_slot.get_child(item_inventory.slot)
 		
 		slot.item_node = new_item
-		slot.item_node.item = item
+		slot.item_node.item_inventory = item_inventory
 		slot.item_node.panel_slot = Inventory.get_panel_id(slot_panel_id)
 		
 		slot.add_child(new_item)
