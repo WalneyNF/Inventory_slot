@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://ep1uy3n0w0d1"]
 
-[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/inventory_biely/assets/imagens/life.png" id="1_h3lic"]
+[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/Inventory_biely/assets/imagens/life.png" id="1_h3lic"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/item_panel.gd" id="1_l311a"]
-[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_biely/assets/.icons/slot_hide_button.tres" id="2_1kig7"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/Inventory_biely/assets/icons/slot_hide_button.tres" id="2_1kig7"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/top_bar.gd" id="2_ifphx"]
-[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_biely/assets/.icons/slot_remove_button.tres" id="4_xst28"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/Inventory_biely/assets/icons/slot_remove_button.tres" id="4_xst28"]
 
 [node name="ItemPanel" type="PanelContainer"]
 anchors_preset = -1

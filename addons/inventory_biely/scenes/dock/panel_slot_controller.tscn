@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/panel_slot_controller.gd" id="1_jph47"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/top_bar.gd" id="2_nllto"]
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_biely/assets/.icons/slot_show_button.tres" id="2_tliut"]
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/Inventory_biely/assets/icons/slot_show_button.tres" id="2_tliut"]
 
 [node name="PanelSlotController" type="PanelContainer"]
 offset_right = 281.0

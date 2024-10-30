@@ -1,12 +1,15 @@
 @tool
-class_name ButtonVisible extends Button
+
+extends Button
+
+class_name VisibleButton
 
 @export var NodeVisible: Control
 
 
 const SLOT_BUTTON = [
-	preload("res://addons/inventory_biely/assets/.icons/slot_hide_button.tres"),
-	preload("res://addons/inventory_biely/assets/.icons/slot_show_button.tres")
+	preload("res://addons/inventory_biely/assets/icons/slot_hide_button.tres"),
+	preload("res://addons/inventory_biely/assets/icons/slot_show_button.tres")
 ]
 
 func _ready() -> void:

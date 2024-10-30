@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://dlmvgp744mykf" path="res://addons/inventory_biely/assets/.themes/default.tres" id="1_1w27d"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/ivt_slot.gd" id="1_tkquw"]
-[ext_resource type="Texture2D" uid="uid://becu4ghipl448" path="res://addons/inventory_biely/assets/.icons/slot_reload.tres" id="3_o3b3d"]
-[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_biely/assets/.icons/slot_remove_button.tres" id="3_xndhx"]
+[ext_resource type="Texture2D" uid="uid://becu4ghipl448" path="res://addons/Inventory_biely/assets/icons/slot_reload.tres" id="3_o3b3d"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/Inventory_biely/assets/icons/slot_remove_button.tres" id="3_xndhx"]
 
 [node name="IVTSlot" type="PanelContainer"]
 anchors_preset = -1

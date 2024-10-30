@@ -1,7 +1,7 @@
 @tool
 extends Node
 
-class_name Inventory_main
+#class_name Inventory_main
 
 # new_data.emit(item_panel,item_inventory,panel_slot)
 signal new_item(item_panel: Dictionary , item_inventory: Dictionary, panel_slot: Dictionary)

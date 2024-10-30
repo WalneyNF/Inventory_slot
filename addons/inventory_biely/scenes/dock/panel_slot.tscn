@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://b0u70qesn4lw0"]
 
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/panel_slot.gd" id="1_joxuk"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/Inventory_biely/assets/icons/slot_hide_button.tres" id="2_hf0pb"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/top_bar.gd" id="2_unog3"]
-[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_biely/assets/.icons/slot_hide_button.tres" id="2_vrroh"]
-[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_biely/assets/.icons/slot_remove_button.tres" id="4_rp7ey"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/Inventory_biely/assets/icons/slot_remove_button.tres" id="4_rp7ey"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_jafag"]
 color = Color(0.29366, 0.29366, 0.29366, 1)
@@ -27,7 +27,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 text = "0"
-icon = ExtResource("2_vrroh")
+icon = ExtResource("2_hf0pb")
 script = ExtResource("2_unog3")
 NodeVisible = NodePath("../../Settings")
 

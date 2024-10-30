@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://du8cysfmaia3w"]
 
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/class.gd" id="1_tlyxu"]
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_biely/assets/.icons/slot_show_button.tres" id="2_5fn77"]
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/Inventory_biely/assets/icons/slot_show_button.tres" id="2_5fn77"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/list_item.gd" id="2_hpeo5"]
 [ext_resource type="Script" path="res://addons/inventory_biely/script/dock/top_bar.gd" id="2_krhex"]
-[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_biely/assets/.icons/slot_remove_button.tres" id="4_kaawh"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/Inventory_biely/assets/icons/slot_remove_button.tres" id="4_kaawh"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_288to"]
 color = Color(0.29366, 0.29366, 0.29366, 1)
