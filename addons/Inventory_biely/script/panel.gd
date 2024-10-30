@@ -204,7 +204,7 @@ func _load_items(item_inventory_array: Array) -> void:
 func _load_item(item_inventory: Dictionary) -> void:
 	var new_item = ITEM_TEXTURE.instantiate()
 	
-	if item_inventory.slot == Inventory_main.ERROR.SLOT_BUTTON_VOID:
+	if item_inventory.slot == Inventory.ERROR.SLOT_BUTTON_VOID:
 		await Inventory.get_child_count() == 0
 		
 		var void_button = Button.new()

@@ -2,7 +2,7 @@
 
 extends Button
 
-class_name VisibleButton
+class_name ButtonVisible
 
 @export var NodeVisible: Control
 

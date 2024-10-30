@@ -1,79 +1,16 @@
 {
-	"109754325": {
-		"amount": 3,
-		"id": 109754325,
-		"panel_id": 1,
-		"slot": 0,
-		"unique_id": 0
-	},
 	"1116068947": {
 		"amount": 3,
 		"id": 1116068947,
-		"panel_id": 1,
-		"slot": 1,
+		"panel_id": 0,
+		"slot": 13,
 		"unique_id": 1
 	},
-	"1173330149": {
+	"2639337082": {
 		"amount": 3,
-		"id": 1173330149,
-		"panel_id": 0,
-		"slot": 7,
-		"unique_id": 2
-	},
-	"182093445": {
-		"amount": 1,
-		"id": 182093445,
-		"panel_id": 0,
-		"slot": 1,
-		"unique_id": 3
-	},
-	"2092263124": {
-		"amount": 3,
-		"id": 2092263124,
+		"id": 2639337082,
 		"panel_id": 0,
 		"slot": 5,
 		"unique_id": 0
-	},
-	"2214737948": {
-		"amount": 3,
-		"id": 2214737948,
-		"panel_id": 0,
-		"slot": 6,
-		"unique_id": 2
-	},
-	"2637076374": {
-		"amount": 1,
-		"id": 2637076374,
-		"panel_id": 1,
-		"slot": 2,
-		"unique_id": 2
-	},
-	"2701389484": {
-		"amount": 1,
-		"id": 2701389484,
-		"panel_id": 0,
-		"slot": 2,
-		"unique_id": 1
-	},
-	"3276713748": {
-		"amount": 2,
-		"id": 3276713748,
-		"panel_id": 0,
-		"slot": 3,
-		"unique_id": 0
-	},
-	"3459128868": {
-		"amount": 2,
-		"id": 3459128868,
-		"panel_id": 1,
-		"slot": 3,
-		"unique_id": 2
-	},
-	"66745778": {
-		"amount": 2,
-		"id": 66745778,
-		"panel_id": 0,
-		"slot": 0,
-		"unique_id": 4
 	}
 }

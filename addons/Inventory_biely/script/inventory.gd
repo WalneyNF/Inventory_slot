@@ -156,7 +156,7 @@ func set_panel_item(_item_inventory: Dictionary, _out_panel_id: int, _new_panel_
 			return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 		else:
 			
-			var _search_item = search_item_amount_min(_new_panel.items,_item_inventory.path,_item_panel.slot_amount)
+			var _search_item = search_item_amount_min(_new_panel.id,_item_inventory.unique_id,_item_panel.slot_amount)
 			
 			if search_item != null:
 				
