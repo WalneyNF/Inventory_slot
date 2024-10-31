@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Inventory_Godot_4"
-run/main_scene="res://addons/inventory_biely/scenes/screen/inventory.tscn"
+run/main_scene="res://addons/inventory_slot_plugin/scenes/screen/inventory.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Inventory="*res://addons/inventory_biely/script/inventory.gd"
+Inventory="*res://addons/inventory_slot_plugin/script/inventory.gd"
 
 [display]
 
@@ -25,7 +25,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Inventory_biely/plugin.cfg")
+enabled=PackedStringArray("res://addons/inventory_slot_plugin/plugin.cfg")
 
 [rendering]
 

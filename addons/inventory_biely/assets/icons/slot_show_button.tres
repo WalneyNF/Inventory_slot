@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://drdt8v1j8h6sb"]
-
-[ext_resource type="Texture2D" uid="uid://bvats03ro7unp" path="res://addons/Inventory_biely/assets/icons/slot_panel_icons.svg" id="1_5noj2"]
-
-[resource]
-atlas = ExtResource("1_5noj2")
-region = Rect2(5, 3, 20, 20)

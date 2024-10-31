@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0u70qesn4lw0"]
+
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/panel_slot.gd" id="1_joxuk"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_hf0pb"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_unog3"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_rp7ey"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_jafag"]
+color = Color(0.29366, 0.29366, 0.29366, 1)
+grow_begin = -84.0
+grow_end = -84.0
+
+[node name="PanelSlot" type="PanelContainer"]
+offset_right = 347.0
+offset_bottom = 181.0
+script = ExtResource("1_joxuk")
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Button" parent="Vbox/TopBar" node_paths=PackedStringArray("NodeVisible")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "0"
+icon = ExtResource("2_hf0pb")
+script = ExtResource("2_unog3")
+NodeVisible = NodePath("../../Settings")
+
+[node name="Remove" type="Button" parent="Vbox/TopBar"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Remove"
+icon = ExtResource("4_rp7ey")
+
+[node name="Settings" type="VBoxContainer" parent="Vbox"]
+visible = false
+layout_mode = 2
+
+[node name="Name" type="HBoxContainer" parent="Vbox/Settings"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Settings/Name"]
+layout_mode = 2
+text = "Panel name:"
+
+[node name="PanelName" type="LineEdit" parent="Vbox/Settings/Name"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "NewPanel"
+placeholder_text = "PanelName"
+
+[node name="ID" type="HBoxContainer" parent="Vbox/Settings"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Settings/ID"]
+layout_mode = 2
+text = "ID:"
+
+[node name="Id" type="SpinBox" parent="Vbox/Settings/ID"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="MaxSlot" type="HBoxContainer" parent="Vbox/Settings"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Settings/MaxSlot"]
+layout_mode = 2
+text = "Slot amount:"
+
+[node name="Amount" type="SpinBox" parent="Vbox/Settings/MaxSlot"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="ClassUnique" type="HBoxContainer" parent="Vbox/Settings"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Settings/ClassUnique"]
+layout_mode = 2
+text = "Class unique:"
+
+[node name="Class" type="OptionButton" parent="Vbox/Settings/ClassUnique"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 0
+item_count = 1
+popup/item_0/text = "All"
+
+[node name="hs" type="HSeparator" parent="Vbox"]
+layout_mode = 2
+theme_override_constants/separation = 5
+theme_override_styles/separator = SubResource("StyleBoxLine_jafag")
+
+[connection signal="gui_input" from="Vbox/TopBar/Tittle" to="." method="_on_tittle_gui_input"]
+[connection signal="pressed" from="Vbox/TopBar/Remove" to="." method="_on_remove_pressed"]
+[connection signal="text_submitted" from="Vbox/Settings/Name/PanelName" to="." method="_on_panel_name_text_submitted"]
+[connection signal="value_changed" from="Vbox/Settings/ID/Id" to="." method="_on_id_value_changed"]
+[connection signal="value_changed" from="Vbox/Settings/MaxSlot/Amount" to="." method="_on_amount_value_changed"]
+[connection signal="item_selected" from="Vbox/Settings/ClassUnique/Class" to="." method="_on_class_item_selected"]
