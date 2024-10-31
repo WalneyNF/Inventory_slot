@@ -13,6 +13,7 @@ var panel_slot: Dictionary
 
 
 func _ready() -> void:
+	Inventory.new_data.connect(reload_my_data)
 	Inventory.new_data_global.connect(reload_data)
 	Inventory.discart_item.connect(remove_item)
 	
@@ -20,7 +21,6 @@ func _ready() -> void:
 
 
 func load_visual() -> void:
-	#print(panel_slot)
 	var item_panel = TypePanel.search_item_id(panel_slot.id,item_inventory.unique_id)
 	
 	texture = load(item_panel.icon)
@@ -29,7 +29,15 @@ func load_visual() -> void:
 	
 	reload_data()
 	anchor_visual_amount()
+	
+	if item_inventory.slot == Inventory.ERROR.SLOT_BUTTON_VOID:
+		z_index = 1
 
+func reload_my_data(_item_panel: Dictionary , _item_inventory: Dictionary , _system_slot: Dictionary) -> void:
+	if item_inventory.id == _item_inventory.id:
+		item_inventory = _item_inventory
+		
+		#reload_data()
 
 func reload_data() -> void:
 	if item_inventory.amount == 0:
@@ -45,9 +53,9 @@ func reload_data() -> void:
 	)
 
 
-func remove_item(_item_inventory: Dictionary,panel_id: int) -> void:
+func remove_item(item_panel: Dictionary ,_item_inventory: Dictionary  ,system_slot: Dictionary) -> void:
 	
-	if _item_inventory.id == item_inventory.id:
+	if item_inventory.id == _item_inventory.id:
 		queue_free()
 		#print(_item_inventory)
 

@@ -50,6 +50,6 @@ text = "New Class"
 
 [connection signal="change_class" from="." to="Panel/ItemBar/hbox/Items/ListClass" method="_on_ui_items_change_class"]
 [connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/Class" to="Panel/ItemBar/hbox/Items/ListClass/Class/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
-[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17420" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17420/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
-[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17436" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17436/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17370" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17370/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17386" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17386/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
 [connection signal="pressed" from="Panel/ItemBar/new_class" to="." method="_on_new_class_pressed"]

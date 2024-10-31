@@ -63,6 +63,12 @@ layout_mode = 2
 layout_mode = 2
 text = "ID:"
 
+[node name="Warning" type="Label" parent="Vbox/Settings/ID"]
+visible = false
+modulate = Color(1, 0.381932, 0.61871, 1)
+layout_mode = 2
+text = "This ID is already in use!"
+
 [node name="Id" type="SpinBox" parent="Vbox/Settings/ID"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
@@ -95,8 +101,18 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 selected = 0
-item_count = 1
+item_count = 6
 popup/item_0/text = "All"
+popup/item_1/text = "Eyes"
+popup/item_1/id = 1
+popup/item_2/text = "Kanoa"
+popup/item_2/id = 2
+popup/item_3/text = "Potion_life"
+popup/item_3/id = 3
+popup/item_4/text = "Potion_mana"
+popup/item_4/id = 4
+popup/item_5/text = "Sword"
+popup/item_5/id = 5
 
 [node name="hs" type="HSeparator" parent="Vbox"]
 layout_mode = 2
@@ -105,6 +121,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_jafag")
 
 [connection signal="gui_input" from="Vbox/TopBar/Tittle" to="." method="_on_tittle_gui_input"]
 [connection signal="pressed" from="Vbox/TopBar/Remove" to="." method="_on_remove_pressed"]
+[connection signal="focus_exited" from="Vbox/Settings/Name/PanelName" to="." method="_on_panel_name_focus_exited"]
 [connection signal="text_submitted" from="Vbox/Settings/Name/PanelName" to="." method="_on_panel_name_text_submitted"]
 [connection signal="value_changed" from="Vbox/Settings/ID/Id" to="." method="_on_id_value_changed"]
 [connection signal="value_changed" from="Vbox/Settings/MaxSlot/Amount" to="." method="_on_amount_value_changed"]

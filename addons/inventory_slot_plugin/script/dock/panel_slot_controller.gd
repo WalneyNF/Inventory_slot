@@ -7,6 +7,18 @@ const PANEL_SLOT = preload("res://addons/inventory_slot_plugin/scenes/dock/panel
 
 
 func _ready() -> void:
+	if !TypePanel.is_json(TypePanel.PANEL_SLOT_PATH):
+		var new_panel = {
+			"Void": {
+				"class_unique": -1,
+				"id": -2,
+				"slot_amount": 15
+			}
+		}
+		
+		
+		TypePanel.push_inventory(new_panel,TypePanel.PANEL_SLOT_PATH)
+	
 	update_panel()
 
 
@@ -30,7 +42,9 @@ func update_panel() -> void:
 	var panel = TypePanel.pull_inventory(TypePanel.PANEL_SLOT_PATH)
 	
 	for i in panel:
-		print(i)
+		if i == "Void":
+			return
+		
 		var new_panel = PANEL_SLOT.instantiate()
 		
 		panel_list.add_child(new_panel)

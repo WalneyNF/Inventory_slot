@@ -4,13 +4,15 @@ extends Node
 #class_name Inventory_main
 
 # new_data.emit(item_panel,item_inventory,panel_slot)
-signal new_item(item_panel: Dictionary , item_inventory: Dictionary, panel_slot: Dictionary)
-signal new_data(item: Dictionary ,system_slot: Dictionary)
-signal discart_item(item: Dictionary ,system_slot: Dictionary)
-signal item_entered_panel(item: Dictionary ,new_id: int)
-signal item_exiting_panel(item: Dictionary ,out_id: int)
-signal button_slot_changed(slot: Control,move: bool)
+signal new_item(_item_panel: Dictionary , _item_inventory: Dictionary, _panel_slot: Dictionary)
+signal new_data(_item_panel: Dictionary , _item_inventory: Dictionary ,_system_slot: Dictionary)
+signal discart_item(_item_panel: Dictionary ,_item_inventory: Dictionary  ,_system_slot: Dictionary)
+signal item_leftlover(_item_panel: Dictionary ,_item_inventory: Dictionary ,amount: int)
+signal item_entered_panel(_item: Dictionary ,_new_id: int)
+signal item_exiting_panel(_item: Dictionary ,_out_id: int)
+signal button_slot_changed(_slot: Control ,_move: bool)
 signal new_data_global()
+signal changed_panel_data()
 
 #@export var panel: PanelResource
 
@@ -18,6 +20,7 @@ signal new_data_global()
 enum ERROR {
 	SLOT_BUTTON_VOID = -2,
 	VOID = -1,
+	SUCESS,
 	NO_SPACE_FOR_ITEM_IN_SLOTS,
 	ITEM_LEFT_WITH_FULL_SLOTS
 }
@@ -45,6 +48,13 @@ func add_item(panel_id: int, item_unique_id: int, amount: int = 1, slot: int = -
 	
 	var panel_slot = search_panel(panel_id)
 	
+	if panel_slot.size() == 0:
+		printerr("invalid panel_id! ")
+		return
+	if item_panel == null:
+		printerr("invalid item_unique_id! ")
+		return
+	
 	var panel_slot_amount = get_amount_panel_inventory_item(panel_id)
 	
 	if panel_slot_amount != panel_slot.slot_amount:
@@ -55,36 +65,32 @@ func add_item(panel_id: int, item_unique_id: int, amount: int = 1, slot: int = -
 		var _new_item = _append_item(panel_slot,item_panel,amount,ERROR.SLOT_BUTTON_VOID)
 		return _new_item
 	
-	if item_inventory is Dictionary and item_inventory != {}:
+	var _separate = separate_item_one(item_panel,panel_slot,panel_slot_amount,amount)
+	
+	if _separate is Array:
+		return _separate
+	
+	if item_inventory is Dictionary:
 		
-		if item_panel.slot_amount == 1:
-			
-			if panel_slot_amount == panel_slot.slot_amount:
-				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,1]
-			
-			for i in amount:
-				if panel_slot_amount != panel_slot.slot_amount:
-					_append_item(panel_slot,item_panel,1)
-				else:
-					return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,amount-i]
-			
-			return
-		
-		if item_inventory.amount == panel_slot.slot_amount:
+		if item_inventory.amount == item_panel.max_amount:
 			var now_search_item = search_item_amount_min(panel_id, item_unique_id, item_panel.max_amount)#  asd
 			
 			if now_search_item != null:
 				item_inventory = now_search_item
-				#item_panel = TypePanel.search_item_id(panel_id,now_search_item.unique_id)
-				#item_panel = now_search_item
 		
-		if amount + item_inventory.amount > item_panel.slot_amount:
+		if amount + item_inventory.amount > item_panel.max_amount:
 			
-			var apply_now_item: int = (item_panel.slot_amount - item_inventory.amount)
+			var apply_now_item: int = (item_panel.max_amount - item_inventory.amount)
 			var filter_amount: int = amount - apply_now_item
 			
 			if panel_slot_amount == panel_slot.slot_amount:
-				item_inventory.amount = item_panel.slot_amount
+				item_inventory.amount = item_panel.max_amount
+				
+				TypePanel.push_item_inventory(item_inventory.id,item_inventory)
+				
+				new_data.emit(item_panel,item_inventory,panel_slot)
+				new_data_global.emit()
+				item_leftlover.emit(item_inventory,item_panel,amount - apply_now_item)
 				
 				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,amount - apply_now_item]
 			else:
@@ -93,7 +99,9 @@ func add_item(panel_id: int, item_unique_id: int, amount: int = 1, slot: int = -
 				
 				var separate_amount = _separater_item_amount(amount, item_panel.max_amount, filter_amount)
 				
-				item_inventory.amount = item_panel.slot_amount
+				item_inventory.amount = item_panel.max_amount
+				
+				TypePanel.push_item_inventory(item_inventory.id,item_inventory)
 				
 				new_data.emit(item_panel,item_inventory,panel_slot)
 				new_data_global.emit()
@@ -106,8 +114,11 @@ func add_item(panel_id: int, item_unique_id: int, amount: int = 1, slot: int = -
 		else:
 			item_inventory.amount = item_inventory.amount + amount
 			
+			TypePanel.push_item_inventory(item_inventory.id,item_inventory)
+			
 			new_data.emit(item_panel ,item_inventory ,panel_slot)
 			new_data_global.emit()
+			
 			return item_inventory
 	
 	return _append_item(panel_slot,item_panel,amount,slot,id)
@@ -129,14 +140,18 @@ func get_amount_panel_inventory_item(_panel_id: int) -> int:
 func remove_item(_panel_item: Dictionary, _id: int = -1) -> bool:
 	var _all_item_inventory: Array = TypePanel.list_all_inventory_item(_panel_item.id)
 	
-	for _items in _all_item_inventory:
+	for _items_inventory in _all_item_inventory:
 		
-		if _items.id == _id:
-			_all_item_inventory.erase(_items)
+		if _items_inventory.id == _id:
+			_all_item_inventory.erase(_items_inventory)
 			
-			discart_item.emit(_items,_panel_item.id)
+			discart_item.emit(
+				TypePanel.search_item_id(_panel_item.id,_items_inventory.unique_id),
+				_items_inventory,
+				_panel_item
+				)
 			
-			TypePanel.push_item_inventory(str(_items.id),{})
+			TypePanel.push_item_inventory(_items_inventory.id,{})
 			return true
 	
 	return false
@@ -156,15 +171,21 @@ func set_panel_item(_item_inventory: Dictionary, _out_panel_id: int, _new_panel_
 			return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 		else:
 			
-			var _search_item = search_item_amount_min(_new_panel.id,_item_inventory.unique_id,_item_panel.slot_amount)
+			var _search_item = search_item_amount_min(_new_panel.id,_item_inventory.unique_id,_item_panel.max_amount)
 			
-			if search_item != null:
+			if _search_item != null:
 				
-				if _item_panel.slot_amount > _search_item.amount:
+				if _item_panel.max_amount > _search_item.amount:
 					
-					var _size = _item_panel.slot_amount - _search_item.amount
+					var _size = _item_panel.max_amount - _search_item.amount
 					_search_item.amount = _search_item.amount + _size
 					_item_inventory.amount -= _size
+					
+					TypePanel.push_item_inventory(_item_inventory.id,_item_inventory)
+					TypePanel.push_item_inventory(_search_item.id,_search_item)
+					
+					new_data.emit(_item_panel,_item_inventory,get_panel_id(_item_inventory.panel_id))
+					new_data.emit(_search_item,TypePanel.search_item_id(_search_item.panel_id,_search_item.unique_id),get_panel_id(_search_item.panel_id))
 					
 					new_data_global.emit()
 					
@@ -185,7 +206,9 @@ func set_panel_item(_item_inventory: Dictionary, _out_panel_id: int, _new_panel_
 				return
 			ERROR.ITEM_LEFT_WITH_FULL_SLOTS:
 				_new_item.amount = _result[1]
+				
 				new_data_global.emit()
+				item_leftlover.emit(_new_item,_new_panel,_result[1])
 				return _result
 	
 	
@@ -312,6 +335,27 @@ func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 			separate_amount.append(next)
 	
 	return separate_amount
+
+func separate_item_one(item_panel: Dictionary, panel_slot: Dictionary, panel_slot_amount: int, amount: int):
+	if item_panel.max_amount == 1:
+		
+		var items: Array = []
+		
+		if panel_slot_amount == panel_slot.slot_amount:
+			item_leftlover.emit(null,item_panel,1)
+			return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,1]
+		
+		for i in amount:
+			if panel_slot_amount != panel_slot.slot_amount:
+				items.append(_append_item(panel_slot,item_panel,1))
+			else:
+				item_leftlover.emit(null,item_panel,amount-i)
+				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,amount-i]
+		
+		if items.size() >= 1:
+			return [ERROR.SUCESS,items]
+	
+	return false
 #---------------------------------------------------------
 
 # Get ---------------------------------------------------
@@ -333,7 +377,7 @@ func search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",
 	if _slot != -1:
 		for _item: String in _all_items:
 			if _all_items.get(_item).slot == _slot:
-				return _item
+				return _all_items.get(_item)
 	
 	#if id == -1 and path != "":
 	#	for item in array_items:
@@ -342,19 +386,19 @@ func search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",
 	#else:
 	for _item: String in _all_items:
 		if _all_items.get(_item).unique_id == _item_unique_id:
-			return _item
+			return _all_items.get(_item)
 	
 	return null
 
-func search_item_amount_min(_panel_id: int, _item_unique_id: int, _max_amount:int):
+func search_item_amount_min(_panel_id: int, _item_unique_id: int, _max_amount: int):
 	var _all_items = TypePanel.list_all_inventory_item(_panel_id)
 	
 	for _item: Dictionary in _all_items:
 		
-		if _all_items.get(_item).unique_id == _item_unique_id:
+		if _item.unique_id == _item_unique_id:
 			if _item.amount < _max_amount:
 				
-				return _all_items.get(_item)
+				return _item
 	
 	return null
 
@@ -383,7 +427,6 @@ func search_panel(panel_id: int) -> Dictionary:
 			return panel.get(_all)
 	
 	return {}
-
 
 func search_panel_id_item(_item_id: int) -> int:
 	var _all_items_inventory: Dictionary = TypePanel.pull_inventory(TypePanel.ITEMS_PATH)

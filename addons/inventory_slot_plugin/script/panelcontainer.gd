@@ -4,6 +4,21 @@ extends PanelContainer
 
 class_name PanelSlot
 
+## Emitido quando um novo item entra no painel.
+signal item_entered(_item_inventory: Dictionary ,_item_panel: Dictionary)
+## Emitido quando algum item é descartado, ou deixou de existir painel. ( Não é emitido ao passar de um painel para outro )
+signal item_exited(_item_inventory: Dictionary, _item_panel: Dictionary)
+## Emitido quando algum item deste painel é atualizado.
+signal item_data_changed(_item_inventory: Dictionary, _item_panel: Dictionary)
+## Emitido quando sobrar algum item. ( Caso o inventario esteja cheio, pode sobrar alguns itens que não caberão, e então é emitido o item e a quantidade que sobrou )
+signal item_leftover(_item_inventory: Dictionary, _item_panel: Dictionary, amount: int)
+
+#signal item_entered_panel(item: Dictionary ,new_id: int)
+#signal item_exiting_panel(item: Dictionary ,out_id: int)
+## Emitido quando algum item é atualizado.
+signal items_data_changed_global()
+
+
 enum CONTAINER_SLOT {
 	## Separa em blocos.
 	GRID,
@@ -28,6 +43,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 			if Inventory == null: return
 		
 		update_tittle_name()
+		update_visual_panel_slot()
 
 @export_subgroup("Slot")
 ## Modo de alinhamento dos Slots. Nem todas as configurações são compativeis com o alinhamento.
@@ -85,8 +101,10 @@ func _ready() -> void:
 	update_visual_panel_slot()
 	update_tittle()
 	
+	Inventory.changed_panel_data.connect(update_changed_panel_data)
+	
 	if !Engine.is_editor_hint():
-		Inventory.new_item.connect(receive_new_item)
+		connect_signal_inventory()
 
 
 ## Visual ================================================
@@ -217,6 +235,7 @@ func _load_item(item_inventory: Dictionary) -> void:
 		slot.item_node.item_inventory = item_inventory
 		slot.self_modulate.a = 0
 		new_item.panel_slot = Inventory.get_panel_id(-2)
+		void_button.global_position = Vector2(99999,99999)
 		
 		Inventory.add_child(void_button)
 		slot.add_child(new_item)
@@ -242,3 +261,30 @@ func instance_slot_button(slot_button: Button) -> void:
 	slot_button.custom_minimum_size = size_slot
 	slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	slot_button.focus_mode = Control.FOCUS_NONE
+
+
+func update_changed_panel_data() -> void:
+	update_visual_panel_slot()
+
+func connect_signal_inventory() -> void:
+	Inventory.new_item.connect(receive_new_item)
+	
+	Inventory.new_item.connect(_new_item)
+	Inventory.new_data.connect(_new_data)
+	Inventory.discart_item.connect(_discart_item)
+	Inventory.new_data_global.connect(_new_data_global)
+	Inventory.item_leftlover.connect(_item_leftlover)
+
+func _new_data(item_panel: Dictionary , item_inventory: Dictionary,system_slot: Dictionary) -> void:
+	if system_slot.id == slot_panel_id:
+		item_data_changed.emit(item_inventory ,item_panel)
+func _new_item(item_panel: Dictionary , item_inventory: Dictionary, system_slot: Dictionary) -> void:
+	if system_slot.id == slot_panel_id:
+		item_entered.emit(item_inventory ,item_panel)
+func _discart_item(item_panel: Dictionary ,item_inventory: Dictionary ,system_slot: Dictionary) -> void:
+	if system_slot.id == slot_panel_id:
+		item_exited.emit(item_inventory ,item_panel)
+func _item_leftlover(item_panel: Dictionary ,item_inventory: Dictionary ,amount) -> void:
+	item_leftover.emit(item_inventory ,item_panel)
+func _new_data_global() -> void:
+	items_data_changed_global.emit()

@@ -21,20 +21,21 @@ func _pressed() -> void:
 			
 			if right_mouse:
 				
-				var items = Inventory.get_panel_id(panel_id).items
-				var is_item = Inventory.search_item_id(panel_id,item_node.item_inventory.unique_id,"",Inventory.ERROR.SLOT_BUTTON_VOID)
+				#var items = Inventory.get_panel_id(panel_id).items
+				var is_item = Inventory.search_item(panel_id,-1,"",Inventory.ERROR.SLOT_BUTTON_VOID)
 				
 				if is_item != null and is_item.unique_id == item_node.item_inventory.unique_id:
 					changed_item_right(is_item)
 				else:
-					is_item = TypePanel.search_item_id(panel_id,Inventory.item_selected.item_inventory.id)
+					pass
+					#is_item = TypePanel.search_item_id(panel_id,Inventory.item_selected.item_inventory.id)
 					
-					if is_item != null:
-						if is_item.path == item_node.item_inventory.path and is_item.amount < item_node.item_scene.max_amount:
-							item_node.item_inventory.amount -= 1
-							is_item.amount += 1
-							
-							Inventory.new_data_global.emit()
+					#if is_item != null:
+					#	if is_item.path == item_node.item_inventory.path and is_item.amount < item_node.item_scene.max_amount:
+					#		item_node.item_inventory.amount -= 1
+					#		is_item.amount += 1
+					#		
+					#		Inventory.new_data_global.emit()
 				
 				right_mouse = false
 				return
@@ -144,8 +145,8 @@ func for_the_same_item() -> bool:
 			
 			Inventory.item_selected.item_inventory.amount -= Inventory.item_selected.item_inventory.amount
 			
-			TypePanel.push_item_inventory(str(Inventory.item_selected.item_inventory.id),Inventory.item_selected.item_inventory)
-			TypePanel.push_item_inventory(str(item_node.item_inventory.id),item_node.item_inventory)
+			TypePanel.push_item_inventory(Inventory.item_selected.item_inventory.id,Inventory.item_selected.item_inventory)
+			TypePanel.push_item_inventory(item_node.item_inventory.id,item_node.item_inventory)
 		
 		Inventory.new_data_global.emit()
 		Inventory.button_slot_changed.emit(null, false)
@@ -156,30 +157,42 @@ func for_the_same_item() -> bool:
 
 
 func set_item_right_mouse() -> void:
+	var _item_panel = TypePanel.search_item_id(item_node.item_inventory.panel_id,item_node.item_inventory.unique_id)
 	
-	if item_node.item_inventory.amount == 1:
+	if _item_panel.max_amount == 1:
+		
 		set_main_item()
+		
 		Inventory.new_data_global.emit()
 	else:
 		item_node.item_inventory.amount -= 1
 		
 		Inventory.add_item(item_node.item_inventory.panel_id,item_node.item_inventory.unique_id,1,Inventory.ERROR.SLOT_BUTTON_VOID)
+		
+		Inventory.new_data.emit(_item_panel,item_node.item_inventory,Inventory.get_panel_id(item_node.item_inventory.panel_id))
 		Inventory.new_data_global.emit()
+		
+		TypePanel.push_item_inventory(item_node.item_inventory.id,item_node.item_inventory)
 	
 	right_mouse = false
 
 
 func changed_item_right(is_item: Dictionary) -> bool:
 	
-	if item_node.item.amount == 1:
-		item_node.item.amount += is_item.amount
-		is_item.amount = 0
+	if item_node.item_inventory.amount == 1:
+		is_item.amount += 1
+		item_node.item_inventory.amount = 0
 		
-		Inventory.button_slot_changed.emit(self,true)
-		item_node.z_index = 1
 	else:
-		item_node.item.amount -= 1
+		item_node.item_inventory.amount -= 1
 		is_item.amount += 1
 	
+	TypePanel.push_item_inventory(is_item.id,is_item)
+	TypePanel.push_item_inventory(item_node.item_inventory.id,item_node.item_inventory)
+	
+	Inventory.new_data.emit(TypePanel.search_item_id(is_item.panel_id,is_item.unique_id),is_item,Inventory.get_panel_id(is_item.panel_id))
+	Inventory.new_data.emit(TypePanel.search_item_id(item_node.item_inventory.panel_id,item_node.item_inventory.unique_id),item_node.item_inventory,Inventory.get_panel_id(item_node.item_inventory.panel_id))
+	
 	Inventory.new_data_global.emit()
+	
 	return false

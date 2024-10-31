@@ -1,13 +1,13 @@
 {
-	"Equipped": {
+	"Equipamento": {
+		"class_unique": -1,
+		"id": 2,
+		"slot_amount": 10
+	},
+	"Inventario": {
 		"class_unique": -1,
 		"id": 1,
-		"slot_amount": 4
-	},
-	"Inventory": {
-		"class_unique": -1,
-		"id": 0,
-		"slot_amount": 15
+		"slot_amount": 25
 	},
 	"Void": {
 		"class_unique": -1,

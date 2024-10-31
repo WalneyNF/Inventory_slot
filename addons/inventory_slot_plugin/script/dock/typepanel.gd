@@ -19,6 +19,20 @@ func changed_class_name(_inventory: Dictionary,_out_class_name: String,_new_clas
 	_inventory[_new_class_name] = new_value
 
 
+static func is_json(path: String) -> bool:
+	
+	if !FileAccess.file_exists(path):
+		return true
+	else:
+		var file = FileAccess.open(path,FileAccess.READ)
+		var json = JSON.parse_string(file.get_as_text())
+		
+		if json.size() > 1:
+			return true
+	
+	return false
+
+
 static func changed_item_name(_inventory: Dictionary,_class_name: String,_out_item_name: String,_new_item_name: String) -> void:
 	
 	var item = search_item(_inventory,_class_name,_out_item_name)
@@ -60,10 +74,6 @@ static func search_dic(_dic: Dictionary,_item_name: String):
 	printerr("Item ",_item_name," não foi encontrado!")
 
 static func search_item_id(panel_id: int, item_unique_id: int = -1):
-	#if slot != -1:
-	#	for item in array_items:
-	#		if item.slot == slot:
-	#			return item
 	
 	#if id == -1 and path != "":
 	#	for item in array_items:
@@ -71,6 +81,16 @@ static func search_item_id(panel_id: int, item_unique_id: int = -1):
 	#			return item
 	#else:
 	var items = TypePanel.pull_inventory(TypePanel.ITEM_PATH)
+	
+	#if slot != -1:
+	#	for _all in items:
+	#		for _item in items.get(_all):
+	#			var item = items.get(_all).get(_item)
+	#			
+	#			if items.get(_all).get(_item).unique_id == item_unique_id:
+	#				
+	#				if item.slot == slot:
+	#					return item
 	
 	for _all in items:
 		for _item in items.get(_all):
@@ -90,15 +110,19 @@ static func get_item_name(unique_id_item: int) -> StringName:
 	
 	return ""
 
-static func push_item_inventory(_item_name: String, _item_inventory: Dictionary) -> void:
+static func push_item_inventory(_item_id: int, _item_inventory: Dictionary) -> bool:
 	var _all_items = pull_inventory(ITEMS_PATH)
 	
 	if _item_inventory == {}:
-		_all_items.erase(_item_name)
+		_all_items.erase(str(_item_id))
+		push_inventory(_all_items,ITEMS_PATH)
+		return true
 	else:
-		_all_items[_item_name] = _item_inventory
+		_all_items[str(_item_id)] = _item_inventory
+		push_inventory(_all_items,ITEMS_PATH)
+		return true
 	
-	push_inventory(_all_items,ITEMS_PATH)
+	return false
 
 static func pull_inventory(path: String = ITEM_PATH) -> Dictionary:
 	if FileAccess.file_exists(path):

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dlmvgp744mykf" path="res://addons/inventory_slot_plugin/assets/themes/default.tres" id="1_1w27d"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/ivt_slot.gd" id="1_tkquw"]
 [ext_resource type="Texture2D" uid="uid://becu4ghipl448" path="res://addons/inventory_slot_plugin/assets/icons/slot_reload.tres" id="3_o3b3d"]
-[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="3_xndhx"]
+[ext_resource type="Texture2D" uid="uid://boxdvtor8gb8m" path="res://addons/inventory_slot_plugin/assets/icons/slot_theme_default.tres" id="4_n2hf1"]
 
 [node name="IVTSlot" type="PanelContainer"]
 anchors_preset = -1
@@ -39,12 +39,16 @@ horizontal_alignment = 1
 [node name="ReloadPlugin" type="Button" parent="Scroll/Panels/TopBar"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_default_cursor_shape = 2
 icon = ExtResource("3_o3b3d")
 
 [node name="RemoveTheme" type="Button" parent="Scroll/Panels/TopBar"]
+custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-icon = ExtResource("3_xndhx")
+mouse_default_cursor_shape = 2
+icon = ExtResource("4_n2hf1")
+icon_alignment = 1
 
 [connection signal="pressed" from="Scroll/Panels/TopBar/ReloadPlugin" to="." method="_on_reload_plugin_pressed"]
 [connection signal="pressed" from="Scroll/Panels/TopBar/RemoveTheme" to="." method="_on_remove_theme_pressed"]

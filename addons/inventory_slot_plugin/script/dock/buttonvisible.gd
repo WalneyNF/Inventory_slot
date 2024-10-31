@@ -2,7 +2,6 @@
 
 class_name ButtonVisible extends Button
 
-
 @export var NodeVisible: Control
 
 
