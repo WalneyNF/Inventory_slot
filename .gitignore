@@ -1,3 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+addons/inventory_slot_plugin/json/save/inventory.json
+addons/inventory_slot_plugin/json/system/item_settings.json
+addons/inventory_slot_plugin/json/system/items.json
+addons/inventory_slot_plugin/json/system/panel_slot.json
+
