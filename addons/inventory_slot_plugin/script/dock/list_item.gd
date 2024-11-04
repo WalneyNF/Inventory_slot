@@ -10,7 +10,7 @@ func load_items() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	if FileAccess.file_exists(InventoryFile.ITEM_PANEL_PATH):
+	if InventoryFile.is_json(InventoryFile.ITEM_PANEL_PATH):
 		for child in get_children():
 			child.queue_free()
 		
@@ -21,6 +21,8 @@ func load_items() -> void:
 		
 		for _class in all_class:
 			if _class == my_class_name:
+				if all_class.get(_class) is float: continue
+				
 				for items in all_class.get(_class):
 					var new_item = all_class.get(_class).get(items)
 					

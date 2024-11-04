@@ -18,18 +18,23 @@ func _ready() -> void:
 	var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	option_class.clear()
-	option_class.add_item("All")
+	option_class.add_item("all")
 	
 	for _class in _all_class:
 		
 		option_class.add_item(_class)
 
 
-func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: int) -> void:
+func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: String) -> void:
 	out_panel_name = _panel_name
 	panel_name.text = _panel_name
 	id.value = _id
 	amount.value = slot_amount
+	
+	for i in option_class.item_count:
+		if option_class.get_item_text(i) == class_unique:
+			option_class.select(i)
+	
 	
 	tittle.text = str(_id," - ",_panel_name)
 
@@ -108,7 +113,7 @@ func _on_class_item_selected(index: int) -> void:
 	
 	var dic = search_dic(panels,out_panel_name)
 	
-	dic.class_unique = index-1
+	dic.class_unique = option_class.get_item_text(index)
 	
 	InventoryFile.push_inventory(panels, InventoryFile.PANEL_SLOT_PATH)
 	

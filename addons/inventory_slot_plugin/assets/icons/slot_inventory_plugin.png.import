@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnkjm1batll1o"
-path="res://.godot/imported/eyes.png-d7d1446052fd752dbce36690536303d7.ctex"
+uid="uid://b5g3cqq0dharo"
+path="res://.godot/imported/slot_inventory_plugin.png-bc8393c69c677ed157338aab86fd6987.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory_slot_plugin/assets/imagens/eyes.png"
-dest_files=["res://.godot/imported/eyes.png-d7d1446052fd752dbce36690536303d7.ctex"]
+source_file="res://addons/inventory_slot_plugin/assets/icons/slot_inventory_plugin.png"
+dest_files=["res://.godot/imported/slot_inventory_plugin.png-bc8393c69c677ed157338aab86fd6987.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ep1uy3n0w0d1"]
 
-[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/inventory_slot_plugin/assets/imagens/life.png" id="1_h3lic"]
+[ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/inventory_slot_plugin/assets/item_image/life.png" id="1_h3lic"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/item_panel.gd" id="1_l311a"]
 [ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_1kig7"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_ifphx"]

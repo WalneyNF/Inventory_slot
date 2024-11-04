@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x03imjta0clc"
-path="res://.godot/imported/kanoa.png-583267f9de044fa90f8ae2818207a93c.ctex"
+uid="uid://bunyjg3o205nh"
+path="res://.godot/imported/Helmet.png-02131c35e693e17119610abd03bc0f7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory_slot_plugin/assets/imagens/kanoa.png"
-dest_files=["res://.godot/imported/kanoa.png-583267f9de044fa90f8ae2818207a93c.ctex"]
+source_file="res://addons/inventory_slot_plugin/assets/item_image/Helmet.png"
+dest_files=["res://.godot/imported/Helmet.png-02131c35e693e17119610abd03bc0f7c.ctex"]
 
 [params]
 

@@ -159,6 +159,19 @@ static func get_item_name(_unique_id_item: int) -> StringName:
 	
 	return ""
 
+static func get_class_name(_unique_id_item: int) -> StringName:
+	
+	var _all_items = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	for _class in _all_items:
+		for _items in _all_items.get(_class):
+			
+			if _all_items.get(_class).get(_items).unique_id == _unique_id_item:
+				
+				return _class
+	
+	return ""
+
 ## File Whrite ==================================================================
 
 static func push_inventory(_dic: Dictionary,_path: String) -> void:

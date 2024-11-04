@@ -40,6 +40,8 @@ static func get_item_panel_id_void() -> int:
 	var _all_id_dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	for _all_class in _all_id_dictionary:
+		if _all_id_dictionary.get(_all_class) is float: continue
+		
 		for _items in _all_id_dictionary.get(_all_class):
 			_all_id_array.append(_all_id_dictionary.get(_all_class).get(_items).unique_id)
 	

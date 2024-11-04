@@ -28,7 +28,7 @@ func _on_create_panel_pressed() -> void:
 	all_panel_slot[str("NewPanel_",all_panel_slot.size())] = {
 			"id" : all_panel_slot.size(),
 			"slot_amount" : 4,
-			"class_unique" : -1,
+			"class_unique" : "all",
 			}
 	
 	InventoryFile.push_inventory(all_panel_slot,InventoryFile.PANEL_SLOT_PATH)

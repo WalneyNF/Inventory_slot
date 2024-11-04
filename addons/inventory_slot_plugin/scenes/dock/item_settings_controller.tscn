@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1dd7ckcktcuf"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/item_settings_controller.gd" id="1_nh2ha"]
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_syul7"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_hdwhx"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="3_y60hx"]
 
 [node name="ItemSettings" type="PanelContainer"]
@@ -16,7 +16,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Item Settings"
-icon = ExtResource("2_syul7")
+icon = ExtResource("2_hdwhx")
 alignment = 0
 script = ExtResource("3_y60hx")
 NodeVisible = NodePath("../Hbox/Vbox")
@@ -43,7 +43,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Amount"
-icon = ExtResource("2_syul7")
+icon = ExtResource("2_hdwhx")
 alignment = 0
 script = ExtResource("3_y60hx")
 NodeVisible = NodePath("../Hbox/Vbox")
@@ -119,7 +119,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Description"
-icon = ExtResource("2_syul7")
+icon = ExtResource("2_hdwhx")
 alignment = 0
 script = ExtResource("3_y60hx")
 NodeVisible = NodePath("../Hbox/Vbox")
@@ -148,6 +148,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 mouse_default_cursor_shape = 2
+button_pressed = true
 
 [node name="amount_show" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox"]
 layout_mode = 2
@@ -162,6 +163,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 mouse_default_cursor_shape = 2
+button_pressed = true
 
 [node name="description" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox"]
 layout_mode = 2
@@ -176,6 +178,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 mouse_default_cursor_shape = 2
+button_pressed = true
 
 [connection signal="text_submitted" from="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/name/name" to="." method="_on_name_text_submitted"]
 [connection signal="item_selected" from="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/anchor/anchor" to="." method="_on_anchor_item_selected"]

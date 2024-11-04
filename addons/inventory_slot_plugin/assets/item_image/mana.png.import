@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duojnn1y01u2x"
-path="res://.godot/imported/life.png-460720c952bde26e2c13fa2e21ef0c47.ctex"
+uid="uid://bucs62icjvqsd"
+path="res://.godot/imported/mana.png-6370cf1d5a91553ed2cc7325cf36a335.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory_slot_plugin/assets/imagens/life.png"
-dest_files=["res://.godot/imported/life.png-460720c952bde26e2c13fa2e21ef0c47.ctex"]
+source_file="res://addons/inventory_slot_plugin/assets/item_image/mana.png"
+dest_files=["res://.godot/imported/mana.png-6370cf1d5a91553ed2cc7325cf36a335.ctex"]
 
 [params]
 

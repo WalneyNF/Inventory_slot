@@ -10,10 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Inventory_Godot_4"
-run/main_scene="res://addons/inventory_slot_plugin/scenes/screen/inventory.tscn"
+config/name="Inventory Slot Plugin"
 config/features=PackedStringArray("4.3", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://addons/inventory_slot_plugin/assets/icons/slot_inventory_plugin.png"
 
 [autoload]
 

@@ -40,6 +40,7 @@ text = "Remove"
 icon = ExtResource("4_rp7ey")
 
 [node name="Settings" type="VBoxContainer" parent="Vbox"]
+visible = false
 layout_mode = 2
 
 [node name="Name" type="HBoxContainer" parent="Vbox/Settings"]
@@ -102,12 +103,10 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 selected = 0
-item_count = 3
+item_count = 2
 popup/item_0/text = "All"
-popup/item_1/text = "PotionLife"
+popup/item_1/text = "new_class"
 popup/item_1/id = 1
-popup/item_2/text = "PotionMana"
-popup/item_2/id = 2
 
 [node name="hs" type="HSeparator" parent="Vbox"]
 layout_mode = 2

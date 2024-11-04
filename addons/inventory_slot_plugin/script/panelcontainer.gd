@@ -4,30 +4,30 @@ extends PanelContainer
 
 class_name PanelSlot
 
-## Emitido quando um novo item entra no painel.
+## Emitted when a new item enters the panel.
 signal item_entered(_item_inventory: Dictionary ,_item_panel: Dictionary)
 
-## Emitido quando algum item é descartado, ou deixou de existir. ( Não é emitido ao passar de um painel para outro )
+## Emitted when an item is discarded or no longer exists. (Not emitted when moving from one panel to another)
 signal item_exited(_item_inventory: Dictionary, _item_panel: Dictionary)
 
-## Emitido quando algum item deste painel é atualizado.
+## Emitted when any panel item is updated.
 signal item_data_changed(_item_inventory: Dictionary, _item_panel: Dictionary)
 
-## Emitido quando sobrar algum item. ( Caso o inventario esteja cheio, pode sobrar alguns itens que não caberão, e então é emitido o item e a quantidade que sobrou )
+## Issued when there is an item left over. (If the inventory is full, there may be some items left over that will not fit, and then the item and the quantity left over are issued)
 signal item_leftover(_item_inventory: Dictionary, _item_panel: Dictionary, amount: int)
 
-## Emitido quando algum item é atualizado.
+## Emitted when any item is updated.
 signal items_data_changed_global()
 
 
 enum CONTAINER_SLOT {
-	## Separa em blocos.
+	## Separate into grid.
 	GRID,
-	## Cria um circulo com os slots.
+	## Creates a circular grid with the slots.
 	WHEEL,
-	## Separa em lista na vertical.
+	## Split the list vertically.
 	VBOX,
-	## Separa em lista na horizontalpp.
+	## Split the list horizontally.
 	HBOX
 }
 
@@ -47,18 +47,18 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		update_visual_panel_slot()
 
 @export_subgroup("Slot")
-## Modo de alinhamento dos Slots. Nem todas as configurações são compativeis com o alinhamento.
+## Slot alignment mode. Not all configurations support alignment.
 @export var container_slot: CONTAINER_SLOT:
 	set(value):
 		container_slot = value
 		update_visual_panel_slot()
-## Define o tamanho do slots.
+## Defines the size of the slots.
 @export var size_slot: Vector2 = Vector2(64,64):
 	set(value):
 		size_slot = value
 		update_visual_panel_slot()
-## Define em quantas colunas o grid irar criar para os slots.
-## Obs: Só irar funcionar caso o container_slot esteja em modo Grid.
+## Defines how many columns the grid should be created for the slots.
+## Note: This will only work if container_slot is in Grid mode.
 @export var columns_grid: int = 5:
 	set(value):
 		columns_grid = value
@@ -188,7 +188,7 @@ func update_slots() -> void: # Mudar
 	
 	for panel_slot in _all_panel:
 		var panel = _all_panel.get(panel_slot)
-		#print(panel.id == slot_panel_id)
+		
 		if panel.id == slot_panel_id:
 			_create_slot(panel.slot_amount)
 			

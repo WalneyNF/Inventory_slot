@@ -21,6 +21,13 @@ func _gui_input(event: InputEvent) -> void:
 func _pressed() -> void:
 	
 	if is_instance_valid(Inventory.item_selected):
+		var panel = InventoryFile.get_panel(panel_id)
+		
+		if panel.class_unique != "all":
+			var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+			
+			for _class in _all_class:
+				if _class !=  panel.class_unique: return
 		
 		if is_instance_valid(item_node):
 			
