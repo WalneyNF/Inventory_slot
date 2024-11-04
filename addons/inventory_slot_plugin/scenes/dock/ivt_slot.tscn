@@ -39,6 +39,7 @@ horizontal_alignment = 1
 [node name="ReloadPlugin" type="Button" parent="Scroll/Panels/TopBar"]
 layout_mode = 2
 size_flags_horizontal = 8
+focus_mode = 0
 mouse_default_cursor_shape = 2
 icon = ExtResource("3_o3b3d")
 
@@ -46,6 +47,7 @@ icon = ExtResource("3_o3b3d")
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+focus_mode = 0
 mouse_default_cursor_shape = 2
 icon = ExtResource("4_n2hf1")
 icon_alignment = 1

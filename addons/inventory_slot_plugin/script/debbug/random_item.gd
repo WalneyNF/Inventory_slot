@@ -1,10 +1,11 @@
-@tool
 extends Button
 
 var items = []
 
 func _ready() -> void:
-	items = TypePanel.list_all_item()
+	items = InventoryFile.list_all_item_panel(-1)
 
 func _pressed() -> void:
-	Inventory.add_item(1,items[randi_range(0,items.size()-1)].unique_id,randi_range(1,3))
+	var unique_id = items[randi_range(0,items.size()-1)].unique_id
+	
+	Inventory.add_item(1,unique_id,1)

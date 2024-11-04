@@ -9,24 +9,25 @@ signal change_class
 var file
 
 func _ready() -> void:
-	
-	if !FileAccess.file_exists(TypePanel.ITEM_PATH):
+	if !InventoryFile.is_json(InventoryFile.ITEM_PANEL_PATH):
 		
-		TypePanel.push_inventory({"void": {}})
+		InventoryFile.push_inventory(InventoryFile.new_class("new_class"), InventoryFile.ITEM_PANEL_PATH)
 	
 	change_class.emit()
 
 func _on_new_class_pressed() -> void:
-	if FileAccess.file_exists(TypePanel.ITEM_PATH):
-		file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.READ)
+	
+	if InventoryFile.is_json(InventoryFile.ITEM_PANEL_PATH):
+		
+		file = FileAccess.open(InventoryFile.ITEM_PANEL_PATH,FileAccess.READ)
 		
 		var items: Dictionary = JSON.parse_string(file.get_as_text())
 		file.close()
 		
-		items[str("new_class_",items.size())] = {}
+		var _new_class = InventoryFile.new_class(str("new_class_",items.size()))
 		
-		file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.WRITE)
-		file.store_string(JSON.stringify(items, "\t"))
-		file.close()
+		InventoryFile.push_inventory(_new_class, InventoryFile.ITEM_PANEL_PATH)
+	else:
+		InventoryFile.push_inventory(InventoryFile.new_class("new_class"), InventoryFile.ITEM_PANEL_PATH)
 	
 	change_class.emit()

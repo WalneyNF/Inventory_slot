@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://btombktb6cfqk"]
+[gd_scene load_steps=4 format=3 uid="uid://btombktb6cfqk"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/ui_items.gd" id="1_oepok"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/list_class.gd" id="2_yfqgh"]
+[ext_resource type="Texture2D" uid="uid://c2254e60ufuh0" path="res://addons/inventory_slot_plugin/assets/icons/slot_add.tres" id="3_eol0j"]
 
 [node name="UiItems" type="PanelContainer"]
 anchors_preset = -1
@@ -45,11 +46,11 @@ script = ExtResource("2_yfqgh")
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "New Class"
+icon = ExtResource("3_eol0j")
 
 [connection signal="change_class" from="." to="Panel/ItemBar/hbox/Items/ListClass" method="_on_ui_items_change_class"]
 [connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/Class" to="Panel/ItemBar/hbox/Items/ListClass/Class/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
-[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17370" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17370/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
-[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17386" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@17386/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
 [connection signal="pressed" from="Panel/ItemBar/new_class" to="." method="_on_new_class_pressed"]

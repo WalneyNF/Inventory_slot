@@ -6,15 +6,16 @@ class_name PanelSlot
 
 ## Emitido quando um novo item entra no painel.
 signal item_entered(_item_inventory: Dictionary ,_item_panel: Dictionary)
-## Emitido quando algum item é descartado, ou deixou de existir painel. ( Não é emitido ao passar de um painel para outro )
+
+## Emitido quando algum item é descartado, ou deixou de existir. ( Não é emitido ao passar de um painel para outro )
 signal item_exited(_item_inventory: Dictionary, _item_panel: Dictionary)
+
 ## Emitido quando algum item deste painel é atualizado.
 signal item_data_changed(_item_inventory: Dictionary, _item_panel: Dictionary)
+
 ## Emitido quando sobrar algum item. ( Caso o inventario esteja cheio, pode sobrar alguns itens que não caberão, e então é emitido o item e a quantidade que sobrou )
 signal item_leftover(_item_inventory: Dictionary, _item_panel: Dictionary, amount: int)
 
-#signal item_entered_panel(item: Dictionary ,new_id: int)
-#signal item_exiting_panel(item: Dictionary ,out_id: int)
 ## Emitido quando algum item é atualizado.
 signal items_data_changed_global()
 
@@ -163,13 +164,13 @@ func update_tittle() -> void:
 
 
 func update_tittle_name() -> void:
-	var all_panel = Inventory.get_all_panels()
+	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
-	for panel_slot in all_panel:
-		var panel = all_panel.get(panel_slot)
+	for _panel_slot in _all_panel:
+		var _panel = _all_panel.get(_panel_slot)
 		
-		if panel.id == slot_panel_id:
-			name_label.text = panel_slot
+		if _panel.id == slot_panel_id:
+			name_label.text = _panel_slot
 
 
 func update_tittle_alignment() -> void:
@@ -183,16 +184,16 @@ func update_tittle_alignment() -> void:
 
 
 func update_slots() -> void: # Mudar
-	var all_panel = Inventory.get_all_panels()
+	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
-	for panel_slot in all_panel:
-		var panel = all_panel.get(panel_slot)
+	for panel_slot in _all_panel:
+		var panel = _all_panel.get(panel_slot)
 		#print(panel.id == slot_panel_id)
 		if panel.id == slot_panel_id:
 			_create_slot(panel.slot_amount)
 			
 			if !Engine.is_editor_hint():
-				_load_items(TypePanel.list_all_inventory_item(slot_panel_id))
+				_load_items(InventoryFile.list_all_item_inventory(slot_panel_id))
 
 
 ## Slots System ====================================
@@ -234,7 +235,7 @@ func _load_item(item_inventory: Dictionary) -> void:
 		slot.item_node = new_item
 		slot.item_node.item_inventory = item_inventory
 		slot.self_modulate.a = 0
-		new_item.panel_slot = Inventory.get_panel_id(-2)
+		new_item.panel_slot = InventoryFile.get_panel(-2)
 		void_button.global_position = Vector2(99999,99999)
 		
 		Inventory.add_child(void_button)
@@ -246,7 +247,7 @@ func _load_item(item_inventory: Dictionary) -> void:
 		
 		slot.item_node = new_item
 		slot.item_node.item_inventory = item_inventory
-		slot.item_node.panel_slot = Inventory.get_panel_id(slot_panel_id)
+		slot.item_node.panel_slot = InventoryFile.get_panel(slot_panel_id)
 		
 		slot.add_child(new_item)
 

@@ -10,9 +10,12 @@ enum SELECTION {ICON,SCENE}
 @onready var id_unique: Button = $Vbox/TopBar/Hbox/id_unique
 @onready var top_bar: PanelContainer = $Vbox/TopBar
 @onready var hbox: HBoxContainer = $Vbox/Hbox
+@onready var id: SpinBox = %id
+@onready var description: TextEdit = %description
 
 
 var item_name: String
+var item: Dictionary
 var selection: int
 
 
@@ -20,12 +23,18 @@ func _ready() -> void:
 	hbox.hide()
 
 
-func start(_item_name: String,_icon_path: String) -> void:
-	icon.icon = load(_icon_path)
+func start(_item_name: String,_item: Dictionary) -> void:
+	icon.icon = load(_item.icon)
 	item_name = _item_name
+	item = _item
 	
-	edit_item_name.text = _item_name
-	id_unique.text = str(get_index()," - ",item_name)
+	update_visual()
+
+func update_visual() -> void:
+	edit_item_name.text = item_name
+	id_unique.text = str(item.unique_id," - ",item_name)
+	id.value = item.unique_id
+	description.text = item.description
 
 
 
@@ -41,19 +50,19 @@ func call_file_dialog(filters: Array) -> void:
 
 
 func file_selection(path: String) -> void:
-	var inventory = pull_inventory()
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	match selection:
 		SELECTION.ICON:
 			icon.icon = load(path)
 			
-			search_item(inventory,get_parent().my_class_name,item_name).icon = path
-			push_inventory(inventory)
+			InventoryFile.search_item(inventory,get_parent().my_class_name,item_name).icon = path
+			InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 		SELECTION.SCENE:
 			scene.text = path
 			
-			search_item(inventory,get_parent().my_class_name,item_name).item_path_scene = path
-			push_inventory(inventory)
+			InventoryFile.search_item(inventory,get_parent().my_class_name,item_name).path_scene = path
+			InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 
 
 
@@ -68,29 +77,39 @@ func _on_icon_pressed() -> void:
 func _on_id_unique_gui_input(event: InputEvent) -> void:
 	move_panel(event,self,top_bar,get_parent())
 	
-	id_unique.text = str(get_index()," - ",item_name)
+	update_visual()
 
 
 
 func _on_delete_pressed() -> void:
-	var inventory = pull_inventory()
-	remove_item(inventory,get_parent().my_class_name,item_name)
-	push_inventory(inventory)
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	InventoryFile.remove_item(inventory,get_parent().my_class_name,item_name)
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	
 	queue_free()
 
 
 func _on_item_name_text_submitted(new_text: String) -> void:
-	var inventory = pull_inventory()
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
 	edit_item_name.release_focus()
 	
 	changed_item_name(inventory,get_parent().my_class_name,item_name,new_text)
-	push_inventory(inventory)
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 	
 	item_name = new_text
-	id_unique.text = str(get_index()," - ",item_name)
+	update_visual()
 
 func _on_max_amount_value_changed(value: float) -> void:
-	var inventory = pull_inventory()
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
-	search_item(inventory,get_parent().my_class_name,item_name).max_amount = int(value)
-	push_inventory(inventory)
+	InventoryFile.search_item(inventory,get_parent().my_class_name,item_name).max_amount = int(value)
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+
+
+func _on_description_text_changed() -> void:
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	InventoryFile.search_item(inventory,get_parent().my_class_name,item_name).description = description.text
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)

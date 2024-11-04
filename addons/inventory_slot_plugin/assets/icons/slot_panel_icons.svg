@@ -24,16 +24,22 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="4"
-     inkscape:cx="89.75"
-     inkscape:cy="-15.375"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="13.435029"
+     inkscape:cy="-27.400388"
      inkscape:window-width="1920"
      inkscape:window-height="1057"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
-     showguides="true" />
+     showguides="true">
+    <sodipodi:guide
+       position="15.949309,289.00197"
+       orientation="0,-1"
+       id="guide4"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <defs
      id="defs1">
     <linearGradient
@@ -101,5 +107,25 @@
        d="m 46.501478,1.3229166 c -0.304603,-0.0024 -1.743128,1.7697234 -1.743128,3.1843017 0,1.4145783 1.345123,1.5263593 1.74313,1.5263593 0.398007,0 1.67787,-0.1035805 1.67787,-1.5273928 0,-1.4238123 -1.373269,-3.1808664 -1.677872,-3.1832682 z"
        id="path15"
        sodipodi:nodetypes="zzzzz" />
+    <rect
+       style="fill:#c1c1c1;stroke:none;stroke-width:0.264999;stroke-linecap:round"
+       id="rect3"
+       width="1.07576"
+       height="4.2094946"
+       x="-11.675615"
+       y="1.8241149"
+       transform="rotate(-90)"
+       rx="0.39756343"
+       ry="0.39756343" />
+    <rect
+       style="fill:#c1c1c1;stroke:none;stroke-width:0.264999;stroke-linecap:round"
+       id="rect4"
+       width="1.07576"
+       height="4.2094946"
+       x="-4.466742"
+       y="-13.242482"
+       transform="scale(-1)"
+       rx="0.39756343"
+       ry="0.39756343" />
   </g>
 </svg>

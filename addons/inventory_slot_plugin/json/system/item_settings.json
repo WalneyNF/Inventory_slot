@@ -1,0 +1,8 @@
+{
+	"amount_anchor": 3,
+	"amount_show_being_one": true,
+	"amount_text": "Amount",
+	"description_amount_show": true,
+	"description_description": true,
+	"description_name_item": true
+}

@@ -33,22 +33,21 @@ func _on_name_class_gui_input(event: InputEvent) -> void:
 
 
 func _on_edit_name_text_submitted(new_text: String) -> void:
-	var inventory = pull_inventory()
-	changed_class_name(inventory,name_class.text,new_text)
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	InventoryFile.changed_dictionary_name(inventory,name_class.text,new_text)
 	
 	items.my_class_name = new_text
 	name_class.text = new_text
 	edit_name.hide()
 	
-	push_inventory(inventory)
-
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 
 
 func _on_new_item_pressed() -> void:
-	var inventory = pull_inventory()
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
-	new_item(inventory,name_class.text)
-	push_inventory(inventory)
+	InventoryFile.push_inventory(InventoryFile.new_item_panel(name_class.text), InventoryFile.ITEM_PANEL_PATH)
 	
 	change_item.emit()
 
@@ -58,8 +57,9 @@ func _on_edit_name_focus_exited() -> void:
 
 
 func _on_delete_pressed() -> void:
-	var inventory = pull_inventory()
-	remove_class(inventory,name_class.text)
-	push_inventory(inventory)
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	InventoryFile.remove_class(inventory,name_class.text)
+	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 	
 	queue_free()

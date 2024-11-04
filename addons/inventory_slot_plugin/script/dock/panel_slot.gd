@@ -1,7 +1,7 @@
 @tool
 extends TypePanel
 
-@onready var _class: OptionButton = %Class
+@onready var option_class: OptionButton = %Class
 @onready var panel_name: LineEdit = %PanelName
 @onready var id: SpinBox = %Id
 @onready var amount: SpinBox = %Amount
@@ -15,15 +15,14 @@ var out_panel_name: String
 func _ready() -> void:
 	settings.hide()
 	
-	var items = list_all_item()
+	var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
+	option_class.clear()
+	option_class.add_item("All")
 	
-	_class.clear()
-	
-	_class.add_item("All")
-	for i in items:
+	for _class in _all_class:
 		
-		_class.add_item(get_item_name(i.unique_id))
+		option_class.add_item(_class)
 
 
 func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: int) -> void:
@@ -39,10 +38,11 @@ func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: int
 func change_panel_name(new_name: String) -> void:
 	panel_name.release_focus()
 	
-	var panels = pull_inventory(PANEL_SLOT_PATH)
+	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	changed_dic_name(panels,out_panel_name,new_name)
-	push_inventory(panels,PANEL_SLOT_PATH)
+	
+	InventoryFile.push_inventory(panels,InventoryFile.PANEL_SLOT_PATH)
 	
 	out_panel_name = new_name
 	
@@ -52,13 +52,13 @@ func change_panel_name(new_name: String) -> void:
 
 
 func _on_remove_pressed() -> void:
-	var panels = pull_inventory(PANEL_SLOT_PATH)
+	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	for panel in panels:
 		if panels.get(panel).id == id.value:
 			panels.erase(panel)
 	
-	push_inventory(panels,PANEL_SLOT_PATH)
+	InventoryFile.push_inventory(panels ,InventoryFile.PANEL_SLOT_PATH)
 	
 	queue_free()
 	
@@ -71,7 +71,7 @@ func _on_panel_name_text_submitted(new_text: String) -> void:
 
 
 func _on_id_value_changed(value: float) -> void:
-	var panels = pull_inventory(PANEL_SLOT_PATH)
+	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	for panel in panels:
 		if panel != out_panel_name:
@@ -85,32 +85,32 @@ func _on_id_value_changed(value: float) -> void:
 	
 	dic.id = value
 	
-	push_inventory(panels,PANEL_SLOT_PATH)
+	InventoryFile.push_inventory(panels, InventoryFile.PANEL_SLOT_PATH)
 	tittle.text = str(value," - ",out_panel_name)
 	
 	Inventory.changed_panel_data.emit()
 
 
 func _on_amount_value_changed(value: float) -> void:
-	var panels = pull_inventory(PANEL_SLOT_PATH)
+	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	var dic = search_dic(panels,out_panel_name)
 	
 	dic.slot_amount = value
 	
-	push_inventory(panels,PANEL_SLOT_PATH)
+	InventoryFile.push_inventory(panels, InventoryFile.PANEL_SLOT_PATH)
 	
 	Inventory.changed_panel_data.emit()
 
 
 func _on_class_item_selected(index: int) -> void:
-	var panels = pull_inventory(PANEL_SLOT_PATH)
+	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	var dic = search_dic(panels,out_panel_name)
 	
 	dic.class_unique = index-1
 	
-	push_inventory(panels,PANEL_SLOT_PATH)
+	InventoryFile.push_inventory(panels, InventoryFile.PANEL_SLOT_PATH)
 	
 	Inventory.changed_panel_data.emit()
 

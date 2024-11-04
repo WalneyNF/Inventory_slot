@@ -2,14 +2,14 @@
 
 extends VBoxContainer
 
-var class_panel = preload("res://addons/inventory_slot_plugin/scenes/dock/class.tscn")
+var class_panel: PackedScene = preload("res://addons/inventory_slot_plugin/scenes/dock/class.tscn")
 
 
 func _on_ui_items_change_class() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	var inventory = TypePanel.pull_inventory()
+	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	for _class in inventory:
 		var new_panel = class_panel.instantiate()

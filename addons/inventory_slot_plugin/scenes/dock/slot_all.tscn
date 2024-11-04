@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ciub2lw5yi8r4"]
+[gd_scene load_steps=6 format=3 uid="uid://ciub2lw5yi8r4"]
 
 [ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="1_ut75d"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_1i1wx"]
 [ext_resource type="PackedScene" uid="uid://c75p37f035d7p" path="res://addons/inventory_slot_plugin/scenes/dock/panel_slot_controller.tscn" id="3_3o5lx"]
 [ext_resource type="PackedScene" uid="uid://btombktb6cfqk" path="res://addons/inventory_slot_plugin/scenes/dock/ui_items.tscn" id="4_3or6b"]
+[ext_resource type="PackedScene" uid="uid://b1dd7ckcktcuf" path="res://addons/inventory_slot_plugin/scenes/dock/item_settings_controller.tscn" id="4_lb3gk"]
 
 [node name="SlotAll" type="VBoxContainer"]
 size_flags_vertical = 3
@@ -18,8 +19,9 @@ layout_mode = 2
 [node name="InvMainButton" type="Button" parent="InventoryMain/Vbox" node_paths=PackedStringArray("NodeVisible")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
-text = "Slot settings"
+text = "Slot"
 icon = ExtResource("1_ut75d")
 icon_alignment = 1
 vertical_icon_alignment = 2
@@ -36,6 +38,9 @@ layout_mode = 2
 [node name="PanelSlotController" parent="InventoryMain/Vbox/Settings/vbox" instance=ExtResource("3_3o5lx")]
 layout_mode = 2
 
+[node name="ItemConfigure" parent="InventoryMain/Vbox/Settings/vbox" instance=ExtResource("4_lb3gk")]
+layout_mode = 2
+
 [node name="hs" type="HSeparator" parent="."]
 layout_mode = 2
 
@@ -49,6 +54,7 @@ size_flags_vertical = 8
 [node name="UiButton" type="Button" parent="UiPanel/Vbox" node_paths=PackedStringArray("NodeVisible")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Class / Items"
 icon = ExtResource("1_ut75d")

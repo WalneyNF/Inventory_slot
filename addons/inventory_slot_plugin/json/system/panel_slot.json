@@ -1,10 +1,10 @@
 {
-	"Equipamento": {
+	"Equipped": {
 		"class_unique": -1,
 		"id": 2,
-		"slot_amount": 10
+		"slot_amount": 4
 	},
-	"Inventario": {
+	"Inventory": {
 		"class_unique": -1,
 		"id": 1,
 		"slot_amount": 25

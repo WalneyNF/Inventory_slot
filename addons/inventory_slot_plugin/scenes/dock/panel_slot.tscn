@@ -25,6 +25,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "0"
 icon = ExtResource("2_hf0pb")
@@ -33,12 +34,12 @@ NodeVisible = NodePath("../../Settings")
 
 [node name="Remove" type="Button" parent="Vbox/TopBar"]
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Remove"
 icon = ExtResource("4_rp7ey")
 
 [node name="Settings" type="VBoxContainer" parent="Vbox"]
-visible = false
 layout_mode = 2
 
 [node name="Name" type="HBoxContainer" parent="Vbox/Settings"]
@@ -61,7 +62,7 @@ layout_mode = 2
 
 [node name="Tittle" type="Label" parent="Vbox/Settings/ID"]
 layout_mode = 2
-text = "ID:"
+text = "Unique ID:"
 
 [node name="Warning" type="Label" parent="Vbox/Settings/ID"]
 visible = false
@@ -101,18 +102,12 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 selected = 0
-item_count = 6
+item_count = 3
 popup/item_0/text = "All"
-popup/item_1/text = "Eyes"
+popup/item_1/text = "PotionLife"
 popup/item_1/id = 1
-popup/item_2/text = "Kanoa"
+popup/item_2/text = "PotionMana"
 popup/item_2/id = 2
-popup/item_3/text = "Potion_life"
-popup/item_3/id = 3
-popup/item_4/text = "Potion_mana"
-popup/item_4/id = 4
-popup/item_5/text = "Sword"
-popup/item_5/id = 5
 
 [node name="hs" type="HSeparator" parent="Vbox"]
 layout_mode = 2

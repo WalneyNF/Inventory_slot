@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://du8cysfmaia3w"]
+[gd_scene load_steps=8 format=3 uid="uid://du8cysfmaia3w"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/class.gd" id="1_tlyxu"]
 [ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_5fn77"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/list_item.gd" id="2_hpeo5"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_krhex"]
 [ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_kaawh"]
+[ext_resource type="Texture2D" uid="uid://c2254e60ufuh0" path="res://addons/inventory_slot_plugin/assets/icons/slot_add.tres" id="6_j1kbg"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_288to"]
 color = Color(0.29366, 0.29366, 0.29366, 1)
@@ -31,6 +32,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "new_class"
 icon = ExtResource("2_5fn77")
@@ -84,8 +86,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(220, 50)
 layout_mode = 2
 size_flags_horizontal = 6
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "New item"
+icon = ExtResource("6_j1kbg")
 
 [node name="hs" type="HSeparator" parent="Vbox"]
 layout_mode = 2

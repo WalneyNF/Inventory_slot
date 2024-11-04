@@ -10,11 +10,11 @@ func load_items() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	if FileAccess.file_exists(TypePanel.ITEM_PATH):
+	if FileAccess.file_exists(InventoryFile.ITEM_PANEL_PATH):
 		for child in get_children():
 			child.queue_free()
 		
-		var file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.READ)
+		var file = FileAccess.open(InventoryFile.ITEM_PANEL_PATH,FileAccess.READ)
 		var all_class = JSON.parse_string(file.get_as_text())
 		
 		file.close()
@@ -27,14 +27,15 @@ func load_items() -> void:
 					var new_panel = itempanel.instantiate()
 					
 					add_child(new_panel)
-					new_panel.start(items,new_item.icon)
+					
+					new_panel.start(items,new_item)
 
 
 func _on_class_change_item() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	var file = FileAccess.open(TypePanel.ITEM_PATH,FileAccess.READ)
+	var file = FileAccess.open(InventoryFile.ITEM_PANEL_PATH,FileAccess.READ)
 	var all_class = JSON.parse_string(file.get_as_text())
 	
 	file.close()
@@ -48,4 +49,4 @@ func _on_class_change_item() -> void:
 				
 				add_child(new_panel)
 				
-				new_panel.start(items,new_item.icon)
+				new_panel.start(items, new_item)

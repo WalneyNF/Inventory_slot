@@ -1,0 +1,185 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1dd7ckcktcuf"]
+
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/item_settings_controller.gd" id="1_nh2ha"]
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_syul7"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="3_y60hx"]
+
+[node name="ItemSettings" type="PanelContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_nh2ha")
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopBar" type="Button" parent="Vbox" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Item Settings"
+icon = ExtResource("2_syul7")
+alignment = 0
+script = ExtResource("3_y60hx")
+NodeVisible = NodePath("../Hbox/Vbox")
+
+[node name="Hbox" type="HBoxContainer" parent="Vbox"]
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Vbox/Hbox"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Amount" type="PanelContainer" parent="Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Vbox/Amount"]
+layout_mode = 2
+
+[node name="TopBar" type="Button" parent="Vbox/Hbox/Vbox/Amount/Vbox" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Amount"
+icon = ExtResource("2_syul7")
+alignment = 0
+script = ExtResource("3_y60hx")
+NodeVisible = NodePath("../Hbox/Vbox")
+
+[node name="Hbox" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Amount/Vbox"]
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="name" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/name"]
+layout_mode = 2
+text = "Text:"
+
+[node name="name" type="LineEdit" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/name"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Amount"
+placeholder_text = "Text"
+
+[node name="anchor" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/anchor"]
+layout_mode = 2
+text = "Anchor:"
+
+[node name="anchor" type="OptionButton" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/anchor"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 0
+item_count = 4
+popup/item_0/text = "LEFT_UP"
+popup/item_1/text = "LEFT_DOWN"
+popup/item_1/id = 1
+popup/item_2/text = "RIGHT_UP"
+popup/item_2/id = 2
+popup/item_3/text = "RIGHT_DOWN"
+popup/item_3/id = 3
+
+[node name="shown_being_one" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/shown_being_one"]
+layout_mode = 2
+text = "Shown being one:"
+
+[node name="shown_being_one" type="CheckBox" parent="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/shown_being_one"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="Description" type="PanelContainer" parent="Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Vbox/Description"]
+layout_mode = 2
+
+[node name="TopBar" type="Button" parent="Vbox/Hbox/Vbox/Description/Vbox" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Description"
+icon = ExtResource("2_syul7")
+alignment = 0
+script = ExtResource("3_y60hx")
+NodeVisible = NodePath("../Hbox/Vbox")
+
+[node name="Hbox" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox"]
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="name_item_show" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/name_item_show"]
+layout_mode = 2
+text = "Name item:"
+
+[node name="name_item_show" type="CheckBox" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/name_item_show"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="amount_show" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/amount_show"]
+layout_mode = 2
+text = "Amount show:"
+
+[node name="amount_show" type="CheckBox" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/amount_show"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="description" type="HBoxContainer" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox"]
+layout_mode = 2
+
+[node name="Tittle" type="Label" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/description"]
+layout_mode = 2
+text = "Description:"
+
+[node name="description" type="CheckBox" parent="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/description"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[connection signal="text_submitted" from="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/name/name" to="." method="_on_name_text_submitted"]
+[connection signal="item_selected" from="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/anchor/anchor" to="." method="_on_anchor_item_selected"]
+[connection signal="pressed" from="Vbox/Hbox/Vbox/Amount/Vbox/Hbox/Vbox/shown_being_one/shown_being_one" to="." method="_on_shown_being_one_pressed"]
+[connection signal="pressed" from="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/name_item_show/name_item_show" to="." method="_on_name_item_show_pressed"]
+[connection signal="pressed" from="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/amount_show/amount_show" to="." method="_on_amount_show_pressed"]
+[connection signal="pressed" from="Vbox/Hbox/Vbox/Description/Vbox/Hbox/Vbox/description/description" to="." method="_on_description_pressed"]

@@ -2,40 +2,12 @@
 class_name TypePanel extends Node
 
 
-const ITEM_PATH = "res://addons/inventory_slot_plugin/json/system/items.json"
-const ITEMS_PATH = "res://addons/inventory_slot_plugin/json/save/inventory.json"
-const PANEL_SLOT_PATH = "res://addons/inventory_slot_plugin/json/system/panel_slot.json"
-const LIFE = "res://addons/inventory_slot_plugin/assets/imagens/life.png"
-const SYSTEM_PATH = "res://addons/inventory_slot_plugin/json/system/"
-
 var start_update: bool
-
-
-func changed_class_name(_inventory: Dictionary,_out_class_name: String,_new_class_name: String) -> void:
-	
-	var new_value = _inventory.get(_out_class_name)
-	
-	_inventory.erase(_out_class_name)
-	_inventory[_new_class_name] = new_value
-
-
-static func is_json(path: String) -> bool:
-	
-	if !FileAccess.file_exists(path):
-		return true
-	else:
-		var file = FileAccess.open(path,FileAccess.READ)
-		var json = JSON.parse_string(file.get_as_text())
-		
-		if json.size() > 1:
-			return true
-	
-	return false
 
 
 static func changed_item_name(_inventory: Dictionary,_class_name: String,_out_item_name: String,_new_item_name: String) -> void:
 	
-	var item = search_item(_inventory,_class_name,_out_item_name)
+	var item = InventoryFile.search_item(_inventory,_class_name,_out_item_name)
 	
 	if item != null:
 		var new_value = _inventory.get(_class_name).get(_out_item_name)
@@ -53,17 +25,6 @@ static func changed_dic_name(_dic: Dictionary,_out_item_name: String,_new_item_n
 		_dic.erase(_out_item_name)
 		_dic[_new_item_name] = new_value
 
-static func search_item(_inventory: Dictionary,_class_name: String,_item_name: String):
-	for _class in _inventory:
-		if _class_name == _class:
-			for _item in _inventory.get(_class):
-				
-				if _item_name == _item:
-					
-					return _inventory.get(_class_name).get(_item_name)
-	
-	printerr("Item ",_item_name," não foi encontrado!")
-
 static func search_dic(_dic: Dictionary,_item_name: String):
 	for _item in _dic:
 		
@@ -71,124 +32,37 @@ static func search_dic(_dic: Dictionary,_item_name: String):
 			
 			return _dic.get(_item_name)
 	
-	printerr("Item ",_item_name," não foi encontrado!")
+	printerr("Item ",_item_name," not found!")
 
-static func search_item_id(panel_id: int, item_unique_id: int = -1):
+static func get_item_panel_id_void() -> int:
+	var _all_id_array: Array = []
 	
-	#if id == -1 and path != "":
-	#	for item in array_items:
-	#		if item.path == path:
-	#			return item
-	#else:
-	var items = TypePanel.pull_inventory(TypePanel.ITEM_PATH)
+	var _all_id_dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
-	#if slot != -1:
-	#	for _all in items:
-	#		for _item in items.get(_all):
-	#			var item = items.get(_all).get(_item)
-	#			
-	#			if items.get(_all).get(_item).unique_id == item_unique_id:
-	#				
-	#				if item.slot == slot:
-	#					return item
-	
-	for _all in items:
-		for _item in items.get(_all):
-			var item = items.get(_all).get(_item)
-			if items.get(_all).get(_item).unique_id == item_unique_id:
-				return items.get(_all).get(_item)
-	
-	return null
-
-static func get_item_name(unique_id_item: int) -> StringName:
-	var all_items = pull_inventory(ITEM_PATH)
-	
-	for _class in all_items:
-		for _items in all_items.get(_class):
-			if all_items.get(_class).get(_items).unique_id == unique_id_item:
-				return _items
-	
-	return ""
-
-static func push_item_inventory(_item_id: int, _item_inventory: Dictionary) -> bool:
-	var _all_items = pull_inventory(ITEMS_PATH)
-	
-	if _item_inventory == {}:
-		_all_items.erase(str(_item_id))
-		push_inventory(_all_items,ITEMS_PATH)
-		return true
-	else:
-		_all_items[str(_item_id)] = _item_inventory
-		push_inventory(_all_items,ITEMS_PATH)
-		return true
-	
-	return false
-
-static func pull_inventory(path: String = ITEM_PATH) -> Dictionary:
-	if FileAccess.file_exists(path):
-		var file = FileAccess.open(path,FileAccess.READ)
-		
-		var all_class: Dictionary = JSON.parse_string(file.get_as_text())
-		file.close()
-		
-		return all_class
-	
-	return {}
-
-static func push_inventory(dic: Dictionary,path: String = ITEM_PATH) -> void:
-	var file = FileAccess.open(path,FileAccess.WRITE)
-	
-	file.store_string(JSON.stringify(dic,"\t"))
-	file.close()
-
-static func new_item(_inventory: Dictionary,_class_name: String,icon_path: String = LIFE,amount: int = 1,path_scene: String = "res://") -> void:
-	
-	for _class in _inventory:
-		
-		if _class == _class_name:
-			
-			_inventory.get(_class)[str("new_item_",get_id_void())] = {
-				"unique_id" : get_id_void(),
-				"icon" : icon_path,
-				"max_amount" : amount,
-				"path_scene" : path_scene
-			}
-
-static func get_id_void() -> int:
-	var all_id: Array = []
-	
-	var all_slots = pull_inventory(ITEM_PATH)
-	
-	for all_class in all_slots:
-		for items in all_slots.get(all_class):
-			all_id.append(all_slots.get(all_class).get(items).unique_id)
+	for _all_class in _all_id_dictionary:
+		for _items in _all_id_dictionary.get(_all_class):
+			_all_id_array.append(_all_id_dictionary.get(_all_class).get(_items).unique_id)
 	
 	
-	all_id.sort()
+	_all_id_array.sort()
 	
-	for id in range(all_id.size()):
-		if id != all_id[id]:
-			return id
+	for _id in range(_all_id_array.size()):
+		if _id != _all_id_array[_id]:
+			return _id
 	
-	return all_id.size()
+	return _all_id_array.size()
 
 static func get_items_size() -> int:
-	var size_item: int = 0
+	var _size_item: int = 0
 	
-	var all_slots = pull_inventory(PANEL_SLOT_PATH)
+	var _all_slots = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
-	for all_class in all_slots:
-		for items in all_slots.get(all_class):
-			size_item += 1
+	for _all_class in _all_slots:
+		for _items in _all_slots.get(_all_class):
+			
+			_size_item += 1
 	
-	return size_item
-
-static func remove_item(_inventory: Dictionary,_class_name: String,_item_name: String) -> void:
-	_inventory.get(_class_name).erase(_item_name)
-
-static func remove_class(_inventory: Dictionary,_class_name: String) -> void:
-	_inventory.erase(_class_name)
-
+	return _size_item
 
 func move_panel(event: InputEvent,panel,topbar: Control,panel_parent: BoxContainer) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -200,7 +74,6 @@ func move_panel(event: InputEvent,panel,topbar: Control,panel_parent: BoxContain
 		if start_update:
 			update_item_panel(panel_parent)
 			start_update = false
-
 
 func update_item_panel(panel_parent: BoxContainer) -> void:
 	var all_child = panel_parent.get_children()
@@ -218,37 +91,6 @@ func update_item_panel(panel_parent: BoxContainer) -> void:
 		
 		#child.id_unique.text = str(child.get_index())
 
-
 func sort_position(a,b):
 	if a.position.y-(a.size.y/2) < b.position.y:
 		return a
-
-
-static func list_all_item(panel_id: int = -1) -> Array:
-	var inventory = pull_inventory()
-	
-	var all_items: Array
-	
-	for _class in inventory:
-		for items in inventory.get(_class):
-			if panel_id == -1:
-				all_items.append(inventory.get(_class).get(items))
-			else:
-				if panel_id == inventory.get(_class).get(items).panel_id:
-					all_items.append(inventory.get(_class).get(items))
-	
-	return all_items
-
-static func list_all_inventory_item(_panel_id: int) -> Array:
-	var _inventory = pull_inventory(ITEMS_PATH)
-	
-	var all_items: Array
-	
-	for _items in _inventory:
-		if _panel_id == -1:
-			all_items.append(_inventory.get(_items))
-		else:
-			if _panel_id == _inventory.get(_items).panel_id:
-				all_items.append(_inventory.get(_items))
-	
-	return all_items

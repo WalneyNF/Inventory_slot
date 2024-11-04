@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0fgcy0fvtoi7"]
+[gd_scene load_steps=4 format=3 uid="uid://d0fgcy0fvtoi7"]
 
-[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/debbug/my_player.gd" id="5_pxtjy"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/debbug/notification.gd" id="6_f3xgp"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/debbug/random_item.gd" id="7_6bfnc"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/panelcontainer.gd" id="8_cp2un"]
@@ -21,15 +20,11 @@ anchor_right = 0.111111
 anchor_bottom = 0.975309
 metadata/_edit_use_anchors_ = true
 
-[node name="my_player" type="Node" parent="Debbug"]
-script = ExtResource("5_pxtjy")
-
 [node name="Notification" type="Control" parent="Debbug"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("6_f3xgp")
-use = false
 
 [node name="Random" type="Button" parent="Debbug"]
 layout_mode = 0

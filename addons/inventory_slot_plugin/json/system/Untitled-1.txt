@@ -1,9 +1,0 @@
-[
-    0 = {
-        id_unique = 0
-        amount = 12
-    }
-
-]
-
-# com o id_unique, conseguimos ir atras das outras informações
