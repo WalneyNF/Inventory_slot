@@ -64,7 +64,7 @@ func enter_child(node: Node) -> void:
 	if node is TextureRect:
 		await node.get_tree().create_timer(0.2).timeout
 		
-		tooltip_text = node.item_more()
+		if is_instance_valid(node): tooltip_text = node.item_more()
 func exit_child(node: Node) -> void:
 	if node is TextureRect:
 		tooltip_text = ""
@@ -89,7 +89,7 @@ func item_move_void_slot() -> void:
 	var _item_selected_panel = InventoryFile.get_panel(_one_item.panel_id)
 	
 	if _item_selected_panel.id != panel_id:
-		Inventory.set_panel_item(_one_item ,_item_selected_panel.id ,panel_id ,get_index() ,true )
+		Inventory.set_panel_item(_one_item.id ,_item_selected_panel.id ,panel_id ,get_index() ,true )
 	else:
 		Inventory.set_slot_item(_item_selected_panel ,_one_item ,get_index() ,true )
 	
@@ -108,11 +108,11 @@ func item_changed_other_slot() -> void:
 	Inventory.button_slot_changed.emit(self,false)
 	
 	if _one_item_panel_id != panel_id:
-		Inventory.remove_item(InventoryFile.get_panel(_one_item_panel_id) ,_one_item.id )
-		Inventory.remove_item(InventoryFile.get_panel(_two_item_panel_id) ,_two_item.id )
+		Inventory.remove_item(_one_item_panel_id ,_one_item.id )
+		Inventory.remove_item(_two_item_panel_id ,_two_item.id )
 		
-		Inventory.set_panel_item(_one_item, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, false )
-		Inventory.set_panel_item(_two_item, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, false )
+		Inventory.set_panel_item(_one_item.id, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, false )
+		Inventory.set_panel_item(_two_item.id, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, false )
 	else:
 		Inventory.changed_slots_items(_one_item, _two_item )
 
@@ -126,7 +126,7 @@ func shift_item_move() -> bool:
 			print("There is no panel as next to send the item.")
 			return false
 		
-		Inventory.set_panel_item(_item_inventory,panel_id,_next_panel_id.slot_panel_id,-1,false)
+		Inventory.set_panel_item(_item_inventory.id,panel_id,_next_panel_id.slot_panel_id,-1,false)
 		
 		return true
 	return false

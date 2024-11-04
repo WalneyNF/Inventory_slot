@@ -38,7 +38,7 @@ func reload_my_data(_item_panel: Dictionary , _item_inventory: Dictionary , _sys
 
 func reload_data() -> void:
 	if item_inventory.amount == 0:
-		Inventory.remove_item(panel_slot,item_inventory.id)
+		Inventory.remove_item(panel_slot.id,item_inventory.id)
 	
 	node_amount_text.text = str(item_inventory.amount)
 	

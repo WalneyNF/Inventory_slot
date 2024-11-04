@@ -89,17 +89,18 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 	
 	return _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id )
 
-func remove_item(_panel_item: Dictionary, _id: int = -1) -> bool:
-	var _all_item_inventory: Array = InventoryFile.list_all_item_inventory(_panel_item.id)
+func remove_item(_panel_id: int, _id: int = -1) -> bool:
+	
+	var _all_item_inventory: Array = InventoryFile.list_all_item_inventory(_panel_id)
 	
 	for _items_inventory in _all_item_inventory:
 		
 		if _items_inventory.id == _id:
 			
 			discart_item.emit(
-				InventoryFile.search_item_id(_panel_item.id,_items_inventory.unique_id),
+				InventoryFile.search_item_id(_panel_id,_items_inventory.unique_id),
 				_items_inventory,
-				_panel_item
+				InventoryFile.get_panel(_panel_id)
 				)
 			
 			InventoryFile.push_item_inventory(_items_inventory.id,{})
@@ -107,7 +108,8 @@ func remove_item(_panel_item: Dictionary, _id: int = -1) -> bool:
 	
 	return false
 
-func set_panel_item(_item_inventory: Dictionary, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true):
+func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true):
+	var _item_inventory: Dictionary = search_item_inventory(_out_panel_id,_item_id)
 	var _out_panel: Dictionary = InventoryFile.get_panel(_out_panel_id)
 	var _new_panel: Dictionary = InventoryFile.get_panel(_new_panel_id)
 	var _item_panel: Dictionary = InventoryFile.search_item_id(_out_panel.id,_item_inventory.unique_id)
@@ -144,7 +146,7 @@ func set_panel_item(_item_inventory: Dictionary, _out_panel_id: int, _new_panel_
 		return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 	
 	if _out_item_remove:
-		remove_item(_out_panel,_item_inventory.id)
+		remove_item(_out_panel_id,_item_inventory.id)
 	
 	if _out_panel == null or new_data == null: return
 	
@@ -170,7 +172,7 @@ func set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: 
 	
 	var _new_item_inventory: Dictionary = _item_inventory
 	
-	remove_item(_panel_item,_item_inventory.id)
+	remove_item(_panel_item.id,_item_inventory.id)
 	add_item(
 		_panel_item.id,
 		_new_item_inventory.unique_id,
@@ -187,8 +189,8 @@ func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 	var panel_one = InventoryFile.get_panel(search_panel_id_item(item_one.id))
 	var panel_two = InventoryFile.get_panel(search_panel_id_item(item_two.id))
 	
-	remove_item(panel_one,item_one.id)
-	remove_item(panel_two,item_two.id)
+	remove_item(panel_one.id,item_one.id)
+	remove_item(panel_two.id,item_two.id)
 	
 	add_item(panel_one.id,one.unique_id,one.amount,two.slot,one.id,true)
 	add_item(panel_two.id,two.unique_id,two.amount,one.slot,two.id,true)
@@ -196,7 +198,7 @@ func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 #---------------------------------------------------------
 
 ## Searchs -----------------------------------------------
-func search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",_slot: int = -1):
+func search_item(_panel_id: int, _item_unique_id: int = -1, _slot: int = -1):
 	var _all_items: Dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
 	
 	if _slot != -1:
@@ -204,13 +206,17 @@ func search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",
 			if _all_items.get(_item).slot == _slot:
 				return _all_items.get(_item)
 	
-	#if id == -1 and path != "":
-	#	for item in array_items:
-	#		if item.path == path:
-	#			return item
-	#else:
 	for _item: String in _all_items:
 		if _all_items.get(_item).unique_id == _item_unique_id:
+			return _all_items.get(_item)
+	
+	return null
+
+func search_item_inventory(_panel_id: int, _item_id: int = -1):
+	var _all_items: Dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
+	
+	for _item: String in _all_items:
+		if _all_items.get(_item).id == _item_id:
 			return _all_items.get(_item)
 	
 	return null
@@ -395,7 +401,7 @@ func _refresh_data_item(_item_inventory: Dictionary, _item_panel: Dictionary) ->
 	
 	if _item_inventory.slot == ERROR.SLOT_BUTTON_VOID:
 		remove_item(
-			InventoryFile.get_panel(_item_inventory.panel_id),
+			_item_inventory.panel_id,
 			_item_inventory.id
 		)
 		
