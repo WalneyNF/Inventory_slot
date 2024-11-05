@@ -4,7 +4,7 @@ The Inventory Slot Plugin is an addon for Godot 4.3.x, designed to simplify and 
 
 <img alt="Static Badge" src="https://img.shields.io/badge/current%20version-0.5.2-red"> <img alt="Static Badge" src="https://img.shields.io/badge/godot%20version-4.3.x.stable-blue">
 
-# Sumario
+# Summary
 
 - [Installation](#installation)
 - [How to use](#how-to-use)
@@ -57,8 +57,8 @@ Restart the project:
 
 # Code and functions
 
-  Aqui temos 2 recursos para manipular itens/arquivos.
-
+  Here we have 2 features for manipulating items/files.
+  
 ## Inventory ( Singleton )
   Manipulação de itens em inventario.
 
