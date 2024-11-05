@@ -8,7 +8,7 @@ class_name WheelContainer
 		wheel_size = value
 		start()
 
-@export_range(0,360) var wheel_rotation: int = 0:
+@export_range(0.0,360.0) var wheel_rotation: float = 0.0:
 	set(value):
 		wheel_rotation = value
 		start()

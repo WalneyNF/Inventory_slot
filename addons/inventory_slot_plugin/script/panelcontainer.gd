@@ -59,7 +59,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		update_visual_panel_slot()
 ## Defines how many columns the grid should be created for the slots.
 ## Note: This will only work if container_slot is in Grid mode.
-@export var columns_grid: int = 5:
+@export var columns_grid: float = 5.0:
 	set(value):
 		columns_grid = value
 		update_visual_panel_slot()
@@ -112,44 +112,62 @@ func _ready() -> void:
 
 ## Visual ================================================
 func update_visual_panel_slot() -> void:
-	
-	for child in vbox_panel.get_children():
-		if child is Container:
-			child.queue_free()
+	var _add: bool = false
 	
 	match container_slot:
 		CONTAINER_SLOT.GRID:
-			grid_slot = GridContainer.new()
+			if grid_slot is GridContainer == false:
+				if is_instance_valid(grid_slot):
+					grid_slot.queue_free()
+				
+				grid_slot = GridContainer.new()
+				_add = true
+			
 			grid_slot.columns = columns_grid
 			grid_slot.add_theme_constant_override("h_separation",horizontal_separation)
 			grid_slot.add_theme_constant_override("v_separation",vertical_separation)
 		CONTAINER_SLOT.WHEEL:
-			grid_slot = WheelContainer.new()
+			if grid_slot is WheelContainer == false:
+				if is_instance_valid(grid_slot):
+					grid_slot.queue_free()
+				
+				grid_slot = WheelContainer.new()
+				_add = true
+			
 			grid_slot.wheel_size = Vector2(horizontal_separation,vertical_separation)
 			grid_slot.wheel_rotation = columns_grid
-			
 		CONTAINER_SLOT.VBOX:
-			grid_slot = VBoxContainer.new()
+			if grid_slot is VBoxContainer == false:
+				if is_instance_valid(grid_slot):
+					grid_slot.queue_free()
+				
+				grid_slot = VBoxContainer.new()
+				_add = true
+			
 			grid_slot.add_theme_constant_override("separation",horizontal_separation)
 		CONTAINER_SLOT.HBOX:
-			grid_slot = HBoxContainer.new()
+			if grid_slot is HBoxContainer == false:
+				if is_instance_valid(grid_slot):
+					grid_slot.queue_free()
+				
+				grid_slot = HBoxContainer.new()
+				_add = true
+			
 			grid_slot.add_theme_constant_override("separation",vertical_separation)
 	
-	
-	if get_node_or_null("VboxPanel") == null:
-		add_child(vbox_panel)
-	
-	vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	
-	vbox_panel.add_child(grid_slot)
-	
-	vbox_panel.name = "VboxPanel"
-	grid_slot.name = "GridSlot"
-	
-	#if !Engine.is_editor_hint(): return
-	
-	update_slots()
+	if _add:
+		if get_node_or_null("VboxPanel") == null:
+			add_child(vbox_panel)
+		
+		vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		
+		vbox_panel.add_child(grid_slot)
+		
+		vbox_panel.name = "VboxPanel"
+		grid_slot.name = "GridSlot"
+		
+		update_slots()
 
 func update_tittle() -> void:
 	if get_node_or_null("Tittle") == null:
