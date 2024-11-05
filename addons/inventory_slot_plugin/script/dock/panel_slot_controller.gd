@@ -10,7 +10,7 @@ func _ready() -> void:
 	if !InventoryFile.is_json(InventoryFile.PANEL_SLOT_PATH):
 		var new_panel = {
 			"Void": {
-				"class_unique": -1,
+				"class_unique": "all",
 				"id": -2,
 				"slot_amount": 15
 			}
@@ -42,8 +42,7 @@ func update_panel() -> void:
 	var panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	for i in panel:
-		if i == "Void":
-			return
+		if i == "Void":	continue
 		
 		var new_panel = PANEL_SLOT.instantiate()
 		

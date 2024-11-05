@@ -106,6 +106,8 @@ func _ready() -> void:
 	
 	if !Engine.is_editor_hint():
 		connect_signal_inventory()
+		reload_item()
+
 
 
 ## Visual ================================================
@@ -149,7 +151,6 @@ func update_visual_panel_slot() -> void:
 	
 	update_slots()
 
-
 func update_tittle() -> void:
 	if get_node_or_null("Tittle") == null:
 		vbox_panel.add_child(name_label)
@@ -162,7 +163,6 @@ func update_tittle() -> void:
 	
 	update_tittle_name()
 
-
 func update_tittle_name() -> void:
 	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
@@ -172,7 +172,6 @@ func update_tittle_name() -> void:
 		if _panel.id == slot_panel_id:
 			name_label.text = _panel_slot
 
-
 func update_tittle_alignment() -> void:
 	match tittle_alignment:
 		ALIGNMENT.LEFT:
@@ -181,7 +180,6 @@ func update_tittle_alignment() -> void:
 			name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		ALIGNMENT.RIGHT:
 			name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-
 
 func update_slots() -> void: # Mudar
 	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
@@ -195,13 +193,23 @@ func update_slots() -> void: # Mudar
 			if !Engine.is_editor_hint():
 				_load_items(InventoryFile.list_all_item_inventory(slot_panel_id))
 
-
 ## Slots System ====================================
+
+func reload_item() -> void:
+	if is_instance_valid(grid_slot):
+		
+		for _child in grid_slot.get_children():
+			if is_instance_valid(_child.item_node):
+				await get_tree().create_timer(0.1).timeout
+				
+				item_entered.emit(
+					_child.item_node.item_inventory ,
+					InventoryFile.search_item_id(slot_panel_id,_child.item_node.item_inventory.unique_id)
+					)
 
 func receive_new_item(item_panel: Dictionary, item_inventory: Dictionary, panel_slot: Dictionary) -> void:
 	if panel_slot.id == slot_panel_id:
 		_load_item(item_inventory)
-
 
 func _create_slot(amount_size: int) -> void:
 	
@@ -213,12 +221,10 @@ func _create_slot(amount_size: int) -> void:
 		
 		grid_slot.add_child(slot_button)
 
-
 func _load_items(item_inventory_array: Array) -> void:
 	
 	for item_inventory in item_inventory_array:
 		_load_item(item_inventory)
-
 
 func _load_item(item_inventory: Dictionary) -> void:
 	var new_item = ITEM_TEXTURE.instantiate()
@@ -251,7 +257,6 @@ func _load_item(item_inventory: Dictionary) -> void:
 		
 		slot.add_child(new_item)
 
-
 func instance_slot_button(slot_button: Button) -> void:
 	if !Engine.is_editor_hint():
 		slot_button.set_script(SCRIPT_SLOT)
@@ -262,7 +267,6 @@ func instance_slot_button(slot_button: Button) -> void:
 	slot_button.custom_minimum_size = size_slot
 	slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	slot_button.focus_mode = Control.FOCUS_NONE
-
 
 func update_changed_panel_data() -> void:
 	update_visual_panel_slot()
