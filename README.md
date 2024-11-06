@@ -60,7 +60,8 @@ Restart the project:
   Here we have 2 features for manipulating items/files.
   
 ## Inventory ( Singleton )
-  Manipulação de itens em inventario.
+  
+  Handling inventory items.
 
   #### Using `add_item()`, you add the item to the inventory by specifying the `_item_unique_id` and directing the panel in `_panel_id`. 
     Inventory.add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false)
@@ -104,6 +105,8 @@ Restart the project:
   #### Remove a class.
     remove_class(_inventory: Dictionary,_class_name: String)
   #### Remove an item in a panel.
+    remove_item(_panel_id: int, _id: int = -1)
+  #### Const
    `ITEM_PANEL_PATH`
    `PANEL_SLOT_PATH`
    `ITEM_INVENTORY_PATH`
