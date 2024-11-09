@@ -88,7 +88,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		tittle_uppercase = value
 		name_label.uppercase = tittle_uppercase
 
-const SCRIPT_SLOT: GDScript = preload("res://addons/inventory_slot_plugin/script/slot_button.gd")
+const SCRIPT_SLOT: Script = preload("res://addons/inventory_slot_plugin/script/slot_button.gd")
 const ITEM_TEXTURE: PackedScene = preload("res://addons/inventory_slot_plugin/scenes/screen/item_texture.tscn")
 
 

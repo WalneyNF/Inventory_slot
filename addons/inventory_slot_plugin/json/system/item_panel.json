@@ -1,1 +1,18 @@
-{}
+{
+	"new_class": {
+		"new_item_0": {
+			"description": "",
+			"icon": "res://addons/inventory_slot_plugin/assets/item_image/life.png",
+			"max_amount": 1,
+			"scene": "res://",
+			"unique_id": 0
+		},
+		"new_item_1": {
+			"description": "",
+			"icon": "res://addons/inventory_slot_plugin/assets/item_image/life.png",
+			"max_amount": 1,
+			"scene": "res://",
+			"unique_id": 1
+		}
+	}
+}

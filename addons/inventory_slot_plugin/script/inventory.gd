@@ -44,9 +44,13 @@ func _input(event: InputEvent) -> void:
 # New functions ================================================================
 
 ## Main functions ----------------------------------------
-func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false):
+func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false, _metadata: Variant = null):
+	
 	var _item_panel = InventoryFile.search_item_id(_panel_id ,_item_unique_id )
-	var item_inventory = search_item(_panel_id ,_item_panel.unique_id )
+	var item_inventory
+	
+	if InventoryFile.is_json(InventoryFile.ITEM_INVENTORY_PATH):
+		item_inventory = search_item(_panel_id ,_item_panel.unique_id )
 	
 	var _panel_slot = InventoryFile.get_panel(_panel_id)
 	
@@ -54,14 +58,14 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 		return [ERROR.INVALID_ARGUMENTS]
 	
 	if _unique:
-		return _append_item_filter_slot_amount(_panel_slot , _item_panel, _amount, _slot, _id)
+		return _append_item_filter_slot_amount(_panel_slot , _item_panel, _amount, _slot, _id, _metadata)
 	
 	if _slot == ERROR.SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
-		var _new_item = _append_item(_panel_slot,_item_panel,_amount,ERROR.SLOT_BUTTON_VOID)
+		var _new_item = _append_item(_panel_slot, _item_panel, _amount, ERROR.SLOT_BUTTON_VOID, _metadata)
 		
 		return _new_item
 	
-	var _separate = _separate_item_one(_item_panel,_panel_slot,_amount)
+	var _separate = _separate_item_one(_item_panel, _panel_slot, _amount, _metadata)
 	
 	if _separate is Array:
 		return _separate
@@ -77,7 +81,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 		
 		if _amount + item_inventory.amount > _item_panel.max_amount:
 			
-			return _filter_add_full_item(_item_panel ,item_inventory ,_panel_slot ,_amount )
+			return _filter_add_full_item(_item_panel ,item_inventory ,_panel_slot ,_amount ,_metadata)
 			
 		else:
 			
@@ -87,7 +91,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 			
 			return item_inventory
 	
-	return _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id )
+	return _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id ,_metadata )
 
 func remove_item(_panel_id: int, _id: int = -1) -> bool:
 	
@@ -150,7 +154,7 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 	
 	if _out_panel == null or new_data == null: return
 	
-	var _result = add_item(_new_panel.id, _new_item.unique_id,_new_item.amount,_slot,_new_item.id,_unique)
+	var _result = add_item(_new_panel.id, _new_item.unique_id,_new_item.amount,_slot,_new_item.id,_unique,_new_item.metadata)
 	
 	if _result is Array:
 		match _result[0]:
@@ -169,7 +173,6 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 	item_exiting_panel.emit(_new_item,_out_panel_id)
 
 func set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: int = -1, _unique: bool = true) -> void:
-	
 	var _new_item_inventory: Dictionary = _item_inventory
 	
 	remove_item(_panel_item.id,_item_inventory.id)
@@ -179,7 +182,8 @@ func set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: 
 		_new_item_inventory.amount,
 		_slot,
 		_item_inventory.id,
-		_unique
+		_unique,
+		_item_inventory.metadata,
 	)
 
 func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
@@ -284,8 +288,7 @@ func _function_slot_changed(slot, move) -> void:
 	else:
 		item_selected = null
 
-func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int, _slot: int = ERROR.VOID, _id: int = -1):
-	
+func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int, _slot: int = ERROR.VOID, _id: int = -1, _metadata: Variant = null):
 	var _now_slot: int = _slot
 	var _all_items_inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
 	
@@ -299,15 +302,12 @@ func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int
 		"id" = _id,
 		"panel_id" = _panel_slot.id,
 		"slot" = _slot,
-		"amount" = _amount
+		"amount" = _amount,
+		"metadata" = _metadata,
 	}
 	
 	InventoryFile.push_inventory(_all_items_inventory,InventoryFile.ITEM_INVENTORY_PATH)
 	
-	#_new_item.amount = amount
-	#_new_item.slot = now_slot
-	#_new_item.path = path
-	#panel_item.items.append(_new_item)
 	new_item.emit(_item_panel,_all_items_inventory.get(str(_id)),_panel_slot)
 	
 	return _all_items_inventory
@@ -335,7 +335,7 @@ func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 	
 	return separate_amount
 
-func _separate_item_one(_item_panel: Dictionary, _panel_slot: Dictionary, _amount: int):
+func _separate_item_one(_item_panel: Dictionary, _panel_slot: Dictionary, _amount: int, _metadata: Variant):
 	
 	var _panel_slot_amount: int = InventoryFile.list_all_item_inventory(_panel_slot.id).size()
 	
@@ -349,7 +349,7 @@ func _separate_item_one(_item_panel: Dictionary, _panel_slot: Dictionary, _amoun
 		
 		for i in _amount:
 			if _panel_slot_amount != _panel_slot.slot_amount:
-				_items.append(_append_item(_panel_slot,_item_panel , 1 ))
+				_items.append(_append_item(_panel_slot,_item_panel , 1 ,-1,-1, _metadata))
 			else:
 				item_leftlover.emit({},_item_panel,_amount-i)
 				return [ERROR.ITEM_LEFT_WITH_FULL_SLOTS,_amount-i]
@@ -369,7 +369,7 @@ func _error(_panel_slot,_item_panel) -> bool:
 	
 	return true
 
-func _filter_add_full_item(_item_panel: Dictionary ,_item_inventory: Dictionary ,_panel_slot: Dictionary ,_amount: int ):
+func _filter_add_full_item(_item_panel: Dictionary ,_item_inventory: Dictionary ,_panel_slot: Dictionary ,_amount: int ,_metadata: Variant ):
 	
 	var _apply_now_item: int = (_item_panel.max_amount - _item_inventory.amount)
 	var _filter_amount: int = _amount - _apply_now_item
@@ -392,7 +392,7 @@ func _filter_add_full_item(_item_panel: Dictionary ,_item_inventory: Dictionary 
 		_refresh_data_item(_item_inventory,_item_panel)
 		
 		for new_amount in separate_amount: 
-			add_item(_panel_slot.id ,_item_panel.unique_id ,new_amount ,-1 ,-1 ,true )
+			add_item(_panel_slot.id ,_item_panel.unique_id ,new_amount ,-1 ,-1 ,true ,_metadata )
 	
 	return _item_inventory
 
@@ -411,7 +411,7 @@ func _refresh_data_item(_item_inventory: Dictionary, _item_panel: Dictionary) ->
 	new_data.emit(_item_panel,_item_inventory,panel_slot)
 	new_data_global.emit()
 
-func _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id ):
+func _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id , _metadata):
 	
 	if _panel_slot.slot_amount == InventoryFile.list_all_item_inventory(_panel_slot.id).size():
 		return [ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS,0]
@@ -424,15 +424,15 @@ func _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_
 			_add_number += 1
 			
 			if _add_number == _item_panel.max_amount:
-				_add_array.append(_append_item(_panel_slot,_item_panel,_add_number,_slot,_id))
+				_add_array.append(_append_item(_panel_slot,_item_panel,_add_number,_slot,_id,_metadata))
 				_add_number = 0
 		
 		if _add_number != 0 and _add_number != _item_panel.max_amount:
-			_add_array.append(_append_item(_panel_slot,_item_panel,_add_number,_slot,_id))
+			_add_array.append(_append_item(_panel_slot,_item_panel,_add_number,_slot,_id,_metadata))
 		
 		return _add_array
 	
-	return _append_item(_panel_slot,_item_panel,_amount,_slot,_id)
+	return _append_item(_panel_slot,_item_panel,_amount,_slot,_id,_metadata)
 
 #---------------------------------------------------------
 
