@@ -1,17 +1,1 @@
-{
-	"NewPanel_1": {
-		"class_unique": "all",
-		"id": 1,
-		"slot_amount": 4
-	},
-	"NewPanel_2": {
-		"class_unique": "all",
-		"id": 2,
-		"slot_amount": 4
-	},
-	"Void": {
-		"class_unique": "all",
-		"id": -2,
-		"slot_amount": 15
-	}
-}
+{}
