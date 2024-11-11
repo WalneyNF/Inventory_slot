@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/inventory_slot_plugin/assets/icons/slot_panelslot.tres")
 
 extends PanelContainer
 
