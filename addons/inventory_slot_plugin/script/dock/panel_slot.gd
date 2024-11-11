@@ -12,6 +12,7 @@ extends TypePanel
 
 var out_panel_name: String
 var panel_slot_controller: Control
+var option_selected: int 
 
 func _ready() -> void:
 	settings.hide()
@@ -41,8 +42,9 @@ func update_option_class() -> void:
 	var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	for _class in _all_class:
-		
 		option_class.add_item(_class)
+	
+	option_class.select(option_selected)
 
 
 func change_panel_name(new_name: String) -> void:
@@ -112,6 +114,8 @@ func _on_amount_value_changed(value: float) -> void:
 
 
 func _on_class_item_selected(index: int) -> void:
+	option_selected = index
+	
 	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
 	var dic = search_dic(panels,out_panel_name)

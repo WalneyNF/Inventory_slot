@@ -27,6 +27,7 @@ func start(_item_name: String,_item: Dictionary) -> void:
 	icon.icon = load(_item.icon)
 	item_name = _item_name
 	item = _item
+	scene.text = _item.scene
 	
 	update_visual()
 

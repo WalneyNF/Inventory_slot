@@ -45,8 +45,8 @@ func _on_delete_inventory_pressed() -> void:
 	
 	popup.start(
 		"Do you really want to remove all the items from the inventory?",
-		"Yes",
-		"No"
+		"No",
+		"Yes"
 	)
 	
 	popup.ok.connect(remove_all_item_inventory)
