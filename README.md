@@ -25,6 +25,7 @@ Find the File:
 Restart the project:
 	It's normal for some errors to appear after importing. Restart the project to make sure everything is working correctly.
 
+NOTE: IMPORTANTLY, THE PLUGIN NEEDS THE ADDONS FOLDER.
 
 # How to use
 
@@ -32,28 +33,31 @@ Restart the project:
 
 ### 1.Create panels and configure them to your liking.
 
-![image](https://github.com/user-attachments/assets/ba8bc02f-970f-4d62-8eea-ef472f5c52c8)
+![image](https://github.com/user-attachments/assets/c1e7cbeb-37ff-4cd1-b118-5ec80d8b924c)
 
 
 ### 2.A little further down you'll find the Class / Items panel, where you'll create your classes and items.
 
-![image](https://github.com/user-attachments/assets/4238cfe7-c616-4225-8c39-deb48334ef22)
+![image](https://github.com/user-attachments/assets/78dcb515-1a22-442f-b400-e9494b45c1d2)
 
 
 ### 3.With the initial settings made, we can put our interface into action. Add the PanelSlot node to your scene.
 
-![image](https://github.com/user-attachments/assets/65e612b6-0cf2-4f00-b58a-e613d45510b1)
+![image](https://github.com/user-attachments/assets/e8abf05a-7a47-4866-a7f7-da82fa517d1f)
+
 
 ### 4.Now let's configure our panel to receive the items properly.
 
-![image](https://github.com/user-attachments/assets/b22fdc9d-bb5e-4d13-a357-b919f441adcf)
+![image](https://github.com/user-attachments/assets/3dd75d63-89f7-47a6-a2b8-8ba804122135)
+
 
 ### 5.Everything is ready, but we need to know how our interface is working. And for this we'll add an item via code in a simple way using add_item() from the Inventory singleton:
 
 	func _ready() -> void:
 		Inventory.add_item(1,0)
 
-![image](https://github.com/user-attachments/assets/8d5a9e48-0dd9-40a2-b13e-84f70056de73)
+![image](https://github.com/user-attachments/assets/4f0912d9-5afe-41fe-891d-dbb15ad9845d)
+
 
 # Coding and functions
 
@@ -106,6 +110,8 @@ Restart the project:
 	remove_class(_inventory: Dictionary,_class_name: String)
   #### Remove an item in a panel.
 	remove_item(_panel_id: int, _id: int = -1)
+  #### Lists all the panels in an array.
+	list_all_panel()
   #### Const
    `ITEM_PANEL_PATH`
    `PANEL_SLOT_PATH`
