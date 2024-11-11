@@ -32,7 +32,7 @@ var item_selected: Control # Item node dos slots
 ## Sub functions ================================================================
 func _ready() -> void:
 	set_process_input(false)
-	
+	process_mode = PROCESS_MODE_ALWAYS
 	button_slot_changed.connect(_function_slot_changed)
 
 func _input(event: InputEvent) -> void:
