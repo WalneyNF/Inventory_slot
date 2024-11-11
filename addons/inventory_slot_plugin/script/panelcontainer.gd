@@ -156,18 +156,10 @@ func update_visual_panel_slot() -> void:
 			grid_slot.add_theme_constant_override("separation",vertical_separation)
 	
 	if _add:
-		if get_node_or_null("VboxPanel") == null:
-			add_child(vbox_panel)
-		
-		vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		
-		vbox_panel.add_child(grid_slot)
-		
-		vbox_panel.name = "VboxPanel"
-		grid_slot.name = "GridSlot"
-		
+		_reset_slots()
 		update_slots()
+
+
 
 func update_tittle() -> void:
 	if get_node_or_null("Tittle") == null:
@@ -275,6 +267,18 @@ func _load_item(item_inventory: Dictionary) -> void:
 		
 		slot.add_child(new_item)
 
+func _reset_slots() -> void:
+		if get_node_or_null("VboxPanel") == null:
+			add_child(vbox_panel)
+		
+		vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		
+		vbox_panel.add_child(grid_slot)
+		
+		vbox_panel.name = "VboxPanel"
+		grid_slot.name = "GridSlot"
+
 func instance_slot_button(slot_button: Button) -> void:
 	if !Engine.is_editor_hint():
 		slot_button.set_script(SCRIPT_SLOT)
@@ -288,6 +292,9 @@ func instance_slot_button(slot_button: Button) -> void:
 
 func update_changed_panel_data() -> void:
 	update_visual_panel_slot()
+	for child in grid_slot.get_children():
+		child.queue_free()
+	update_slots()
 
 func connect_signal_inventory() -> void:
 	Inventory.new_item.connect(receive_new_item)
