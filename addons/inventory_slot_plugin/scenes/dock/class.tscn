@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://du8cysfmaia3w"]
+[gd_scene load_steps=10 format=3 uid="uid://du8cysfmaia3w"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/class.gd" id="1_tlyxu"]
 [ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_5fn77"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/list_item.gd" id="2_hpeo5"]
-[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_krhex"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_krhex"]
+[ext_resource type="Texture2D" uid="uid://b3gjbet1fqlon" path="res://addons/inventory_slot_plugin/assets/icons/slot_more.tres" id="4_560wv"]
 [ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_kaawh"]
 [ext_resource type="Texture2D" uid="uid://c2254e60ufuh0" path="res://addons/inventory_slot_plugin/assets/icons/slot_add.tres" id="6_j1kbg"]
+[ext_resource type="Texture2D" uid="uid://vcqdmhm3l70u" path="res://addons/inventory_slot_plugin/assets/icons/slot_rename.tres" id="6_nmbge"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_288to"]
 color = Color(0.29366, 0.29366, 0.29366, 1)
@@ -50,11 +52,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="delete" type="Button" parent="Vbox/TopBar/Hbox"]
+[node name="More" type="Button" parent="Vbox/TopBar/Hbox" node_paths=PackedStringArray("NodeVisible")]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
+icon = ExtResource("4_560wv")
+icon_alignment = 1
+script = ExtResource("2_krhex")
+NodeVisible = NodePath("more_buttons")
+icon_use = false
+no_focus_hide = true
+
+[node name="more_buttons" type="VBoxContainer" parent="Vbox/TopBar/Hbox/More"]
+visible = false
+layout_mode = 0
+offset_left = -74.0
+offset_top = -68.0
+offset_right = 33.0
+offset_bottom = -1.0
+
+[node name="Remove" type="Button" parent="Vbox/TopBar/Hbox/More/more_buttons"]
+layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Remove"
 icon = ExtResource("4_kaawh")
+alignment = 2
+
+[node name="EditName" type="Button" parent="Vbox/TopBar/Hbox/More/more_buttons"]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Rename"
+icon = ExtResource("6_nmbge")
+alignment = 2
 
 [node name="PanelItems" type="PanelContainer" parent="Vbox"]
 layout_mode = 2
@@ -100,5 +130,6 @@ theme_override_styles/separator = SubResource("StyleBoxLine_288to")
 [connection signal="gui_input" from="Vbox/TopBar/Hbox/name_class" to="." method="_on_name_class_gui_input"]
 [connection signal="focus_exited" from="Vbox/TopBar/Hbox/name_class/edit_name" to="." method="_on_edit_name_focus_exited"]
 [connection signal="text_submitted" from="Vbox/TopBar/Hbox/name_class/edit_name" to="." method="_on_edit_name_text_submitted"]
-[connection signal="pressed" from="Vbox/TopBar/Hbox/delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="Vbox/TopBar/Hbox/More/more_buttons/Remove" to="." method="_on_remove_pressed"]
+[connection signal="pressed" from="Vbox/TopBar/Hbox/More/more_buttons/EditName" to="." method="_on_edit_name_pressed"]
 [connection signal="pressed" from="Vbox/PanelItems/Vbox/Buttons/New_item" to="." method="_on_new_item_pressed"]

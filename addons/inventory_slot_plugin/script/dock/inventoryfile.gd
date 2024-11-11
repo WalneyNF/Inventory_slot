@@ -172,6 +172,15 @@ static func get_class_name(_unique_id_item: int) -> StringName:
 	
 	return ""
 
+static func list_all_panel() -> Array:
+	var _all_panel = pull_inventory(PANEL_SLOT_PATH)
+	var _array_panel: Array
+	
+	for _panel in _all_panel:
+		_array_panel.append(_all_panel.get(_panel))
+	
+	return _array_panel
+
 ## File Whrite ==================================================================
 
 static func push_inventory(_dic: Dictionary,_path: String) -> void:
@@ -195,6 +204,11 @@ static func push_item_inventory(_item_id: int, _item_inventory: Dictionary) -> b
 		return true
 	
 	return false
+
+static func remove_all_item_inventory() -> void:
+	for panel in InventoryFile.list_all_panel():
+		for item in InventoryFile.list_all_item_inventory(panel.id):
+			Inventory.remove_item(panel.id,item.id)
 
 ## Dictionary ==================================================================
 

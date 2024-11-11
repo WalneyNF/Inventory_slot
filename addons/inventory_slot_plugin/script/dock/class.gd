@@ -7,6 +7,7 @@ extends TypePanel
 @onready var items: VBoxContainer = $Vbox/PanelItems/Vbox/Hbox/Items
 @onready var top_bar: PanelContainer = $Vbox/TopBar
 @onready var panel_items: PanelContainer = $Vbox/PanelItems
+@onready var more_buttons: VBoxContainer = $Vbox/TopBar/Hbox/More/more_buttons
 
 var load_items: bool = true
 
@@ -42,7 +43,8 @@ func _on_edit_name_text_submitted(new_text: String) -> void:
 	edit_name.hide()
 	
 	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
-
+	
+	Inventory.changed_panel_data.emit()
 
 func _on_new_item_pressed() -> void:
 	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
@@ -56,10 +58,15 @@ func _on_edit_name_focus_exited() -> void:
 	edit_name.hide()
 
 
-func _on_delete_pressed() -> void:
+func _on_remove_pressed() -> void:
 	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
 	
 	InventoryFile.remove_class(inventory,name_class.text)
 	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
 	
+	Inventory.changed_panel_data.emit()
 	queue_free()
+
+func _on_edit_name_pressed() -> void:
+	edit_name.show()
+	more_buttons.hide()

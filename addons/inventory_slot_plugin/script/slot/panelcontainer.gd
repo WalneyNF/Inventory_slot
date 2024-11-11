@@ -89,7 +89,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		tittle_uppercase = value
 		name_label.uppercase = tittle_uppercase
 
-const SCRIPT_SLOT: Script = preload("res://addons/inventory_slot_plugin/script/slot_button.gd")
+const SCRIPT_SLOT: Script = preload("res://addons/inventory_slot_plugin/script/slot/slot_button.gd")
 const ITEM_TEXTURE: PackedScene = preload("res://addons/inventory_slot_plugin/scenes/screen/item_texture.tscn")
 
 
@@ -296,6 +296,7 @@ func update_changed_panel_data() -> void:
 	for child in grid_slot.get_children():
 		child.queue_free()
 	update_slots()
+	update_tittle_name()
 
 func connect_signal_inventory() -> void:
 	Inventory.new_item.connect(receive_new_item)

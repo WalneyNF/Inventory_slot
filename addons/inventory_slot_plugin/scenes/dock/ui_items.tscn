@@ -53,4 +53,5 @@ icon = ExtResource("3_eol0j")
 
 [connection signal="change_class" from="." to="Panel/ItemBar/hbox/Items/ListClass" method="_on_ui_items_change_class"]
 [connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/Class" to="Panel/ItemBar/hbox/Items/ListClass/Class/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
+[connection signal="change_item" from="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@34555" to="Panel/ItemBar/hbox/Items/ListClass/@PanelContainer@34555/Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
 [connection signal="pressed" from="Panel/ItemBar/new_class" to="." method="_on_new_class_pressed"]

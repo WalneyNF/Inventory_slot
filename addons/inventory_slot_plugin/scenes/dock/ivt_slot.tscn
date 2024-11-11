@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8w5wbmaey2hq"]
+[gd_scene load_steps=7 format=3 uid="uid://b8w5wbmaey2hq"]
 
 [ext_resource type="Theme" uid="uid://dlmvgp744mykf" path="res://addons/inventory_slot_plugin/assets/themes/default.tres" id="1_1w27d"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/ivt_slot.gd" id="1_tkquw"]
 [ext_resource type="Texture2D" uid="uid://becu4ghipl448" path="res://addons/inventory_slot_plugin/assets/icons/slot_reload.tres" id="3_o3b3d"]
 [ext_resource type="Texture2D" uid="uid://boxdvtor8gb8m" path="res://addons/inventory_slot_plugin/assets/icons/slot_theme_default.tres" id="4_n2hf1"]
+[ext_resource type="Texture2D" uid="uid://bwwgylpwkgmf4" path="res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres" id="4_q2ndl"]
+[ext_resource type="Texture2D" uid="uid://cqhxnuh7nk3er" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_all_item_inventory.tres" id="5_due8w"]
 
 [node name="IVTSlot" type="PanelContainer"]
 anchors_preset = -1
@@ -24,33 +26,83 @@ horizontal_scroll_mode = 0
 [node name="Panels" type="VBoxContainer" parent="Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Panel" type="PanelContainer" parent="Scroll/Panels"]
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TopBar" type="HBoxContainer" parent="Scroll/Panels"]
+[node name="TopBar" type="VBoxContainer" parent="Scroll/Panels/Panel"]
 layout_mode = 2
-alignment = 2
 
-[node name="Label" type="Label" parent="Scroll/Panels/TopBar"]
+[node name="Tittle" type="Label" parent="Scroll/Panels/Panel/TopBar"]
+custom_minimum_size = Vector2(0, 38.46)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Inventory Slot Plugin"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ReloadPlugin" type="Button" parent="Scroll/Panels/TopBar"]
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Panels/Panel/TopBar"]
 layout_mode = 2
-size_flags_horizontal = 8
+alignment = 1
+
+[node name="Control" type="Control" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+custom_minimum_size = Vector2(36.66, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ReloadPlugin" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Reload dock."
 focus_mode = 0
 mouse_default_cursor_shape = 2
 icon = ExtResource("3_o3b3d")
 
-[node name="RemoveTheme" type="Button" parent="Scroll/Panels/TopBar"]
+[node name="SaveInventory" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "All delete item inventory."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("4_q2ndl")
+icon_alignment = 1
+
+[node name="DeleteInventory" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "All delete item inventory."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("5_due8w")
+icon_alignment = 1
+
+[node name="RemoveTheme" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Changed theme."
 focus_mode = 0
 mouse_default_cursor_shape = 2
 icon = ExtResource("4_n2hf1")
 icon_alignment = 1
 
-[connection signal="pressed" from="Scroll/Panels/TopBar/ReloadPlugin" to="." method="_on_reload_plugin_pressed"]
-[connection signal="pressed" from="Scroll/Panels/TopBar/RemoveTheme" to="." method="_on_remove_theme_pressed"]
+[node name="Label" type="Label" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+modulate = Color(1, 1, 1, 0.180392)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "v0.7.0"
+
+[node name="hs" type="HSeparator" parent="Scroll/Panels"]
+layout_mode = 2
+
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/ReloadPlugin" to="." method="_on_reload_plugin_pressed"]
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/SaveInventory" to="." method="_on_save_inventory_pressed"]
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/DeleteInventory" to="." method="_on_delete_inventory_pressed"]
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/RemoveTheme" to="." method="_on_remove_theme_pressed"]

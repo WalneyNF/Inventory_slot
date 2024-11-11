@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c75p37f035d7p"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/panel_slot_controller.gd" id="1_jph47"]
-[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_nllto"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_nllto"]
 [ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_tliut"]
 [ext_resource type="Texture2D" uid="uid://c2254e60ufuh0" path="res://addons/inventory_slot_plugin/assets/icons/slot_add.tres" id="4_y2wlv"]
 

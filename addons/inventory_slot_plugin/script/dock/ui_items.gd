@@ -31,3 +31,4 @@ func _on_new_class_pressed() -> void:
 		InventoryFile.push_inventory(InventoryFile.new_class("new_class"), InventoryFile.ITEM_PANEL_PATH)
 	
 	change_class.emit()
+	Inventory.changed_panel_data.emit()

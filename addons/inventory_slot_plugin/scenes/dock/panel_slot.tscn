@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0u70qesn4lw0"]
+[gd_scene load_steps=8 format=3 uid="uid://b0u70qesn4lw0"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/panel_slot.gd" id="1_joxuk"]
 [ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_hf0pb"]
-[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/buttonvisible.gd" id="2_unog3"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_unog3"]
+[ext_resource type="Texture2D" uid="uid://b3gjbet1fqlon" path="res://addons/inventory_slot_plugin/assets/icons/slot_more.tres" id="4_aauc0"]
 [ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_rp7ey"]
+[ext_resource type="Texture2D" uid="uid://vcqdmhm3l70u" path="res://addons/inventory_slot_plugin/assets/icons/slot_rename.tres" id="6_uatu7"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_jafag"]
 color = Color(0.29366, 0.29366, 0.29366, 1)
@@ -32,12 +34,40 @@ icon = ExtResource("2_hf0pb")
 script = ExtResource("2_unog3")
 NodeVisible = NodePath("../../Settings")
 
-[node name="Remove" type="Button" parent="Vbox/TopBar"]
+[node name="More" type="Button" parent="Vbox/TopBar" node_paths=PackedStringArray("NodeVisible")]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+icon = ExtResource("4_aauc0")
+icon_alignment = 1
+script = ExtResource("2_unog3")
+NodeVisible = NodePath("vbox")
+icon_use = false
+no_focus_hide = true
+
+[node name="vbox" type="VBoxContainer" parent="Vbox/TopBar/More"]
+visible = false
+layout_mode = 0
+offset_left = -75.0
+offset_top = -68.0
+offset_right = 25.0
+offset_bottom = -1.0
+
+[node name="Remove" type="Button" parent="Vbox/TopBar/More/vbox"]
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Remove"
 icon = ExtResource("4_rp7ey")
+alignment = 2
+
+[node name="EditName" type="Button" parent="Vbox/TopBar/More/vbox"]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Rename"
+icon = ExtResource("6_uatu7")
+alignment = 2
 
 [node name="Settings" type="VBoxContainer" parent="Vbox"]
 layout_mode = 2
@@ -62,7 +92,7 @@ layout_mode = 2
 
 [node name="Tittle" type="Label" parent="Vbox/Settings/ID"]
 layout_mode = 2
-text = "Unique ID:"
+text = "ID:"
 
 [node name="Warning" type="Label" parent="Vbox/Settings/ID"]
 visible = false
@@ -113,7 +143,8 @@ theme_override_constants/separation = 5
 theme_override_styles/separator = SubResource("StyleBoxLine_jafag")
 
 [connection signal="gui_input" from="Vbox/TopBar/Tittle" to="." method="_on_tittle_gui_input"]
-[connection signal="pressed" from="Vbox/TopBar/Remove" to="." method="_on_remove_pressed"]
+[connection signal="pressed" from="Vbox/TopBar/More/vbox/Remove" to="." method="_on_remove_pressed"]
+[connection signal="pressed" from="Vbox/TopBar/More/vbox/EditName" to="." method="_on_edit_name_pressed"]
 [connection signal="focus_exited" from="Vbox/Settings/Name/PanelName" to="." method="_on_panel_name_focus_exited"]
 [connection signal="text_submitted" from="Vbox/Settings/Name/PanelName" to="." method="_on_panel_name_text_submitted"]
 [connection signal="value_changed" from="Vbox/Settings/ID/Id" to="." method="_on_id_value_changed"]

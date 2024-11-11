@@ -11,18 +11,13 @@ extends TypePanel
 @onready var id_warning: Label = $Vbox/Settings/ID/Warning
 
 var out_panel_name: String
+var panel_slot_controller: Control
 
 func _ready() -> void:
 	settings.hide()
 	
-	var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
-	
-	option_class.clear()
-	option_class.add_item("all")
-	
-	for _class in _all_class:
-		
-		option_class.add_item(_class)
+	Inventory.changed_panel_data.connect(update_option_class)
+	update_option_class()
 
 
 func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: String) -> void:
@@ -38,6 +33,16 @@ func start(_panel_name: StringName,_id: int, slot_amount: int, class_unique: Str
 	
 	tittle.text = str(_id," - ",_panel_name)
 
+
+func update_option_class() -> void:
+	option_class.clear()
+	option_class.add_item("all")
+	
+	var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	
+	for _class in _all_class:
+		
+		option_class.add_item(_class)
 
 
 func change_panel_name(new_name: String) -> void:
@@ -55,7 +60,6 @@ func change_panel_name(new_name: String) -> void:
 	
 	Inventory.changed_panel_data.emit()
 
-
 func _on_remove_pressed() -> void:
 	var panels = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
@@ -65,14 +69,13 @@ func _on_remove_pressed() -> void:
 	
 	InventoryFile.push_inventory(panels ,InventoryFile.PANEL_SLOT_PATH)
 	
-	queue_free()
-	
 	Inventory.changed_panel_data.emit()
+	
+	queue_free()
 
 
 func _on_panel_name_text_submitted(new_text: String) -> void:
 	change_panel_name(new_text)
-
 
 
 func _on_id_value_changed(value: float) -> void:
@@ -123,6 +126,11 @@ func _on_class_item_selected(index: int) -> void:
 func _on_tittle_gui_input(event: InputEvent) -> void:
 	move_panel(event,self,top_bar,get_parent())
 
-
 func _on_panel_name_focus_exited() -> void:
 	change_panel_name(panel_name.text)
+
+func _on_edit_name_pressed() -> void:
+	tittle.NodeVisible.show()
+	
+	panel_name.grab_focus()
+	panel_name.select_all()

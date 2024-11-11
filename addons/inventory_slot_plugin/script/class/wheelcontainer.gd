@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/inventory_slot_plugin/assets/icons/slot_whellcontainer.tres")
 extends Container
 
 class_name WheelContainer

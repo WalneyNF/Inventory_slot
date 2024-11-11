@@ -16,7 +16,7 @@ config/icon="res://addons/inventory_slot_plugin/assets/icons/slot_inventory_plug
 
 [autoload]
 
-Inventory="*res://addons/inventory_slot_plugin/script/inventory.gd"
+Inventory="*res://addons/inventory_slot_plugin/script/slot/inventory.gd"
 
 [display]
 

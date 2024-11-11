@@ -5,7 +5,6 @@ const PANEL_SLOT = preload("res://addons/inventory_slot_plugin/scenes/dock/panel
 
 @onready var panel_list: VBoxContainer = %PanelList
 
-
 func _ready() -> void:
 	if !InventoryFile.is_json(InventoryFile.PANEL_SLOT_PATH):
 		var new_panel = {
@@ -39,14 +38,16 @@ func update_panel() -> void:
 	for child in panel_list.get_children():
 		child.queue_free()
 	
-	var panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
 	
-	for i in panel:
-		if i == "Void":	continue
+	for _panel_name in _all_panel:
+		var _panel = _all_panel.get(_panel_name)
+		
+		if _panel.id == Inventory.ERROR.SLOT_BUTTON_VOID: continue
 		
 		var new_panel = PANEL_SLOT.instantiate()
 		
 		panel_list.add_child(new_panel)
 		
-		new_panel.start(i,panel.get(i).id,panel.get(i).slot_amount,panel.get(i).class_unique)
-	
+		new_panel.panel_slot_controller = self
+		new_panel.start(_panel_name,_panel.id,_panel.slot_amount,_panel.class_unique)

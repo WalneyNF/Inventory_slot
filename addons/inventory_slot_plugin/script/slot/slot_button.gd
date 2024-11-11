@@ -103,11 +103,8 @@ func item_changed_other_slot() -> void:
 	Inventory.button_slot_changed.emit(self,false)
 	
 	if _one_item_panel_id != panel_id:
-		Inventory.remove_item(_one_item_panel_id ,_one_item.id )
-		Inventory.remove_item(_two_item_panel_id ,_two_item.id )
-		
-		Inventory.set_panel_item(_one_item.id, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, false )
-		Inventory.set_panel_item(_two_item.id, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, false )
+		Inventory.set_panel_item(_one_item.id, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, true )
+		Inventory.set_panel_item(_two_item.id, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, true )
 	else:
 		Inventory.changed_slots_items(_one_item, _two_item )
 
@@ -213,6 +210,8 @@ func is_unique_class() -> bool:
 				if _all_class.get(_class).get(_item).unique_id == Inventory.item_selected.item_inventory.unique_id:
 					
 					if _class == panel.class_unique:
+						return true
+					else:
 						return false
 	
 	return true

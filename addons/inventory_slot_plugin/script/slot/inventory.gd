@@ -61,7 +61,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 		return _append_item_filter_slot_amount(_panel_slot , _item_panel, _amount, _slot, _id, _metadata)
 	
 	if _slot == ERROR.SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
-		var _new_item = _append_item(_panel_slot, _item_panel, _amount, ERROR.SLOT_BUTTON_VOID, _metadata)
+		var _new_item = _append_item(_panel_slot, _item_panel, _amount, ERROR.SLOT_BUTTON_VOID, -1,_metadata)
 		
 		return _new_item
 	
@@ -154,20 +154,26 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 	
 	if _out_panel == null or new_data == null: return
 	
-	var _result = add_item(_new_panel.id, _new_item.unique_id,_new_item.amount,_slot,_new_item.id,_unique,_new_item.metadata)
+	var _result = add_item(
+		_new_panel.id,
+		_new_item.unique_id,
+		_new_item.amount,
+		_slot,
+		_new_item.id,
+		_unique,
+		_new_item.metadata
+	)
 	
 	if _result is Array:
 		match _result[0]:
 			ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS:
-				return
+				return _result
 			ERROR.ITEM_LEFT_WITH_FULL_SLOTS:
 				_new_item.amount = _result[1]
 				
 				new_data_global.emit()
 				item_leftlover.emit(_new_item,_new_panel,_result[1])
 				return _result
-	
-	
 	
 	item_entered_panel.emit(_new_item,_new_panel_id)
 	item_exiting_panel.emit(_new_item,_out_panel_id)
