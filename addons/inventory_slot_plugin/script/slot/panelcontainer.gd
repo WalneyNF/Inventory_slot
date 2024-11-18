@@ -44,19 +44,21 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		if !Engine.is_editor_hint():
 			if Inventory == null: return
 		
-		update_tittle_name()
 		update_visual_panel_slot()
+		update_tittle_name()
 
 @export_subgroup("Slot")
 ## Slot alignment mode. Not all configurations support alignment.
 @export var container_slot: CONTAINER_SLOT:
 	set(value):
 		container_slot = value
+		
 		update_visual_panel_slot()
 ## Defines the size of the slots.
 @export var size_slot: Vector2 = Vector2(64,64):
 	set(value):
 		size_slot = value
+		
 		update_visual_panel_slot()
 ## Defines how many columns the grid should be created for the slots.
 ## Note: This will only work if container_slot is in Grid mode.
@@ -113,6 +115,8 @@ func _ready() -> void:
 
 ## Visual ================================================
 func update_visual_panel_slot() -> void:
+	InventorySystem._update_path()
+	
 	var _add: bool = false
 	
 	match container_slot:
@@ -175,7 +179,7 @@ func update_tittle() -> void:
 	update_tittle_name()
 
 func update_tittle_name() -> void:
-	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var _all_panel = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
 	
 	for _panel_slot in _all_panel:
 		var _panel = _all_panel.get(_panel_slot)
@@ -193,7 +197,7 @@ func update_tittle_alignment() -> void:
 			name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 func update_slots() -> void: # Mudar
-	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var _all_panel = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
 	
 	for panel_slot in _all_panel:
 		var panel = _all_panel.get(panel_slot)
@@ -269,16 +273,16 @@ func _load_item(item_inventory: Dictionary) -> void:
 		slot.add_child(new_item)
 
 func _reset_slots() -> void:
-		if get_node_or_null("VboxPanel") == null:
-			add_child(vbox_panel)
-		
-		vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		
-		vbox_panel.add_child(grid_slot)
-		
-		vbox_panel.name = "VboxPanel"
-		grid_slot.name = "GridSlot"
+	if get_node_or_null("VboxPanel") == null:
+		add_child(vbox_panel)
+	
+	vbox_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	grid_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	vbox_panel.add_child(grid_slot)
+	
+	vbox_panel.name = "VboxPanel"
+	grid_slot.name = "GridSlot"
 
 func instance_slot_button(slot_button: Button) -> void:
 	if !Engine.is_editor_hint():

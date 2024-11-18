@@ -1,0 +1,1305 @@
+[gd_scene load_steps=4 format=3 uid="uid://da4aaqpi5d8kv"]
+
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="1_k3ij2"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_o68ly"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="3_q43ub"]
+
+[node name="Documentation" type="PanelContainer"]
+offset_right = 385.0
+offset_bottom = 883.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="hbox" type="HBoxContainer" parent="scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="vs" type="VSeparator" parent="scroll/hbox"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="scroll/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Basic" type="Button" parent="scroll/hbox/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Basic"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../basicbuttons")
+
+[node name="basicbuttons" type="HBoxContainer" parent="scroll/hbox/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/basicbuttons"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="scroll/hbox/buttons/basicbuttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="add_itemButton" type="Button" parent="scroll/hbox/buttons/basicbuttons/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "add item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../add_item")
+
+[node name="add_item" type="HBoxContainer" parent="scroll/hbox/buttons/basicbuttons/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/basicbuttons/buttons/add_item"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/basicbuttons/buttons/add_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.add_item(0,1) for add new item"
+autowrap_mode = 1
+
+[node name="remove_itemButton" type="Button" parent="scroll/hbox/buttons/basicbuttons/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "remove item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../remove_item")
+
+[node name="remove_item" type="HBoxContainer" parent="scroll/hbox/buttons/basicbuttons/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/basicbuttons/buttons/remove_item"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/basicbuttons/buttons/remove_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.remove_item(0,1) for removed item"
+autowrap_mode = 1
+
+[node name="Script" type="Button" parent="scroll/hbox/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Script"
+icon = ExtResource("1_k3ij2")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../h_files")
+
+[node name="h_files" type="HBoxContainer" parent="scroll/hbox/buttons"]
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files"]
+layout_mode = 2
+
+[node name="Files" type="VBoxContainer" parent="scroll/hbox/buttons/h_files"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Inventory" type="Button" parent="scroll/hbox/buttons/h_files/Files" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+text = "Inventory ( Singleton )"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../inventorylist")
+
+[node name="inventorylist" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist"]
+layout_mode = 2
+
+[node name="ScriptS" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Properties" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+text = "Properties"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../propertieslist")
+
+[node name="propertieslist" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS"]
+visible = false
+layout_mode = 2
+
+[node name="vs2" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SAVE_PATHButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "SAVE PATH"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../SAVE_PATH")
+
+[node name="SAVE_PATH" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/SAVE_PATH"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/SAVE_PATH"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/SAVE_PATH/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Caminho em que é salvo todos os arquivos."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/SAVE_PATH/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=GRAY]SAVE_PATH[/color]"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="ITEM_PANEL_PATHButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "ITEM PANEL PATH"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../ITEM_PANEL_PATH")
+
+[node name="ITEM_PANEL_PATH" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_PANEL_PATH"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_PANEL_PATH"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_PANEL_PATH/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local do arquivo que salva os itens em paineis. ( class / itens )"
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_PANEL_PATH/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=GRAY]ITEM_PANEL_PATH[/color]"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="ITEM_INVENTORY_PATHButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "ITEM INVENTORY PATH"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../ITEM_INVENTORY_PATH")
+
+[node name="ITEM_INVENTORY_PATH" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_INVENTORY_PATH"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_INVENTORY_PATH"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_INVENTORY_PATH/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local do arquivo que salva os itens em inventario. ( itens de todos os SlotPanel em jogo. )"
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_INVENTORY_PATH/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=GRAY]ITEM_INVENTORY_PATH[/color]"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="PANEL_SLOT_PATHButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "PANEL SLOT PATH"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../PANEL_SLOT_PATH")
+
+[node name="PANEL_SLOT_PATH" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/PANEL_SLOT_PATH"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/PANEL_SLOT_PATH"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/PANEL_SLOT_PATH/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local do arquivo que salva todos os paineis."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/PANEL_SLOT_PATH/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=GRAY]PANEL_SLOT_PATH[/color]"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="ITEM_SETTINGSButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "ITEM SETTINGS"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../ITEM_SETTINGS")
+
+[node name="ITEM_SETTINGS" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_SETTINGS"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_SETTINGS"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_SETTINGS/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Predefinições dos slots."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/propertieslist/buttons/ITEM_SETTINGS/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=GRAY]ITEM_SETTINGS[/color]"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="Methods" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+text = "Methods"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../methlist")
+
+[node name="methlist" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS"]
+visible = false
+layout_mode = 2
+
+[node name="vs2" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="main" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+text = "main"
+horizontal_alignment = 1
+
+[node name="hs" type="HSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+layout_mode = 2
+
+[node name="add_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "add item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../add_item")
+
+[node name="add_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/add_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/add_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/add_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.add_item() for add new item."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/add_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]add_item[/color](panel_id, unique_id_item, amount, slot, id, unique, metadata)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/add_item/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: caso o inventario esteja cheio, será retornado um array com o erro e a sobra dos itens: [erro, sobra]."
+autowrap_mode = 2
+
+[node name="remove_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "remove item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../remove_item")
+
+[node name="remove_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/remove_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/remove_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/remove_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.remove_item() for remove item."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/remove_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]remove_item[/color](panel_id, id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/remove_item/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: o id é a indentificação do item em inventario, use metodos que puxam do inventario."
+autowrap_mode = 2
+
+[node name="set_panel_item_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "set panel item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../set_panel_item")
+
+[node name="set_panel_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_panel_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_panel_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_panel_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.set_panel_item() para setar um item em um painel."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_panel_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]set_panel_item[/color](_item_id, _out_panel_id, _new_panel_id, _slot, _unique, _out_item_remove)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_panel_item/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: caso o inventario esteja cheio, retorna os espaços que sobram em array."
+autowrap_mode = 2
+
+[node name="set_slot_item_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "set slot item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../set_slot_item")
+
+[node name="set_slot_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_slot_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_slot_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_slot_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.set_panel_item() para setar um item em um slot."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/set_slot_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]set_slot_item[/color](_panel_item, _item_inventory, _slot, _unique)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="changed_slots_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "changed slots items"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../changed_slots_item")
+
+[node name="changed_slots_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/changed_slots_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/changed_slots_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/changed_slots_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.changed_slots_items() para trocar a posição de 2 itens."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/changed_slots_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]changed_slots_items[/color](_one_item, _two_item)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="search" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+text = "search"
+horizontal_alignment = 1
+
+[node name="hs2" type="HSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+layout_mode = 2
+
+[node name="search_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "search item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../search_item")
+
+[node name="search_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.search_item() para procurar um item com base seu painel, o uso do argumento _slot irar fazer com que o _item_unique_id seja ignorado."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]search_item[/color](_panel_id, _item_unique_id, _slot)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: retornará o primeiro item encontrado com item_unique_id."
+autowrap_mode = 2
+
+[node name="search_item_inventoryButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "search item inventory"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../search_item_inventory")
+
+[node name="search_item_inventory" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_inventory"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_inventory"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_inventory/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.search_item_inventory() procura um item com base seu painel."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_inventory/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]search_item_inventory[/color](_panel_id, _item_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_inventory/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: item_id é o id do item no inventario."
+autowrap_mode = 2
+
+[node name="search_panel_id_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "search panel id item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../search_panel_id_item")
+
+[node name="search_panel_id_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_panel_id_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_panel_id_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_panel_id_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O Inventory.search_panel_id_item() irar em busca de um item em todos os paineis."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_panel_id_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]search_panel_id_item[/color](_item_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="text2" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_panel_id_item/text"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Note: item_id é o id do item no inventario."
+autowrap_mode = 2
+
+[node name="search_void_slotButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "search void slot"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../search_void_slot")
+
+[node name="search_void_slot" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_void_slot"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_void_slot"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_void_slot/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O Inventory.search_void_slot() irar fazer uma busca por um slot vazio."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_void_slot/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]search_void_slot[/color](_panel_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="search_item_amount_minButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "search item amount min"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../search_item_amount_min")
+
+[node name="search_item_amount_min" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_amount_min"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_amount_min"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_amount_min/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use Inventory.search_item_amount_min() procura pelo item com menor amontoado no momento."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/search_item_amount_min/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]search_item_amount_min[/color](_panel_id, _item_unique_id, _max_amount)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="extra" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+modulate = Color(0.709375, 0.709375, 0.709375, 1)
+layout_mode = 2
+text = "extra"
+horizontal_alignment = 1
+
+[node name="hs3" type="HSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+layout_mode = 2
+
+[node name="_append_itemButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "append item"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../_append_item")
+
+[node name="_append_item" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O Inventory._append_item() adiciona um item diretamente no inventario sem passar por condições ou filtros."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]_append_item[/color](_panel_slot, _item_panel, _amount, _slot, _id, _metadata)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="_append_item_filter_slot_amountButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "append item filter slot amount"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../_append_item_filter_slot_amount")
+
+[node name="_append_item_filter_slot_amount" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item_filter_slot_amount"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item_filter_slot_amount"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item_filter_slot_amount/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O Inventory._append_item_filter_slot_amount() adiciona um item passando pela filtragem de amontoado do item."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventorylist/ScriptS/methlist/buttons/_append_item_filter_slot_amount/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]Inventory[/color].[color=aqua]_append_item_filter_slot_amount[/color](_panel_slot ,_item_panel ,_amount ,_slot ,_id , _metadata)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="InventoryFile" type="Button" parent="scroll/hbox/buttons/h_files/Files" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+text = "InventoryFile ( Class )"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../inventoryfilelist")
+
+[node name="inventoryfilelist" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist"]
+layout_mode = 2
+
+[node name="ScriptS" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Methods" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+text = "Methods"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../methlist")
+
+[node name="methlist" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS"]
+visible = false
+layout_mode = 2
+
+[node name="vs2" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="is_jsonButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "is json"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../is_json")
+
+[node name="is_json" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/is_json"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/is_json"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/is_json/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    Use InventoryFile.is_json() para verificar se o arquivo é um json aceitavel."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/is_json/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]is_json[/color](_path)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="pull_inventoryButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "pull inventory"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../pull_inventory")
+
+[node name="pull_inventory" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/pull_inventory"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/pull_inventory"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/pull_inventory/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.pull_inventory() irar ler o arquivo passado e retornar em dicionario."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/pull_inventory/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]pull_inventory[/color](_path)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="push_inventoryButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "push inventory"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../push_inventory")
+
+[node name="push_inventory" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/push_inventory"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/push_inventory"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/push_inventory/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.pull_inventory() irar enviar o dicionario ao arquivo."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/push_inventory/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]push_inventory[/color](_dictionary,_path)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="list_all_classButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "list all class"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../list_all_class")
+
+[node name="list_all_class" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_class"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_class"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_class/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.list_all_class() irar retornar todas as classes."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_class/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]list_all_class[/color]()"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="list_all_item_inventoryButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "list all item inventory"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../list_all_item_inventory")
+
+[node name="list_all_item_inventory" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_inventory"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_inventory"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_inventory/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.list_all_item_inventory() irar retornar todos os itens do inventario em um painel."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_inventory/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]list_all_item_inventory[/color](_panel_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="list_all_item_panelButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "list all item inventory"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../list_all_item_panel")
+
+[node name="list_all_item_panel" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_panel"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_panel/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.list_all_item_panel() irar retornar todos os itens em paineis."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_item_panel/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]list_all_item_panel[/color](_panel_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="list_all_panelButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "list all panel"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../list_all_panel")
+
+[node name="list_all_panel" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_panel"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_panel/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.list_all_panel() irar retornar todos os paineis."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/list_all_panel/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]list_all_panel[/color]()"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="get_panelButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "get panel"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../get_panel")
+
+[node name="get_panel" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.get_panel() irar retornar um dicionario."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]get_panel[/color](_panel_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="get_panel_with_unique_idButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "get panel with unique id"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../get_panel_with_unique_id")
+
+[node name="get_panel_with_unique_id" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel_with_unique_id"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel_with_unique_id"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="text" type="Label" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel_with_unique_id/text"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "    O InventoryFile.get_panel_with_unique_id() irar retornar um dicionario."
+autowrap_mode = 2
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_panel_with_unique_id/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]get_panel_with_unique_id[/color](_unique_id)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="get_item_nameButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "get item name"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../get_item_name")
+
+[node name="get_item_name" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_item_name"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_item_name"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_item_name/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]get_item_name[/color](_unique_id_item)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="get_class_nameButton" type="Button" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "get class name"
+icon = ExtResource("3_q43ub")
+alignment = 0
+script = ExtResource("2_o68ly")
+NodeVisible = NodePath("../get_class_name")
+
+[node name="get_class_name" type="HBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_class_name"]
+layout_mode = 2
+
+[node name="text" type="VBoxContainer" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_class_name"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="script" type="RichTextLabel" parent="scroll/hbox/buttons/h_files/Files/inventoryfilelist/ScriptS/methlist/buttons/get_class_name/text"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=aquamarine]InventoryFile[/color].[color=aqua]get_class_name[/color](_unique_id_item)"
+fit_content = true
+scroll_active = false
+context_menu_enabled = true
+selection_enabled = true

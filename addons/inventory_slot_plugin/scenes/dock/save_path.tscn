@@ -1,0 +1,143 @@
+[gd_scene load_steps=5 format=3 uid="uid://iuusevm1brx8"]
+
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/save_path.gd" id="1_nlv6a"]
+[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_v6csw"]
+[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="3_ee03f"]
+[ext_resource type="Texture2D" uid="uid://bwwgylpwkgmf4" path="res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres" id="5_xkcjw"]
+
+[node name="SavePath" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.270833
+anchor_bottom = 0.330247
+offset_bottom = -100.0
+size_flags_horizontal = 3
+script = ExtResource("1_nlv6a")
+metadata/_edit_use_anchors_ = true
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopBar" type="Button" parent="Vbox" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Save path"
+icon = ExtResource("2_v6csw")
+alignment = 0
+script = ExtResource("3_ee03f")
+NodeVisible = NodePath("../hbox")
+
+[node name="hbox" type="HBoxContainer" parent="Vbox"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Vbox/hbox"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="Vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="v_mode_path_save" type="HBoxContainer" parent="Vbox/hbox/vbox"]
+layout_mode = 2
+
+[node name="tittle" type="Label" parent="Vbox/hbox/vbox/v_mode_path_save"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Path mode:"
+
+[node name="path_global" type="OptionButton" parent="Vbox/hbox/vbox/v_mode_path_save"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Plugin path"
+popup/item_1/text = "Undefined"
+popup/item_1/id = 1
+popup/item_1/disabled = true
+
+[node name="hs" type="HSeparator" parent="Vbox/hbox/vbox"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="Vbox/hbox/vbox" node_paths=PackedStringArray("NodeVisible")]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Plugin path"
+icon = ExtResource("2_v6csw")
+script = ExtResource("3_ee03f")
+NodeVisible = NodePath("../panelsave")
+
+[node name="panelsave" type="HBoxContainer" parent="Vbox/hbox/vbox"]
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Vbox/hbox/vbox/panelsave"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="Vbox/hbox/vbox/panelsave"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="h_system_path" type="HBoxContainer" parent="Vbox/hbox/vbox/panelsave/vbox"]
+layout_mode = 2
+
+[node name="tittle" type="Label" parent="Vbox/hbox/vbox/panelsave/vbox/h_system_path"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "System Path:"
+
+[node name="path" type="Button" parent="Vbox/hbox/vbox/panelsave/vbox/h_system_path"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "res://addons/inventory_slot_plugin"
+alignment = 0
+clip_text = true
+
+[node name="h_extension" type="HBoxContainer" parent="Vbox/hbox/vbox/panelsave/vbox"]
+layout_mode = 2
+
+[node name="tittle" type="Label" parent="Vbox/hbox/vbox/panelsave/vbox/h_extension"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Extension:"
+
+[node name="extension" type="LineEdit" parent="Vbox/hbox/vbox/panelsave/vbox/h_extension"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "data"
+placeholder_text = "\"save\",\"dat\""
+
+[node name="hs2" type="HSeparator" parent="Vbox/hbox/vbox"]
+layout_mode = 2
+
+[node name="warning" type="Label" parent="Vbox/hbox/vbox"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 0.32, 0.32, 1)
+layout_mode = 2
+text = "A extensão precisa ter mais de 2 letras!"
+horizontal_alignment = 1
+
+[node name="Save" type="Button" parent="Vbox/hbox/vbox"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Apply"
+icon = ExtResource("5_xkcjw")
+
+[connection signal="item_selected" from="Vbox/hbox/vbox/v_mode_path_save/path_global" to="." method="_on_path_global_item_selected"]
+[connection signal="pressed" from="Vbox/hbox/vbox/panelsave/vbox/h_system_path/path" to="." method="_on_panel_system_path_pressed"]
+[connection signal="text_changed" from="Vbox/hbox/vbox/panelsave/vbox/h_extension/extension" to="." method="_on_extension_text_changed"]
+[connection signal="pressed" from="Vbox/hbox/vbox/Save" to="." method="_on_save_pressed"]

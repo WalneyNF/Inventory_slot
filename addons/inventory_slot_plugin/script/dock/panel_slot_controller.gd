@@ -6,7 +6,7 @@ const PANEL_SLOT = preload("res://addons/inventory_slot_plugin/scenes/dock/panel
 @onready var panel_list: VBoxContainer = %PanelList
 
 func _ready() -> void:
-	if !InventoryFile.is_json(InventoryFile.PANEL_SLOT_PATH):
+	if !InventoryFile.is_json(Inventory.PANEL_SLOT_PATH):
 		var new_panel = {
 			"Void": {
 				"class_unique": "all",
@@ -16,21 +16,21 @@ func _ready() -> void:
 		}
 		
 		
-		InventoryFile.push_inventory(new_panel,InventoryFile.PANEL_SLOT_PATH)
+		InventoryFile.push_inventory(new_panel,Inventory.PANEL_SLOT_PATH)
 	
 	update_panel()
 
 
 func _on_create_panel_pressed() -> void:
-	var all_panel_slot = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var all_panel_slot = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
 	
-	all_panel_slot[str("NewPanel_",all_panel_slot.size())] = {
-			"id" : all_panel_slot.size(),
+	all_panel_slot[str("NewPanel_",all_panel_slot.size()-1)] = {
+			"id" : all_panel_slot.size()-1,
 			"slot_amount" : 4,
 			"class_unique" : "all",
 			}
 	
-	InventoryFile.push_inventory(all_panel_slot,InventoryFile.PANEL_SLOT_PATH)
+	InventoryFile.push_inventory(all_panel_slot,Inventory.PANEL_SLOT_PATH)
 	
 	update_panel()
 
@@ -38,7 +38,7 @@ func update_panel() -> void:
 	for child in panel_list.get_children():
 		child.queue_free()
 	
-	var _all_panel = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var _all_panel = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
 	
 	for _panel_name in _all_panel:
 		var _panel = _all_panel.get(_panel_name)

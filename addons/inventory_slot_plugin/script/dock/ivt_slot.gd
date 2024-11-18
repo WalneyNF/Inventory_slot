@@ -4,6 +4,7 @@ extends PanelContainer
 @onready var panels: VBoxContainer = $Scroll/Panels
 @onready var remove_theme: Button = %RemoveTheme
 @onready var save_inventory: Button = %SaveInventory
+@onready var documentation: PanelContainer = $Documentation
 
 const POPUP = preload("res://addons/inventory_slot_plugin/scenes/dock/popup.tscn")
 const SLOT_ALL = preload("res://addons/inventory_slot_plugin/scenes/dock/slot_all.tscn")
@@ -14,7 +15,11 @@ const SLOT_UNSAVE_INVENTORY = preload("res://addons/inventory_slot_plugin/assets
 const SLOT_SAVE_INVENTORY = preload("res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres")
 
 func _ready() -> void:
+	Inventory.reload_dock.connect(reload)
 	
+	generate()
+
+func generate() -> void:
 	var new_slotall = SLOT_ALL.instantiate()
 	
 	panels.add_child(new_slotall)
@@ -22,7 +27,7 @@ func _ready() -> void:
 func reload() -> void:
 	panels.get_child(2).queue_free()
 	
-	_ready()
+	generate()
 
 
 func _on_reload_plugin_pressed() -> void:
@@ -58,3 +63,11 @@ func remove_all_item_inventory() -> void:
 
 func _on_save_inventory_pressed() -> void:
 	save_inventory.icon
+
+
+func _on_document_pressed() -> void:
+	documentation.show()
+
+
+func _on_top_pressed() -> void:
+	documentation.hide()

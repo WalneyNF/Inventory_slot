@@ -203,7 +203,7 @@ func is_unique_class() -> bool:
 	
 	if panel.class_unique != "all":
 		
-		var _all_class = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+		var _all_class = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 		
 		for _class in _all_class:
 			for _item in _all_class.get(_class):

@@ -127,7 +127,6 @@ theme_override_constants/separation = 5
 theme_override_styles/separator = SubResource("StyleBoxLine_288to")
 
 [connection signal="change_item" from="." to="Vbox/PanelItems/Vbox/Hbox/Items" method="_on_class_change_item"]
-[connection signal="gui_input" from="Vbox/TopBar/Hbox/name_class" to="." method="_on_name_class_gui_input"]
 [connection signal="focus_exited" from="Vbox/TopBar/Hbox/name_class/edit_name" to="." method="_on_edit_name_focus_exited"]
 [connection signal="text_submitted" from="Vbox/TopBar/Hbox/name_class/edit_name" to="." method="_on_edit_name_text_submitted"]
 [connection signal="pressed" from="Vbox/TopBar/Hbox/More/more_buttons/Remove" to="." method="_on_remove_pressed"]

@@ -1,6 +1,6 @@
 @tool
 
-extends TypePanel
+extends PanelContainer
 
 @onready var edit_name: LineEdit = %edit_name
 @onready var name_class: Button = %name_class
@@ -25,16 +25,8 @@ func _start(_class_name: String) -> void:
 		load_items = false
 
 
-func _on_name_class_gui_input(event: InputEvent) -> void:
-	move_panel(event,self,top_bar,get_parent())
-	
-	if event is InputEventMouseButton:
-		if event.double_click:
-			edit_name.show()
-
-
 func _on_edit_name_text_submitted(new_text: String) -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	InventoryFile.changed_dictionary_name(inventory,name_class.text,new_text)
 	
@@ -42,14 +34,14 @@ func _on_edit_name_text_submitted(new_text: String) -> void:
 	name_class.text = new_text
 	edit_name.hide()
 	
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 	
 	Inventory.changed_panel_data.emit()
 
 func _on_new_item_pressed() -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
-	InventoryFile.push_inventory(InventoryFile.new_item_panel(name_class.text), InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(InventoryFile.new_item_panel(name_class.text), Inventory.ITEM_PANEL_PATH)
 	
 	change_item.emit()
 
@@ -59,10 +51,10 @@ func _on_edit_name_focus_exited() -> void:
 
 
 func _on_remove_pressed() -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	InventoryFile.remove_class(inventory,name_class.text)
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 	
 	Inventory.changed_panel_data.emit()
 	queue_free()

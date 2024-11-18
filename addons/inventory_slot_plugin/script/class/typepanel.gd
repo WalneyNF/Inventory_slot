@@ -37,7 +37,7 @@ static func search_dic(_dic: Dictionary,_item_name: String):
 static func get_item_panel_id_void() -> int:
 	var _all_id_array: Array = []
 	
-	var _all_id_dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var _all_id_dictionary = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	for _all_class in _all_id_dictionary:
 		if _all_id_dictionary.get(_all_class) is float: continue
@@ -57,7 +57,7 @@ static func get_item_panel_id_void() -> int:
 static func get_items_size() -> int:
 	var _size_item: int = 0
 	
-	var _all_slots = InventoryFile.pull_inventory(InventoryFile.PANEL_SLOT_PATH)
+	var _all_slots = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
 	
 	for _all_class in _all_slots:
 		for _items in _all_slots.get(_all_class):

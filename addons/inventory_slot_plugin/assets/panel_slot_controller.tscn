@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://c75p37f035d7p"]
+[gd_scene load_steps=3 format=3 uid="uid://c75p37f035d7p"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/panel_slot_controller.gd" id="1_jph47"]
-[ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_nllto"]
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_tliut"]
 [ext_resource type="Texture2D" uid="uid://c2254e60ufuh0" path="res://addons/inventory_slot_plugin/assets/icons/slot_add.tres" id="4_y2wlv"]
 
 [node name="PanelSlotController" type="PanelContainer"]
@@ -14,16 +12,6 @@ script = ExtResource("1_jph47")
 
 [node name="Vbox" type="VBoxContainer" parent="."]
 layout_mode = 2
-
-[node name="TopBar" type="Button" parent="Vbox" node_paths=PackedStringArray("NodeVisible")]
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "All Panel"
-icon = ExtResource("2_tliut")
-alignment = 0
-script = ExtResource("2_nllto")
-NodeVisible = NodePath("../Vbox")
 
 [node name="Vbox" type="VBoxContainer" parent="Vbox"]
 layout_mode = 2

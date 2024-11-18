@@ -16,8 +16,8 @@ enum AMOUNT_ANCHOR {LEFT_UP,LEFT_DOWN,RIGHT_UP,RIGHT_DOWN}
 var _item_settings
 
 func _ready() -> void:
-	if InventoryFile.is_json(InventoryFile.ITEM_SETTINGS):
-		_item_settings = InventoryFile.pull_inventory(InventoryFile.ITEM_SETTINGS)
+	if InventoryFile.is_json(Inventory.ITEM_SETTINGS):
+		_item_settings = InventoryFile.pull_inventory(Inventory.ITEM_SETTINGS)
 		
 		amount_text.text = _item_settings.amount_text
 		amount_anchor.selected = _item_settings.amount_anchor
@@ -37,7 +37,7 @@ func _ready() -> void:
 			"description_description" : true,
 		}
 		
-		InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+		InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 
 
@@ -45,29 +45,29 @@ func _on_name_text_submitted(new_text: String) -> void:
 	_item_settings.amount_text = new_text
 	amount_text.release_focus()
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 func _on_anchor_item_selected(index: int) -> void:
 	_item_settings.amount_anchor = index
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 func _on_shown_being_one_pressed() -> void:
 	_item_settings.amount_show_being_one = amount_show_being_one.button_pressed
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 func _on_name_item_show_pressed() -> void:
 	_item_settings.description_name_item = description_name_item.button_pressed
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 func _on_amount_show_pressed() -> void:
 	_item_settings.description_amount_show = description_amount_show.button_pressed
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)
 
 func _on_description_pressed() -> void:
 	_item_settings.description_description = description_description.button_pressed
 	
-	InventoryFile.push_inventory(_item_settings,InventoryFile.ITEM_SETTINGS)
+	InventoryFile.push_inventory(_item_settings,Inventory.ITEM_SETTINGS)

@@ -10,8 +10,8 @@
 
 [node name="ItemPanel" type="PanelContainer"]
 anchors_preset = -1
-anchor_right = 0.381944
-anchor_bottom = 0.253087
+anchor_right = 0.22309
+anchor_bottom = 0.554012
 script = ExtResource("1_l311a")
 metadata/_edit_use_anchors_ = true
 
@@ -75,20 +75,6 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="IconPanel" type="PanelContainer" parent="Vbox/Hbox"]
-custom_minimum_size = Vector2(84, 84)
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Icon" type="Button" parent="Vbox/Hbox/IconPanel"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 8)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_default_cursor_shape = 2
-icon = ExtResource("1_h3lic")
-expand_icon = true
-
 [node name="Panel" type="PanelContainer" parent="Vbox/Hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -103,6 +89,15 @@ size_flags_vertical = 3
 
 [node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Panel/Vbox/Bar"]
 layout_mode = 2
+
+[node name="Icon" type="Button" parent="Vbox/Hbox/Panel/Vbox/Bar/Vbox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("1_h3lic")
+expand_icon = true
 
 [node name="item_name" type="HBoxContainer" parent="Vbox/Hbox/Panel/Vbox/Bar/Vbox"]
 layout_mode = 2
@@ -120,6 +115,14 @@ size_flags_vertical = 4
 text = "New_item"
 caret_blink = true
 caret_blink_interval = 0.35
+
+[node name="icon" type="HBoxContainer" parent="Vbox/Hbox/Panel/Vbox/Bar/Vbox"]
+visible = false
+layout_mode = 2
+
+[node name="tittle" type="Label" parent="Vbox/Hbox/Panel/Vbox/Bar/Vbox/icon"]
+layout_mode = 2
+text = "Icon:"
 
 [node name="id" type="HBoxContainer" parent="Vbox/Hbox/Panel/Vbox/Bar/Vbox"]
 layout_mode = 2
@@ -191,7 +194,7 @@ wrap_mode = 1
 [connection signal="gui_input" from="Vbox/TopBar/Hbox/id_unique" to="." method="_on_id_unique_gui_input"]
 [connection signal="pressed" from="Vbox/TopBar/Hbox/More/vbox/Remove" to="." method="_on_remove_pressed"]
 [connection signal="pressed" from="Vbox/TopBar/Hbox/More/vbox/EditName" to="." method="_on_edit_name_pressed"]
-[connection signal="pressed" from="Vbox/Hbox/IconPanel/Icon" to="." method="_on_icon_pressed"]
+[connection signal="pressed" from="Vbox/Hbox/Panel/Vbox/Bar/Vbox/Icon" to="." method="_on_icon_pressed"]
 [connection signal="text_submitted" from="Vbox/Hbox/Panel/Vbox/Bar/Vbox/item_name/item_name" to="." method="_on_item_name_text_submitted"]
 [connection signal="value_changed" from="Vbox/Hbox/Panel/Vbox/Bar/Vbox/amount/max_amount" to="." method="_on_max_amount_value_changed"]
 [connection signal="pressed" from="Vbox/Hbox/Panel/Vbox/Bar/Vbox/scene/scene" to="." method="_on_scene_pressed"]

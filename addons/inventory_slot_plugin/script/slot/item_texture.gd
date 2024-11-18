@@ -9,7 +9,7 @@ var panel_slot: Dictionary
 var item_settings: Dictionary
 
 func _ready() -> void:
-	item_settings = InventoryFile.pull_inventory(InventoryFile.ITEM_SETTINGS)
+	item_settings = InventoryFile.pull_inventory(Inventory.ITEM_SETTINGS)
 	
 	Inventory.new_data.connect(reload_my_data)
 	Inventory.new_data_global.connect(reload_data)

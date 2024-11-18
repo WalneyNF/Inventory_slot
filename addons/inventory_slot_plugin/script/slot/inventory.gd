@@ -1,9 +1,6 @@
 @tool
 extends Node
 
-#class_name Inventory_main
-
-# new_data.emit(item_panel,item_inventory,panel_slot)
 signal new_item(_item_panel: Dictionary , _item_inventory: Dictionary, _panel_slot: Dictionary)
 signal new_data(_item_panel: Dictionary , _item_inventory: Dictionary ,_system_slot: Dictionary)
 signal discart_item(_item_panel: Dictionary ,_item_inventory: Dictionary  ,_system_slot: Dictionary)
@@ -14,8 +11,7 @@ signal button_slot_changed(_slot: Control ,_move: bool)
 signal new_data_global()
 signal changed_panel_data()
 
-#@export var panel: PanelResource
-
+signal reload_dock()
 
 enum ERROR {
 	SLOT_BUTTON_VOID = -2,
@@ -27,10 +23,20 @@ enum ERROR {
 	SEPARATER
 }
 
+var ITEM_PANEL_PATH: String
+var ITEM_INVENTORY_PATH: String
+var PANEL_SLOT_PATH: String
+var JSON_PATH: String
+var SAVE_PATH: String
+var ITEM_SETTINGS: String
+
 var item_selected: Control # Item node dos slots
 
 ## Sub functions ================================================================
+
 func _ready() -> void:
+	InventorySystem._update_path()
+	
 	set_process_input(false)
 	process_mode = PROCESS_MODE_ALWAYS
 	button_slot_changed.connect(_function_slot_changed)
@@ -49,7 +55,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 	var _item_panel = InventoryFile.search_item_id(_panel_id ,_item_unique_id )
 	var item_inventory
 	
-	if InventoryFile.is_json(InventoryFile.ITEM_INVENTORY_PATH):
+	if InventoryFile.is_json(ITEM_INVENTORY_PATH):
 		item_inventory = search_item(_panel_id ,_item_panel.unique_id )
 	
 	var _panel_slot = InventoryFile.get_panel(_panel_id)
@@ -209,7 +215,7 @@ func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 
 ## Searchs -----------------------------------------------
 func search_item(_panel_id: int, _item_unique_id: int = -1, _slot: int = -1):
-	var _all_items: Dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
+	var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
 	
 	if _slot != -1:
 		for _item: String in _all_items:
@@ -223,7 +229,7 @@ func search_item(_panel_id: int, _item_unique_id: int = -1, _slot: int = -1):
 	return null
 
 func search_item_inventory(_panel_id: int, _item_id: int = -1):
-	var _all_items: Dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
+	var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
 	
 	for _item: String in _all_items:
 		if _all_items.get(_item).id == _item_id:
@@ -260,7 +266,7 @@ func search_void_slot(_panel_id: int) -> int:
 	return -1
 
 func search_panel_id_item(_item_id: int) -> int:
-	var _all_items_inventory: Dictionary = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
+	var _all_items_inventory: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
 	
 	for _item: String in _all_items_inventory:
 		if _all_items_inventory.get(_item).id == _item_id:
@@ -296,7 +302,7 @@ func _function_slot_changed(slot, move) -> void:
 
 func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int, _slot: int = ERROR.VOID, _id: int = -1, _metadata: Variant = null):
 	var _now_slot: int = _slot
-	var _all_items_inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_INVENTORY_PATH)
+	var _all_items_inventory = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
 	
 	if _slot == ERROR.VOID:
 		_slot = search_void_slot(_panel_slot.id)
@@ -312,7 +318,7 @@ func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int
 		"metadata" = _metadata,
 	}
 	
-	InventoryFile.push_inventory(_all_items_inventory,InventoryFile.ITEM_INVENTORY_PATH)
+	InventoryFile.push_inventory(_all_items_inventory,ITEM_INVENTORY_PATH)
 	
 	new_item.emit(_item_panel,_all_items_inventory.get(str(_id)),_panel_slot)
 	

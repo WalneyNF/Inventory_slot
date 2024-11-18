@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8w5wbmaey2hq"]
+[gd_scene load_steps=11 format=3 uid="uid://b8w5wbmaey2hq"]
 
 [ext_resource type="Theme" uid="uid://dlmvgp744mykf" path="res://addons/inventory_slot_plugin/assets/themes/default.tres" id="1_1w27d"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/ivt_slot.gd" id="1_tkquw"]
 [ext_resource type="Texture2D" uid="uid://becu4ghipl448" path="res://addons/inventory_slot_plugin/assets/icons/slot_reload.tres" id="3_o3b3d"]
 [ext_resource type="Texture2D" uid="uid://boxdvtor8gb8m" path="res://addons/inventory_slot_plugin/assets/icons/slot_theme_default.tres" id="4_n2hf1"]
 [ext_resource type="Texture2D" uid="uid://bwwgylpwkgmf4" path="res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres" id="4_q2ndl"]
-[ext_resource type="Texture2D" uid="uid://cqhxnuh7nk3er" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_all_item_inventory.tres" id="5_due8w"]
+[ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="5_8red5"]
+[ext_resource type="Texture2D" uid="uid://dc5huooh5a4lr" path="res://addons/inventory_slot_plugin/assets/icons/slot_doc.tres" id="7_njxqs"]
+[ext_resource type="Texture2D" uid="uid://biqqrklcf6pfm" path="res://addons/inventory_slot_plugin/assets/icons/slot_unsave_inventory.tres" id="7_tvms6"]
+[ext_resource type="Texture2D" uid="uid://dvg8v6s7dhqjr" path="res://addons/inventory_slot_plugin/assets/icons/slot_closed.tres" id="9_otvxs"]
+[ext_resource type="PackedScene" uid="uid://da4aaqpi5d8kv" path="res://addons/inventory_slot_plugin/scenes/dock/documentation.tscn" id="10_3uyny"]
 
-[node name="IVTSlot" type="PanelContainer"]
+[node name="Inventory" type="PanelContainer"]
 anchors_preset = -1
 anchor_right = 0.333333
 anchor_bottom = 1.0
@@ -79,7 +83,7 @@ size_flags_horizontal = 8
 tooltip_text = "All delete item inventory."
 focus_mode = 0
 mouse_default_cursor_shape = 2
-icon = ExtResource("5_due8w")
+icon = ExtResource("5_8red5")
 icon_alignment = 1
 
 [node name="RemoveTheme" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
@@ -93,16 +97,63 @@ mouse_default_cursor_shape = 2
 icon = ExtResource("4_n2hf1")
 icon_alignment = 1
 
-[node name="Label" type="Label" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+[node name="vs" type="VSeparator" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+layout_mode = 2
+
+[node name="Document" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Documentation."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("7_njxqs")
+icon_alignment = 1
+
+[node name="RemoveTheme2" type="Button" parent="Scroll/Panels/Panel/TopBar/Buttons"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Changed theme."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("7_tvms6")
+icon_alignment = 1
+
+[node name="version" type="Label" parent="Scroll/Panels/Panel/TopBar/Buttons"]
 modulate = Color(1, 1, 1, 0.180392)
 layout_mode = 2
 size_flags_horizontal = 10
-text = "v0.7.0"
+text = "v0.8.0"
 
 [node name="hs" type="HSeparator" parent="Scroll/Panels"]
 layout_mode = 2
+
+[node name="Documentation" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="Documentation"]
+layout_mode = 2
+
+[node name="Top" type="Button" parent="Documentation/Vbox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Documentation"
+icon = ExtResource("9_otvxs")
+icon_alignment = 2
+
+[node name="Documentation" parent="Documentation/Vbox" instance=ExtResource("10_3uyny")]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/ReloadPlugin" to="." method="_on_reload_plugin_pressed"]
 [connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/SaveInventory" to="." method="_on_save_inventory_pressed"]
 [connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/DeleteInventory" to="." method="_on_delete_inventory_pressed"]
 [connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/RemoveTheme" to="." method="_on_remove_theme_pressed"]
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/Document" to="." method="_on_document_pressed"]
+[connection signal="pressed" from="Scroll/Panels/Panel/TopBar/Buttons/RemoveTheme2" to="." method="_on_remove_theme_pressed"]
+[connection signal="pressed" from="Documentation/Vbox/Top" to="." method="_on_top_pressed"]

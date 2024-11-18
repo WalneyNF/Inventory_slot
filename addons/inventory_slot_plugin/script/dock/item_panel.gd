@@ -51,7 +51,7 @@ func call_file_dialog(filters: Array) -> void:
 
 
 func file_selection(path: String) -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	match selection:
 		SELECTION.ICON:
@@ -59,13 +59,13 @@ func file_selection(path: String) -> void:
 			
 			item = InventoryFile.search_item(inventory,get_parent().my_class_name,item_name)
 			item.icon = path
-			InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+			InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 		SELECTION.SCENE:
 			scene.text = path
 			
 			item = InventoryFile.search_item(inventory,get_parent().my_class_name,item_name)
 			item.scene = path
-			InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+			InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 
 
 
@@ -86,38 +86,38 @@ func _on_id_unique_gui_input(event: InputEvent) -> void:
 
 
 func _on_item_name_text_submitted(new_text: String) -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	edit_item_name.release_focus()
 	
 	changed_item_name(inventory,get_parent().my_class_name,item_name,new_text)
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 	
 	item_name = new_text
 	update_visual()
 
 func _on_max_amount_value_changed(value: float) -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	item = InventoryFile.search_item(inventory,get_parent().my_class_name,item_name)
 	item.max_amount = int(value)
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 
 
 func _on_description_text_changed() -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	item = InventoryFile.search_item(inventory,get_parent().my_class_name,item_name)
 	item.description = description.text
 	
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 
 
 func _on_remove_pressed() -> void:
-	var inventory = InventoryFile.pull_inventory(InventoryFile.ITEM_PANEL_PATH)
+	var inventory = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	InventoryFile.remove_item(inventory,get_parent().my_class_name,item_name)
-	InventoryFile.push_inventory(inventory, InventoryFile.ITEM_PANEL_PATH)
+	InventoryFile.push_inventory(inventory, Inventory.ITEM_PANEL_PATH)
 	
 	queue_free()
 

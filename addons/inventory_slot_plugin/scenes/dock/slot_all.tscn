@@ -1,69 +1,140 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciub2lw5yi8r4"]
+[gd_scene load_steps=8 format=3 uid="uid://ciub2lw5yi8r4"]
 
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="1_ut75d"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="1_jx1l2"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_1i1wx"]
-[ext_resource type="PackedScene" uid="uid://c75p37f035d7p" path="res://addons/inventory_slot_plugin/scenes/dock/panel_slot_controller.tscn" id="3_3o5lx"]
-[ext_resource type="PackedScene" uid="uid://btombktb6cfqk" path="res://addons/inventory_slot_plugin/scenes/dock/ui_items.tscn" id="4_3or6b"]
+[ext_resource type="PackedScene" uid="uid://c75p37f035d7p" path="res://addons/inventory_slot_plugin/assets/panel_slot_controller.tscn" id="3_l34vd"]
+[ext_resource type="PackedScene" uid="uid://btombktb6cfqk" path="res://addons/inventory_slot_plugin/scenes/dock/ui_items.tscn" id="4_831sj"]
 [ext_resource type="PackedScene" uid="uid://b1dd7ckcktcuf" path="res://addons/inventory_slot_plugin/scenes/dock/item_settings_controller.tscn" id="4_lb3gk"]
+[ext_resource type="PackedScene" uid="uid://iuusevm1brx8" path="res://addons/inventory_slot_plugin/scenes/dock/save_path.tscn" id="5_powt2"]
+[ext_resource type="PackedScene" uid="uid://da4aaqpi5d8kv" path="res://addons/inventory_slot_plugin/scenes/dock/documentation.tscn" id="7_kurdx"]
 
 [node name="SlotAll" type="VBoxContainer"]
 size_flags_vertical = 3
 
-[node name="InventoryMain" type="PanelContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Vbox" type="VBoxContainer" parent="InventoryMain"]
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 2
 
-[node name="InvMainButton" type="Button" parent="InventoryMain/Vbox" node_paths=PackedStringArray("NodeVisible")]
+[node name="vbox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="PanelButton" type="Button" parent="Panel/vbox" node_paths=PackedStringArray("NodeVisible")]
+modulate = Color(0.833882, 0.864331, 0.935937, 1)
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
-text = "Slot"
-icon = ExtResource("1_ut75d")
+text = "Panel"
+icon = ExtResource("1_jx1l2")
 icon_alignment = 1
 vertical_icon_alignment = 2
 script = ExtResource("2_1i1wx")
-NodeVisible = NodePath("../Settings")
+NodeVisible = NodePath("../AllPanel")
 
-[node name="Settings" type="PanelContainer" parent="InventoryMain/Vbox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="vbox" type="VBoxContainer" parent="InventoryMain/Vbox/Settings"]
+[node name="AllPanel" type="VBoxContainer" parent="Panel/vbox"]
+visible = false
 layout_mode = 2
 
-[node name="PanelSlotController" parent="InventoryMain/Vbox/Settings/vbox" instance=ExtResource("3_3o5lx")]
-layout_mode = 2
-
-[node name="ItemConfigure" parent="InventoryMain/Vbox/Settings/vbox" instance=ExtResource("4_lb3gk")]
+[node name="PanelSlotController" parent="Panel/vbox/AllPanel" instance=ExtResource("3_l34vd")]
 layout_mode = 2
 
 [node name="hs" type="HSeparator" parent="."]
+visible = false
 layout_mode = 2
 
-[node name="UiPanel" type="PanelContainer" parent="."]
+[node name="ClassItem" type="PanelContainer" parent="."]
 layout_mode = 2
 
-[node name="Vbox" type="VBoxContainer" parent="UiPanel"]
+[node name="vbox" type="VBoxContainer" parent="ClassItem"]
 layout_mode = 2
-size_flags_vertical = 8
 
-[node name="UiButton" type="Button" parent="UiPanel/Vbox" node_paths=PackedStringArray("NodeVisible")]
+[node name="ClassItemButton" type="Button" parent="ClassItem/vbox" node_paths=PackedStringArray("NodeVisible")]
+modulate = Color(0.833882, 0.864331, 0.935937, 1)
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
-text = "Class / Items"
-icon = ExtResource("1_ut75d")
+text = "Class / Item"
+icon = ExtResource("1_jx1l2")
 icon_alignment = 1
 vertical_icon_alignment = 2
 script = ExtResource("2_1i1wx")
-NodeVisible = NodePath("../UiItems")
+NodeVisible = NodePath("../AllPanel")
 
-[node name="UiItems" parent="UiPanel/Vbox" instance=ExtResource("4_3or6b")]
+[node name="AllPanel" type="VBoxContainer" parent="ClassItem/vbox"]
+visible = false
+layout_mode = 2
+
+[node name="UiItems" parent="ClassItem/vbox/AllPanel" instance=ExtResource("4_831sj")]
+layout_mode = 2
+
+[node name="hs2" type="HSeparator" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Settings" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="Settings/vbox" node_paths=PackedStringArray("NodeVisible")]
+modulate = Color(0.833882, 0.864331, 0.935937, 1)
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Settings"
+icon = ExtResource("1_jx1l2")
+icon_alignment = 1
+vertical_icon_alignment = 2
+script = ExtResource("2_1i1wx")
+NodeVisible = NodePath("../hbox")
+
+[node name="hbox" type="HBoxContainer" parent="Settings/vbox"]
+visible = false
+layout_mode = 2
+
+[node name="vs" type="VSeparator" parent="Settings/vbox/hbox"]
+layout_mode = 2
+
+[node name="AllPanel" type="VBoxContainer" parent="Settings/vbox/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="SavePath" parent="Settings/vbox/hbox/AllPanel" instance=ExtResource("5_powt2")]
+layout_mode = 2
+
+[node name="ItemConfigure" parent="Settings/vbox/hbox/AllPanel" instance=ExtResource("4_lb3gk")]
+layout_mode = 2
+
+[node name="hs3" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="Documentation" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
 size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="Documentation"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="Documentation/vbox" node_paths=PackedStringArray("NodeVisible")]
+modulate = Color(0.835294, 0.862745, 0.937255, 1)
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Documentation"
+icon = ExtResource("1_jx1l2")
+icon_alignment = 1
+vertical_icon_alignment = 2
+script = ExtResource("2_1i1wx")
+NodeVisible = NodePath("../AllPanel")
+
+[node name="AllPanel" type="VBoxContainer" parent="Documentation/vbox"]
+visible = false
+layout_mode = 2
+
+[node name="Documentation" parent="Documentation/vbox/AllPanel" instance=ExtResource("7_kurdx")]
+layout_mode = 2
