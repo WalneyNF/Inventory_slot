@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Inventory Slot Plugin"
-run/main_scene="res://control.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://addons/inventory_slot_plugin/assets/icons/slot_inventory_plugin.png"
 
