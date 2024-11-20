@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b0u70qesn4lw0"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/panel_slot.gd" id="1_joxuk"]
-[ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_28pyv"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_pc000"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="2_unog3"]
 [ext_resource type="Texture2D" uid="uid://b3gjbet1fqlon" path="res://addons/inventory_slot_plugin/assets/icons/slot_more.tres" id="4_aauc0"]
 [ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_rp7ey"]
@@ -30,7 +30,7 @@ size_flags_horizontal = 3
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "0"
-icon = ExtResource("2_28pyv")
+icon = ExtResource("2_pc000")
 script = ExtResource("2_unog3")
 NodeVisible = NodePath("../../Settings")
 
@@ -70,6 +70,7 @@ icon = ExtResource("6_uatu7")
 alignment = 2
 
 [node name="Settings" type="VBoxContainer" parent="Vbox"]
+visible = false
 layout_mode = 2
 
 [node name="Name" type="HBoxContainer" parent="Vbox/Settings"]
@@ -134,12 +135,10 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 selected = 0
-item_count = 3
+item_count = 2
 popup/item_0/text = "all"
-popup/item_1/text = "Weapon"
+popup/item_1/text = "new_class"
 popup/item_1/id = 1
-popup/item_2/text = "new_class_1"
-popup/item_2/id = 2
 
 [node name="hs" type="HSeparator" parent="Vbox"]
 layout_mode = 2

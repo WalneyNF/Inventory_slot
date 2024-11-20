@@ -1,6 +1,6 @@
 class_name InventorySystem extends Node
 
-const INVENTORY_SYSTEM = "res://.inventory.system"
+const INVENTORY_SYSTEM = "res://config.json"
 
 
 static func push_system_file(_path_mode: int,_path: String,_extension: StringName) -> void:
@@ -159,3 +159,24 @@ static func _update_path() -> void:
 	Inventory.ITEM_PANEL_PATH = Inventory.SAVE_PATH + "class." + _get_settings_system().extension
 	Inventory.PANEL_SLOT_PATH = Inventory.SAVE_PATH + "panel." + _get_settings_system().extension
 	Inventory.ITEM_INVENTORY_PATH = Inventory.SAVE_PATH + "inventory." + _get_settings_system().extension
+	
+	#if Engine.is_editor_hint():
+		#var _edit_exp: EditorExportPlugin = EditorExportPlugin.new()
+		#var _edit_plugin: EditorPlugin = EditorPlugin.new()
+		#
+		#Inventory.add_child(_edit_plugin)
+		#
+		#_add_export(_edit_exp ,INVENTORY_SYSTEM)
+		#_add_export(_edit_exp ,Inventory.ITEM_SETTINGS)
+		#_add_export(_edit_exp ,Inventory.ITEM_PANEL_PATH)
+		#_add_export(_edit_exp ,Inventory.PANEL_SLOT_PATH)
+		#_add_export(_edit_exp ,Inventory.ITEM_INVENTORY_PATH)
+		#
+		#_edit_plugin.add_export_plugin(_edit_exp)
+#
+#static func _add_export(_edit: EditorExportPlugin,_path: String) -> void:
+	#
+	#var _file: FileAccess = FileAccess.open(_path,FileAccess.READ)
+	#
+	#
+	#_edit.add_file(_path,_file.get_buffer(_file.get_length()), false)

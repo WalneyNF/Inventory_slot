@@ -1,0 +1,26 @@
+{
+	"1913099326": {
+		"amount": 1,
+		"id": 1913099326,
+		"metadata": null,
+		"panel_id": 0,
+		"slot": 0,
+		"unique_id": 0
+	},
+	"3035428154": {
+		"amount": 1,
+		"id": 3035428154,
+		"metadata": null,
+		"panel_id": 0,
+		"slot": 2,
+		"unique_id": 0
+	},
+	"407521481": {
+		"amount": 1,
+		"id": 407521481,
+		"metadata": null,
+		"panel_id": 0,
+		"slot": 3,
+		"unique_id": 0
+	}
+}

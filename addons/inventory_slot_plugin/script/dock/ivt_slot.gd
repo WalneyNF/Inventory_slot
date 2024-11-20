@@ -6,13 +6,13 @@ extends PanelContainer
 @onready var save_inventory: Button = %SaveInventory
 @onready var documentation: PanelContainer = $Documentation
 
-const POPUP = preload("res://addons/inventory_slot_plugin/scenes/dock/popup.tscn")
-const SLOT_ALL = preload("res://addons/inventory_slot_plugin/scenes/dock/slot_all.tscn")
-const THEME_DEFAULT = preload("res://addons/inventory_slot_plugin/assets/themes/default.tres")
-const SLOT_THEME_DEFAULT = preload("res://addons/inventory_slot_plugin/assets/icons/slot_theme_default.tres")
-const SLOT_THEME_GODOT = preload("res://addons/inventory_slot_plugin/assets/icons/slot_theme_godot.tres")
-const SLOT_UNSAVE_INVENTORY = preload("res://addons/inventory_slot_plugin/assets/icons/slot_unsave_inventory.tres")
-const SLOT_SAVE_INVENTORY = preload("res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres")
+var POPUP = load(str(Inventory.PLUGIN_PATH,"/scenes/dock/popup.tscn"))
+var SLOT_ALL = load(str(Inventory.PLUGIN_PATH,"/scenes/dock/slot_all.tscn"))
+var THEME_DEFAULT = load(str(Inventory.PLUGIN_PATH,"/assets/themes/default.tres"))
+var SLOT_THEME_DEFAULT = load(str(Inventory.PLUGIN_PATH,"/assets/icons/slot_theme_default.tres"))
+var SLOT_THEME_GODOT = load(str(Inventory.PLUGIN_PATH,"/assets/icons/slot_theme_godot.tres"))
+var SLOT_UNSAVE_INVENTORY = load(str(Inventory.PLUGIN_PATH,"/assets/icons/slot_unsave_inventory.tres"))
+var SLOT_SAVE_INVENTORY = load(str(Inventory.PLUGIN_PATH,"/assets/icons/slot_save_inventory.tres"))
 
 func _ready() -> void:
 	Inventory.reload_dock.connect(reload)

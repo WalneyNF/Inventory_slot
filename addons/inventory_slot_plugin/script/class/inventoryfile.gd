@@ -1,8 +1,5 @@
 class_name InventoryFile extends Node
 
-const IMAGE_DEFAULT = "res://addons/inventory_slot_plugin/assets/item_image/life.png"
-
-
 ## File Learns ===================================================================
 
 static func is_json(_path: String) -> bool:
@@ -252,7 +249,7 @@ static func _changed_class_name(_dic: Dictionary,_out_item_name: String,_new_ite
 
 ## Dictionary ==================================================================
 
-static func new_item_panel(_class_name: String,_icon_path: String = InventoryFile.IMAGE_DEFAULT,_amount: int = 1,_description: String = "",_path_scene: String = "res://") -> Dictionary:
+static func new_item_panel(_class_name: String,_icon_path: String = Inventory.IMAGE_DEFAULT,_amount: int = 1,_description: String = "",_path_scene: String = "res://") -> Dictionary:
 	var _new_inventory = pull_inventory(Inventory.ITEM_PANEL_PATH)
 	
 	for _class in _new_inventory:

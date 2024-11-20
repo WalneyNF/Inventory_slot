@@ -23,6 +23,11 @@ enum ERROR {
 	SEPARATER
 }
 
+#Ready value ===
+@onready var PLUGIN_PATH: String = str(get_script().resource_path.get_base_dir(),"/../..")
+@onready var IMAGE_DEFAULT: String = str(PLUGIN_PATH,"/assets/item_image/life.png")
+
+
 var ITEM_PANEL_PATH: String
 var ITEM_INVENTORY_PATH: String
 var PANEL_SLOT_PATH: String
@@ -35,6 +40,8 @@ var item_selected: Control # Item node dos slots
 ## Sub functions ================================================================
 
 func _ready() -> void:
+	OS.request_permissions()
+	
 	InventorySystem._update_path()
 	
 	set_process_input(false)

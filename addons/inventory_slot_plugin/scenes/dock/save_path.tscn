@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://iuusevm1brx8"]
+[gd_scene load_steps=6 format=3 uid="uid://iuusevm1brx8"]
 
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/save_path.gd" id="1_nlv6a"]
+[ext_resource type="Texture2D" uid="uid://cpov2vpvvqtgt" path="res://addons/inventory_slot_plugin/assets/icons/slot_hide_button.tres" id="2_ec8vs"]
 [ext_resource type="Texture2D" uid="uid://drdt8v1j8h6sb" path="res://addons/inventory_slot_plugin/assets/icons/slot_show_button.tres" id="2_v6csw"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/class/buttonvisible.gd" id="3_ee03f"]
 [ext_resource type="Texture2D" uid="uid://bwwgylpwkgmf4" path="res://addons/inventory_slot_plugin/assets/icons/slot_save_inventory.tres" id="5_xkcjw"]
@@ -22,7 +23,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Save path"
-icon = ExtResource("2_v6csw")
+icon = ExtResource("2_ec8vs")
 alignment = 0
 script = ExtResource("3_ee03f")
 NodeVisible = NodePath("../hbox")
@@ -95,6 +96,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "res://addons/inventory_slot_plugin"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "res://addons/inventory_slot_plugin"
@@ -114,7 +116,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
-text = "data"
+text = "json"
 placeholder_text = "\"save\",\"dat\""
 
 [node name="hs2" type="HSeparator" parent="Vbox/hbox/vbox"]
