@@ -22,10 +22,6 @@ func _ready_plugin() -> void:
 	
 	dock = load(str(inventory_slot_plugin_path,"/scenes/dock/ivt_slot.tscn")).instantiate()
 	add_control_to_dock(EditorPlugin.DOCK_SLOT_RIGHT_UL,dock)
-	
-	var _exp = EditorExportPlugin.new()
-	_exp.set_script(load(str(inventory_slot_plugin_path,"/script/slot/export.gd")))
-	add_export_plugin(_exp)
 
 func _import_settings() -> void:
 	var _path: String = get_script().resource_path.get_base_dir()

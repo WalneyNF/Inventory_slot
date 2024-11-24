@@ -43,14 +43,14 @@ static func _create_json_path(_path: String,_extension: StringName, _create_file
 		_extension = "json"
 	
 	if !DirAccess.dir_exists_absolute(_path):
-		printerr("This folder doesn't exist, it's impossible to create a directory!")
+		printerr("This folder doesn1't exist, it's impossible to create a directory!")
 		return
 	
 	var _json_path: String = _path
 	var _save_path: String = str(_json_path,"/save")
 	
 	var _file_system_path: String = str(_save_path,"/system.",_extension)
-	var _file_save_path: String = str(_save_path,"/inventory.",_extension)
+	var _file_save_path: String = str("user://inventory.",_extension)
 	var _file_class_path: String = str(_save_path,"/class.",_extension)
 	var _file_panel_path: String = str(_save_path,"/panel.",_extension)
 	
@@ -63,7 +63,7 @@ static func _create_json_path(_path: String,_extension: StringName, _create_file
 	var _file_system: FileAccess = FileAccess.open(_file_system_path,FileAccess.WRITE)
 	var _file_save: FileAccess = FileAccess.open(_file_save_path,FileAccess.WRITE)
 	var _file_class: FileAccess = FileAccess.open(_file_class_path,FileAccess.WRITE)
-	var _file_panel: FileAccess = FileAccess.open(_file_class_path,FileAccess.WRITE)
+	var _file_panel: FileAccess = FileAccess.open(_file_panel_path,FileAccess.WRITE)
 	
 	InventoryFile.push_inventory(_file_system_default_value(),_file_system_path)
 	InventoryFile.push_inventory({},_file_save_path)
@@ -158,25 +158,4 @@ static func _update_path() -> void:
 	Inventory.ITEM_SETTINGS = Inventory.SAVE_PATH + "system." + _get_settings_system().extension
 	Inventory.ITEM_PANEL_PATH = Inventory.SAVE_PATH + "class." + _get_settings_system().extension
 	Inventory.PANEL_SLOT_PATH = Inventory.SAVE_PATH + "panel." + _get_settings_system().extension
-	Inventory.ITEM_INVENTORY_PATH = Inventory.SAVE_PATH + "inventory." + _get_settings_system().extension
-	
-	#if Engine.is_editor_hint():
-		#var _edit_exp: EditorExportPlugin = EditorExportPlugin.new()
-		#var _edit_plugin: EditorPlugin = EditorPlugin.new()
-		#
-		#Inventory.add_child(_edit_plugin)
-		#
-		#_add_export(_edit_exp ,INVENTORY_SYSTEM)
-		#_add_export(_edit_exp ,Inventory.ITEM_SETTINGS)
-		#_add_export(_edit_exp ,Inventory.ITEM_PANEL_PATH)
-		#_add_export(_edit_exp ,Inventory.PANEL_SLOT_PATH)
-		#_add_export(_edit_exp ,Inventory.ITEM_INVENTORY_PATH)
-		#
-		#_edit_plugin.add_export_plugin(_edit_exp)
-#
-#static func _add_export(_edit: EditorExportPlugin,_path: String) -> void:
-	#
-	#var _file: FileAccess = FileAccess.open(_path,FileAccess.READ)
-	#
-	#
-	#_edit.add_file(_path,_file.get_buffer(_file.get_length()), false)
+	Inventory.ITEM_INVENTORY_PATH = "user://inventory." + _get_settings_system().extension
