@@ -155,22 +155,18 @@ func item_move_void_slot() -> void:
 func item_changed_other_slot() -> void:
 	var _one_item = Inventory.item_selected.item_inventory
 	var _two_item = item_node.item_inventory
-	var _item_selected = Inventory.item_selected
 	
 	var _one_item_panel_id = Inventory.search_panel_id_item(_one_item.id)
 	var _two_item_panel_id = Inventory.search_panel_id_item(_two_item.id)
 	
 	#Changed panel
-	
 	Inventory.button_slot_changed.emit(self,false)
 	
 	if _one_item_panel_id != panel_id:
-		Inventory.set_panel_item(_two_item.id, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, true )
-		var a = Inventory.set_panel_item(_one_item.id, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, true )
+		Inventory.set_panel_item(_one_item.id, _one_item_panel_id, -2, _two_item.slot, true, true)
 		
-		if a == Inventory.ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS:
-			_item_selected.get_parent().reset()
-			reset()
+		Inventory.set_panel_item(_two_item.id, _two_item_panel_id, _one_item_panel_id, _one_item.slot, true, true)
+		Inventory.set_panel_item(_one_item.id, _one_item_panel_id, _two_item_panel_id, _two_item.slot, true, true)
 	else:
 		Inventory.changed_slots_items(_one_item, _two_item )
 

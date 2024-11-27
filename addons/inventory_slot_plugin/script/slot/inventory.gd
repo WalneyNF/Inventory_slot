@@ -45,6 +45,7 @@ func _ready() -> void:
 	InventorySystem._update_path()
 	
 	set_process_input(false)
+	
 	process_mode = PROCESS_MODE_ALWAYS
 	button_slot_changed.connect(_function_slot_changed)
 
@@ -106,11 +107,23 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 	
 	return _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id ,_metadata )
 
-func remove_item(_panel_id: int, _id: int = -1) -> bool:
+func remove_item(_panel_id: int, _id: int = -1, _slot: int = -1) -> bool:
 	
 	var _all_item_inventory: Array = InventoryFile.list_all_item_inventory(_panel_id)
 	
 	for _items_inventory in _all_item_inventory:
+		if _slot != -1:
+			if _items_inventory.slot == _slot:
+				
+				discart_item.emit(
+					InventoryFile.search_item_id(_panel_id,_items_inventory.unique_id),
+					_items_inventory,
+					InventoryFile.get_panel(_panel_id)
+					)
+				
+				InventoryFile.push_item_inventory(_items_inventory.id,{})
+				return true
+			continue
 		
 		if _items_inventory.id == _id:
 			
@@ -127,19 +140,21 @@ func remove_item(_panel_id: int, _id: int = -1) -> bool:
 
 func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true):
 	var _item_inventory: Dictionary = search_item_inventory(_out_panel_id,_item_id)
+	
+	if _out_item_remove:
+		remove_item(_out_panel_id,_item_id)
+	
 	var _out_panel: Dictionary = InventoryFile.get_panel(_out_panel_id)
 	var _new_panel: Dictionary = InventoryFile.get_panel(_new_panel_id)
 	var _item_panel: Dictionary = InventoryFile.search_item_id(_out_panel.id,_item_inventory.unique_id)
 	var _new_item: Dictionary = _item_inventory
 	var _all_items_new_panel: Array = InventoryFile.list_all_item_inventory(_new_panel.id)
 	
+	
 	if _new_panel.slot_amount == _all_items_new_panel.size() and _slot != ERROR.SLOT_BUTTON_VOID:
-		
 		if _unique:
-			
 			return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 		else:
-			
 			var _search_item = search_item_amount_min(_new_panel.id,_item_inventory.unique_id,_item_panel.max_amount)
 			
 			if _search_item != null:
@@ -161,9 +176,6 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 					return new_item
 		
 		return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
-	
-	if _out_item_remove:
-		remove_item(_out_panel_id,_item_inventory.id)
 	
 	if _out_panel == null or new_data == null: return
 	
