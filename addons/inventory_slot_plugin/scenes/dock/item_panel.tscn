@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ep1uy3n0w0d1"]
+[gd_scene load_steps=10 format=3 uid="uid://ep1uy3n0w0d1"]
 
 [ext_resource type="Texture2D" uid="uid://duojnn1y01u2x" path="res://addons/inventory_slot_plugin/assets/item_image/life.png" id="1_h3lic"]
 [ext_resource type="Script" path="res://addons/inventory_slot_plugin/script/dock/item_panel.gd" id="1_l311a"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://b3gjbet1fqlon" path="res://addons/inventory_slot_plugin/assets/icons/slot_more.tres" id="4_101el"]
 [ext_resource type="Texture2D" uid="uid://fpmoxkao1nxc" path="res://addons/inventory_slot_plugin/assets/icons/slot_remove_button.tres" id="4_xst28"]
 [ext_resource type="Texture2D" uid="uid://vcqdmhm3l70u" path="res://addons/inventory_slot_plugin/assets/icons/slot_rename.tres" id="6_pcyvm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wckgx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gbsct"]
 
 [node name="ItemPanel" type="PanelContainer"]
 anchors_preset = -1
@@ -21,6 +25,7 @@ layout_mode = 2
 [node name="TopBar" type="PanelContainer" parent="Vbox"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wckgx")
 
 [node name="Hbox" type="HBoxContainer" parent="Vbox/TopBar"]
 layout_mode = 2
@@ -71,13 +76,13 @@ icon = ExtResource("6_pcyvm")
 alignment = 2
 
 [node name="Hbox" type="HBoxContainer" parent="Vbox"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Panel" type="PanelContainer" parent="Vbox/Hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wckgx")
 
 [node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Panel"]
 layout_mode = 2
@@ -86,6 +91,7 @@ size_flags_horizontal = 3
 [node name="Bar" type="PanelContainer" parent="Vbox/Hbox/Panel/Vbox"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gbsct")
 
 [node name="Vbox" type="VBoxContainer" parent="Vbox/Hbox/Panel/Vbox/Bar"]
 layout_mode = 2

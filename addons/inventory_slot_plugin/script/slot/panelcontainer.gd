@@ -47,7 +47,13 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		update_visual_panel_slot()
 		update_tittle_name()
 
-@export_subgroup("Slot")
+@export_subgroup("Slot Mouse")
+## Select items with a right click, allowing you to pick up the item by one unit.
+@export var use_right_click: bool = true
+## If true, the item can only be moved while the mouse is held down.
+@export var press: bool
+
+@export_subgroup("Slot Layout")
 ## Slot alignment mode. Not all configurations support alignment.
 @export var container_slot: CONTAINER_SLOT:
 	set(value):
@@ -76,8 +82,7 @@ enum ALIGNMENT {LEFT, CENTER, RIGHT}
 		update_visual_panel_slot()
 
 
-
-@export_subgroup("Tittle")
+@export_subgroup("Panel Tittle")
 @export var show_panel_tittle: bool = true:
 	set(value):
 		show_panel_tittle = value
@@ -211,9 +216,12 @@ func update_slots() -> void: # Mudar
 ## Slots System ====================================
 
 func reload_item() -> void:
+	
 	if is_instance_valid(grid_slot):
 		
 		for _child in grid_slot.get_children():
+			instance_slot_button(_child)
+			
 			if is_instance_valid(_child.item_node):
 				await get_tree().create_timer(0.1).timeout
 				
@@ -255,7 +263,10 @@ func _load_item(item_inventory: Dictionary) -> void:
 		slot.free_use = true
 		slot.item_node = new_item
 		slot.item_node.item_inventory = item_inventory
+		
 		slot.self_modulate.a = 0
+		slot.z_index = 1
+		
 		new_item.panel_slot = InventoryFile.get_panel(-2)
 		void_button.global_position = Vector2(99999,99999)
 		
@@ -265,6 +276,9 @@ func _load_item(item_inventory: Dictionary) -> void:
 		Inventory.button_slot_changed.emit(slot,true)
 	else:
 		var slot = grid_slot.get_child(item_inventory.slot)
+		
+		slot.press = press
+		slot.use_right_click = use_right_click
 		
 		slot.item_node = new_item
 		slot.item_node.item_inventory = item_inventory
@@ -289,8 +303,10 @@ func instance_slot_button(slot_button: Button) -> void:
 		slot_button.set_script(SCRIPT_SLOT)
 		slot_button.my_panel = self
 		slot_button.panel_id = slot_panel_id
+		
+		slot_button.press = press
+		slot_button.use_right_click = use_right_click
 	
-	slot_button.button_mask = MOUSE_BUTTON_MASK_RIGHT | MOUSE_BUTTON_MASK_LEFT
 	slot_button.custom_minimum_size = size_slot
 	slot_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	slot_button.focus_mode = Control.FOCUS_NONE
