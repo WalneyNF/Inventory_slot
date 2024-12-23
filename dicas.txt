@@ -29,10 +29,18 @@ exemplo
 		}
 	},
 	"Armadura": {
-		"Armadura": {
+		"Armadura1": {
 			"ID_unico": 1,
-			"descricao": "",
+			"descricao": "Armadura 1",
 			"icon": "res://Assets/Itens/genericItem_color_035.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Armadura2": {
+			"ID_unico": 2,
+			"descricao": "Armadura 2",
+			"description": "Armadura 2\n",
+			"icon": "res://Assets/Itens/genericItem_color_036.png",
 			"quantidade_maxima": 1,
 			"scene": "res://"
 		}
@@ -53,4 +61,3 @@ exemplo
 
 	}
 }
-
