@@ -20,7 +20,7 @@ exemplo
 			"scene": "res://"
 		},
 		"Serrote": {
-			"ID_unico": 0,
+			"ID_unico": 3,
 			"descricao": "Serrote",
 			"description": "Serrote",
 			"icon": "res://Assets/Itens/genericItem_color_016.png",
@@ -30,7 +30,7 @@ exemplo
 	},
 	"Armadura": {
 		"Armadura": {
-			"ID_unico": 0,
+			"ID_unico": 1,
 			"descricao": "",
 			"icon": "res://Assets/Itens/genericItem_color_035.png",
 			"quantidade_maxima": 1,
