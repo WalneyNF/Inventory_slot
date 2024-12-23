@@ -118,12 +118,13 @@ static func search_item_id(_panel_id: int, _item_unique_id: int = -1):
 		for _item in _items.get(_all):
 			var item = _items.get(_all).get(_item)
 			
-			# Verifica se o ID único do item corresponde
-			if _items.get(_all).get(_item).unique_id == _item_unique_id:
-				return _items.get(_all).get(_item)
+			# Verifica se a chave 'unique_id' existe no dicionário
+			if item.has("unique_id") and item.unique_id == _item_unique_id:
+				return item
 	
 	# Exibe um erro se o item não for encontrado
 	printerr("Item ", _item_unique_id, " não encontrado!")
+	return null
 
 # Busca uma classe pelo nome
 static func search_class_name(_class_name: String):
@@ -276,10 +277,10 @@ static func new_item_panel(_class_name: String, _icon_path: String = Inventory.I
 	for _class in _new_inventory:
 		if _class == _class_name:
 			_new_inventory.get(_class)[str("new_item_", get_item_panel_id_void())] = {
-				"ID_unico": get_item_panel_id_void(),
+				"unique_id": get_item_panel_id_void(),
 				"icon": _icon_path,
-				"quantidade_maxima": _amount,
-				"descricao": _description,
+				"max_amount": _amount,
+				"description": _description,
 				"scene": _path_scene
 			}
 	
