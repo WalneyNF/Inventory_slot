@@ -3,14 +3,6 @@ Para criar os itens pode ser pelo proprio arquivo json que fica na pasta (addons
 exemplo
 {
 	"Arma": {
-		"Serrote": {
-			"ID_unico": 0,
-			"descricao": "Serrote",
-			"description": "Serrote",
-			"icon": "res://Assets/Itens/genericItem_color_016.png",
-			"quantidade_maxima": 1,
-			"scene": "res://"
-		},
 		"Pa": {
 			"ID_unico": 1,
 			"descricao": "Pa",
@@ -26,10 +18,24 @@ exemplo
 			"icon": "res://Assets/Itens/genericItem_color_021.png",
 			"quantidade_maxima": 1,
 			"scene": "res://"
+		},
+		"Serrote": {
+			"ID_unico": 0,
+			"descricao": "Serrote",
+			"description": "Serrote",
+			"icon": "res://Assets/Itens/genericItem_color_016.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
 		}
 	},
 	"Armadura": {
-
+		"Armadura": {
+			"ID_unico": 0,
+			"descricao": "",
+			"icon": "res://Assets/Itens/genericItem_color_035.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		}
 	},
 	"Bota": {
 
@@ -47,3 +53,4 @@ exemplo
 
 	}
 }
+
