@@ -1,118 +1,128 @@
 
-# Inventory Slot Plugin
-The Inventory Slot Plugin is an addon for Godot 4.3.x, designed to simplify and speed up the implementation of inventory systems in games. With an intuitive interface and a robust system, it allows you to manage items efficiently.
+Plugin de Slot de Inventário
+O Plugin de Slot de Inventário é um addon para Godot 4.3.x, projetado para simplificar e acelerar a implementação de sistemas de inventário em jogos. Com uma interface intuitiva e um sistema robusto, ele permite gerenciar itens de forma eficiente.
+
+Pluguin Original: https://github.com/BielyDev/Inventory_slot
+Fork com tradução em portugues: https://github.com/WalneyNF/Inventory_slot
+
 
 <img alt="Static Badge" src="https://img.shields.io/badge/current%20version-0.9.0-red"> <img alt="Static Badge" src="https://img.shields.io/badge/godot%20version-4.3.x.stable-blue">
 
-# Summary
+Sumário
+Instalação
 
-- [Installation](#installation)
-- [How to use](#how-to-use)
-- [Coding and functions](#code-and-functions)
-  
-# Installation
-Download the Repository:
-	After downloading the `.zip` file of the plugin, open your project in Godot.
+Como usar
 
-Importing the Plugin:
-	Go to the AssetLib window and click on `“Import Plugins”`.
+Código e Funções
 
-![image](https://github.com/user-attachments/assets/27baefb5-0270-48c6-a943-e276f317e269)
+Instalação
+Baixar o Repositório:
+Após baixar o arquivo .zip do plugin, abra seu projeto no Godot.
 
-Find the File:
-	Find the plugin file you downloaded.
+Importar o Plugin:
+Vá até a janela AssetLib e clique em “Import Plugins”.
 
-Restart the project:
-	It's normal for some errors to appear after importing. Restart the project to make sure everything is working correctly.
+image
 
-NOTE: IMPORTANTLY, THE PLUGIN NEEDS THE ADDONS FOLDER.
+Encontrar o Arquivo:
+Localize o arquivo do plugin que você baixou.
 
-# How to use
+Reiniciar o Projeto:
+É normal que alguns erros apareçam após a importação. Reinicie o projeto para garantir que tudo esteja funcionando corretamente.
 
-  The way to use the plugin is simple and very flexible with projects.
+NOTA: IMPORTANTEMENTE, O PLUGIN PRECISA DA PASTA ADDONS.
 
-### 1.Create panels and configure them to your liking.
+Como usar
+A maneira de usar o plugin é simples e muito flexível com projetos.
 
-![image](https://github.com/user-attachments/assets/c1e7cbeb-37ff-4cd1-b118-5ec80d8b924c)
+1. Crie painéis e configure-os como desejar.
+image
 
+2. Um pouco mais abaixo, você encontrará o painel Class / Items, onde criará suas classes e itens.
+image
 
-### 2.A little further down you'll find the Class / Items panel, where you'll create your classes and items.
+3. Com as configurações iniciais feitas, podemos colocar nossa interface em ação. Adicione o nó PanelSlot à sua cena.
+image
 
-![image](https://github.com/user-attachments/assets/78dcb515-1a22-442f-b400-e9494b45c1d2)
+4. Agora, vamos configurar nosso painel para receber os itens corretamente.
+image
 
+5. Tudo está pronto, mas precisamos saber como nossa interface está funcionando. E para isso, adicionaremos um item via código de forma simples usando add_item() do singleton Inventory:
+Copy
+func _ready() -> void:
+	Inventory.add_item(1,0)
+image
 
-### 3.With the initial settings made, we can put our interface into action. Add the PanelSlot node to your scene.
+Código e Funções
+Aqui temos 2 recursos para manipulação de itens/arquivos.
 
-![image](https://github.com/user-attachments/assets/e8abf05a-7a47-4866-a7f7-da82fa517d1f)
+Inventory (Singleton)
+Manipulação de itens do inventário.
 
+Usando add_item(), você adiciona o item ao inventário especificando o _item_unique_id e direcionando o painel em _panel_id.
+Copy
+Inventory.add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false)
+Remove o item de um painel, forneça o id do painel em _panel_id e o id do item no inventário.
+Copy
+Inventory.remove_item(_panel_id: Dictionary, _id: int = -1)
+Pesquise itens em um painel usando search_item, forneça o unique_id do item em _item_unique_id.
+Copy
+Inventory.search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",_slot: int = -1)
+Troca itens de painéis.
+Copy
+Inventory.set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true)
+Altera o slot de um item.
+Copy
+Inventory.set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: int = -1, _unique: bool = true)
+Troca 2 itens de slot.
+Copy
+Inventory.func changed_slots_items(item_one: Dictionary, item_two: Dictionary)`
+InventoryFile (Classe)
+Manipulação de arquivos.
 
-### 4.Now let's configure our panel to receive the items properly.
-
-![image](https://github.com/user-attachments/assets/3dd75d63-89f7-47a6-a2b8-8ba804122135)
-
-
-### 5.Everything is ready, but we need to know how our interface is working. And for this we'll add an item via code in a simple way using add_item() from the Inventory singleton:
-
-	func _ready() -> void:
-		Inventory.add_item(1,0)
-
-![image](https://github.com/user-attachments/assets/4f0912d9-5afe-41fe-891d-dbb15ad9845d)
-
-
-# Coding and functions
-
-  Here we have 2 features for manipulating items/files.
-  
-## Inventory ( Singleton )
-  
-  Handling inventory items.
-
-  #### Using `add_item()`, you add the item to the inventory by specifying the `_item_unique_id` and directing the panel in `_panel_id`. 
-	Inventory.add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false)
-  #### Remove the item from a panel, give the id of the panel to `_panel_id`, and the `id` of the item in the inventory.
-	Inventory.remove_item(_panel_id: Dictionary, _id: int = -1)
-  #### Search for items in a panel using `search_item`, give the `unique_id` of the item in `_item_unique_id`.
-	Inventory.search_item(_panel_id: int, _item_unique_id: int = -1, _path : String = "",_slot: int = -1)
-  #### Exchange panel items.
-	Inventory.set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true)
-  #### Change the slot of an item.
-	Inventory.set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: int = -1, _unique: bool = true)
-  #### Swap 2 slot items.
-	Inventory.func changed_slots_items(item_one: Dictionary, item_two: Dictionary)`
-
-
-## InventoryFile ( Class )
-  File handling.
-  
-  #### Search for an item in a panel using `unique_id`.
-	search_item_id(_panel_id: int, _item_unique_id: int = -1)
-  #### Take a panel with its own id.
-	get_panel(_panel_id: int)
-  #### Pegue um painel com o `unique_id` de um item em inventario que esteja dentro do proprio.
-	get_panel_id(_unique_id: int)
-  #### Returns the name of the item
-	get_class_name(_unique_id_item: int)
-  #### Returns the class name of the item
-	get_item_name(_unique_id_item: int)
-  #### Check if the file is a json (goes beyond the extension).
-	InventoryFile.is_json(_path: String)
-  #### Pull the json from the dictionary.
-	InventoryFile.pull_inventory(_path: String)
-  #### Send your dictionary to be saved in json stop `_path`.
-	InventoryFile.push_inventory(_dic: Dictionary,_path: String)
-  #### Add the item directly to `ITEM_INVENTORY_PATH`.
-	InventoryFile.push_item_inventory(_item_id: int, _item_inventory: Dictionary)
-  #### Create a new class.
-	new_class(_class_name: String)
-  #### Create an item in a panel.
-	new_item_panel(_class_name: String,_icon_path: String = InventoryFile.IMAGE_DEFAULT,_amount: int = 1,_description: String = “”,_path_scene: String = “res://”)
-  #### Remove a class.
-	remove_class(_inventory: Dictionary,_class_name: String)
-  #### Remove an item in a panel.
-	remove_item(_panel_id: int, _id: int = -1)
-  #### Lists all the panels in an array.
-	list_all_panel()
-  #### Const
-   `ITEM_PANEL_PATH`
-   `PANEL_SLOT_PATH`
-   `ITEM_INVENTORY_PATH`
+Pesquise um item em um painel usando unique_id.
+Copy
+search_item_id(_panel_id: int, _item_unique_id: int = -1)
+Obtenha um painel com seu próprio id.
+Copy
+get_panel(_panel_id: int)
+Obtenha um painel com o unique_id de um item no inventário que esteja dentro dele.
+Copy
+get_panel_id(_unique_id: int)
+Retorna o nome do item.
+Copy
+get_class_name(_unique_id_item: int)
+Retorna o nome da classe do item.
+Copy
+get_item_name(_unique_id_item: int)
+Verifica se o arquivo é um json (vai além da extensão).
+Copy
+InventoryFile.is_json(_path: String)
+Extrai o json do dicionário.
+Copy
+InventoryFile.pull_inventory(_path: String)
+Envia seu dicionário para ser salvo em json no _path.
+Copy
+InventoryFile.push_inventory(_dic: Dictionary,_path: String)
+Adiciona o item diretamente ao ITEM_INVENTORY_PATH.
+Copy
+InventoryFile.push_item_inventory(_item_id: int, _item_inventory: Dictionary)
+Cria uma nova classe.
+Copy
+new_class(_class_name: String)
+Cria um item em um painel.
+Copy
+new_item_panel(_class_name: String,_icon_path: String = InventoryFile.IMAGE_DEFAULT,_amount: int = 1,_description: String = “”,_path_scene: String = “res://”)
+Remove uma classe.
+Copy
+remove_class(_inventory: Dictionary,_class_name: String)
+Remove um item em um painel.
+Copy
+remove_item(_panel_id: int, _id: int = -1)
+Lista todos os painéis em um array.
+Copy
+list_all_panel()
+Const
+ITEM_PANEL_PATH
+PANEL_SLOT_PATH
+ITEM_INVENTORY_PATH

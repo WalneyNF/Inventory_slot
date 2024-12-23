@@ -1,6 +1,7 @@
 @tool
 extends Node
 
+# Sinais emitidos pelo sistema de inventário
 signal new_item(_item_panel: Dictionary , _item_inventory: Dictionary, _panel_slot: Dictionary)
 signal new_data(_item_panel: Dictionary , _item_inventory: Dictionary ,_system_slot: Dictionary)
 signal discart_item(_item_panel: Dictionary ,_item_inventory: Dictionary  ,_system_slot: Dictionary)
@@ -13,6 +14,7 @@ signal changed_panel_data()
 
 signal reload_dock()
 
+# Enumeração para códigos de erro
 enum ERROR {
 	SLOT_BUTTON_VOID = -2,
 	VOID = -1,
@@ -23,11 +25,11 @@ enum ERROR {
 	SEPARATER
 }
 
-#Ready value ===
+# Valores prontos ao iniciar
 @onready var PLUGIN_PATH: String = str(get_script().resource_path.get_base_dir(),"/../..")
 @onready var IMAGE_DEFAULT: String = str(PLUGIN_PATH,"/assets/item_image/life.png")
 
-
+# Variáveis globais para caminhos de arquivos
 var ITEM_PANEL_PATH: String
 var ITEM_INVENTORY_PATH: String
 var PANEL_SLOT_PATH: String
@@ -35,60 +37,77 @@ var JSON_PATH: String
 var SAVE_PATH: String
 var ITEM_SETTINGS: String
 
-var item_selected: Control # Item node dos slots
+# Item selecionado no slot
+var item_selected: Control
 
-## Sub functions ================================================================
+## Funções secundárias ================================================================
 
+# Função chamada quando o nó é carregado
 func _ready() -> void:
+	# Solicita permissões do sistema operacional
 	OS.request_permissions()
 	
+	# Atualiza os caminhos do sistema de inventário
 	InventorySystem._update_path()
 	
+	# Desativa o processamento de entrada inicialmente
 	set_process_input(false)
 	
+	# Define o modo de processamento como sempre ativo
 	process_mode = PROCESS_MODE_ALWAYS
+	
+	# Conecta o sinal de mudança de slot
 	button_slot_changed.connect(_function_slot_changed)
 
+# Função chamada para processar eventos de entrada
 func _input(event: InputEvent) -> void:
+	# Move o item selecionado com o mouse
 	if event is InputEventMouseMotion:
-		item_selected.global_position = event.position - (item_selected.size/2)
-
+		item_selected.global_position = event.position - (item_selected.size / 2)
 
 ##===============================================================================
-# New functions ================================================================
+# Novas funções ================================================================
 
-## Main functions ----------------------------------------
+## Funções principais ----------------------------------------
 func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false, _metadata: Variant = null):
 	
+	# Busca o item no painel
 	var _item_panel = InventoryFile.search_item_id(_panel_id ,_item_unique_id )
 	var item_inventory
 	
+	# Verifica se o arquivo de inventário existe
 	if InventoryFile.is_json(ITEM_INVENTORY_PATH):
 		item_inventory = search_item(_panel_id ,_item_panel.unique_id )
 	
+	# Obtém o painel de slot
 	var _panel_slot = InventoryFile.get_panel(_panel_id)
 	
+	# Verifica se há erros nos argumentos
 	if !_error(_panel_slot,_item_panel):
 		return [ERROR.INVALID_ARGUMENTS]
 	
+	# Adiciona o item com filtro de slot
 	if _unique:
 		return _append_item_filter_slot_amount(_panel_slot , _item_panel, _amount, _slot, _id, _metadata)
 	
-	if _slot == ERROR.SLOT_BUTTON_VOID: # Para botoes vazios, normalmente craidos com o botao direito.
+	# Adiciona o item em um slot vazio
+	if _slot == ERROR.SLOT_BUTTON_VOID:
 		var _new_item = _append_item(_panel_slot, _item_panel, _amount, ERROR.SLOT_BUTTON_VOID, -1,_metadata)
 		
 		return _new_item
 	
+	# Separa o item em múltiplos slots
 	var _separate = _separate_item_one(_item_panel, _panel_slot, _amount, _metadata)
 	
 	if _separate is Array:
 		return _separate
 	
+	# Adiciona o item ao inventário
 	if item_inventory is Dictionary:
 		
 		if item_inventory.amount == _item_panel.max_amount:
 			
-			var now_search_item = search_item_amount_min(_panel_slot.id, _item_panel.unique_id, _item_panel.max_amount)#  asd
+			var now_search_item = search_item_amount_min(_panel_slot.id, _item_panel.unique_id, _item_panel.max_amount)
 			
 			if now_search_item != null:
 				item_inventory = now_search_item
@@ -107,6 +126,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 	
 	return _append_item_filter_slot_amount(_panel_slot ,_item_panel ,_amount ,_slot ,_id ,_metadata )
 
+# Remove um item do inventário
 func remove_item(_panel_id: int, _id: int = -1, _slot: int = -1) -> bool:
 	
 	var _all_item_inventory: Array = InventoryFile.list_all_item_inventory(_panel_id)
@@ -138,6 +158,7 @@ func remove_item(_panel_id: int, _id: int = -1, _slot: int = -1) -> bool:
 	
 	return false
 
+# Move um item para outro painel
 func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot: int = -1, _unique: bool = false, _out_item_remove: bool = true):
 	var _item_inventory: Dictionary = search_item_inventory(_out_panel_id,_item_id)
 	
@@ -203,6 +224,7 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 	item_entered_panel.emit(_new_item,_new_panel_id)
 	item_exiting_panel.emit(_new_item,_out_panel_id)
 
+# Move um item para outro slot
 func set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: int = -1, _unique: bool = true) -> void:
 	var _new_item_inventory: Dictionary = _item_inventory
 	
@@ -217,6 +239,7 @@ func set_slot_item(_panel_item: Dictionary, _item_inventory: Dictionary, _slot: 
 		_item_inventory.metadata,
 	)
 
+# Troca os itens entre dois slots
 func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 	var one = item_one
 	var two = item_two
@@ -232,7 +255,7 @@ func changed_slots_items(item_one: Dictionary, item_two: Dictionary) -> void:
 
 #---------------------------------------------------------
 
-## Searchs -----------------------------------------------
+## Buscas -----------------------------------------------
 func search_item(_panel_id: int, _item_unique_id: int = -1, _slot: int = -1):
 	var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
 	
@@ -296,7 +319,7 @@ func search_panel_id_item(_item_id: int) -> int:
 
 #---------------------------------------------------------
 
-## Adjustments -------------------------------------------
+## Ajustes -------------------------------------------
 func _is_item_valid(array_item: Array, path: String) -> bool:
 	for item in array_item:
 		if item.path == path:
@@ -349,8 +372,7 @@ func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
 	var next: int = 0
 	var max: int = 0
 	
-	# se tiver muito item
-	for i in filter_amount: # Separa quantos slots são necessarios e a quantidade que irar ir pra cada slot
+	for i in filter_amount:
 		
 		next += 1
 		max += 1
