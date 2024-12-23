@@ -7,53 +7,57 @@ Copy
 {
 	"Arma": {
 		"Pa": {
-			"ID_unico": 1,
+			"unique_id": 0,
 			"descricao": "Pa",
 			"description": "Pa",
 			"icon": "res://Assets/Itens/genericItem_color_022.png",
-			"quantidade_maxima": 1,
+			"max_amount": 1,
 			"scene": "res://"
 		},
 		"Picareta": {
-			"ID_unico": 2,
+			"unique_id": 1,
 			"descricao": "Picareta",
 			"description": "Picareta",
 			"icon": "res://Assets/Itens/genericItem_color_021.png",
-			"quantidade_maxima": 1,
+			"max_amount": 1,
 			"scene": "res://"
 		},
 		"Serrote": {
-			"ID_unico": 3,
+			"unique_id": 2,
 			"descricao": "Serrote",
 			"description": "Serrote",
 			"icon": "res://Assets/Itens/genericItem_color_016.png",
-			"quantidade_maxima": 1,
+			"max_amount": 1,
+			"scene": "res://"
+		},
+		"Arco": {
+			"unique_id": 3,
+			"descricao": "Arco",
+			"description": "Arco",
+			"icon": "res://Assets/Itens/genericItem_color_017.png",
+			"max_amount": 1,
 			"scene": "res://"
 		}
 	},
 	"Armadura": {
 		"Armadura1": {
-			"ID_unico": 1,
+			"unique_id": 4,
 			"descricao": "Armadura 1",
 			"icon": "res://Assets/Itens/genericItem_color_035.png",
-			"quantidade_maxima": 1,
+			"max_amount": 1,
 			"scene": "res://"
 		},
 		"Armadura2": {
-			"ID_unico": 2,
+			"unique_id": 5,
 			"descricao": "Armadura 2",
 			"description": "Armadura 2\n",
 			"icon": "res://Assets/Itens/genericItem_color_036.png",
-			"quantidade_maxima": 1,
+			"max_amount": 1,
 			"scene": "res://"
 		}
-	},
-	"Bota": {},
-	"Calca": {},
-	"Capacete": {},
-	"Escudo": {},
-	"Pet": {}
+	}
 }
+
 Explicação:
 Classes: Cada classe (como Arma, Armadura, etc.) contém itens associados.
 
