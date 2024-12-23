@@ -1,0 +1,259 @@
+Estrutura do Arquivo class.json
+O arquivo class.json define as classes de itens e os itens associados a cada classe. Cada classe pode conter vários itens, e cada item possui propriedades como ID_unico, descricao, icon, quantidade_maxima, e scene.
+
+Exemplo de Estrutura:
+json
+Copy
+{
+	"Arma": {
+		"Pa": {
+			"ID_unico": 1,
+			"descricao": "Pa",
+			"description": "Pa",
+			"icon": "res://Assets/Itens/genericItem_color_022.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Picareta": {
+			"ID_unico": 2,
+			"descricao": "Picareta",
+			"description": "Picareta",
+			"icon": "res://Assets/Itens/genericItem_color_021.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Serrote": {
+			"ID_unico": 3,
+			"descricao": "Serrote",
+			"description": "Serrote",
+			"icon": "res://Assets/Itens/genericItem_color_016.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		}
+	},
+	"Armadura": {
+		"Armadura1": {
+			"ID_unico": 1,
+			"descricao": "Armadura 1",
+			"icon": "res://Assets/Itens/genericItem_color_035.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Armadura2": {
+			"ID_unico": 2,
+			"descricao": "Armadura 2",
+			"description": "Armadura 2\n",
+			"icon": "res://Assets/Itens/genericItem_color_036.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		}
+	},
+	"Bota": {},
+	"Calca": {},
+	"Capacete": {},
+	"Escudo": {},
+	"Pet": {}
+}
+Explicação:
+Classes: Cada classe (como Arma, Armadura, etc.) contém itens associados.
+
+Itens: Cada item tem um ID_unico único, uma descricao, um caminho para o ícone (icon), uma quantidade_maxima (quantidade máxima que pode ser armazenada no inventário) e uma scene (que pode ser usada para carregar uma cena associada ao item).
+
+Estrutura do Arquivo panel.json
+O arquivo panel.json define os painéis do inventário, que são os espaços onde os itens podem ser armazenados. Cada painel tem um class_unique (que restringe os itens que podem ser colocados nele), um id único e um slot_amount (quantidade de slots disponíveis no painel).
+
+Exemplo de Estrutura:
+json
+Copy
+{
+	"Armadura": {
+		"class_unique": "Armadura",
+		"id": 1,
+		"slot_amount": 1
+	},
+	"Armas": {
+		"class_unique": "Arma",
+		"id": 3,
+		"slot_amount": 1
+	},
+	"Bota": {
+		"class_unique": "Bota",
+		"id": 5,
+		"slot_amount": 1
+	},
+	"Calca": {
+		"class_unique": "Calca",
+		"id": 4,
+		"slot_amount": 1
+	},
+	"Capacete": {
+		"class_unique": "Capacete",
+		"id": 0,
+		"slot_amount": 1
+	},
+	"Escudo": {
+		"class_unique": "Escudo",
+		"id": 2,
+		"slot_amount": 1
+	},
+	"Pet": {
+		"class_unique": "Pet",
+		"id": 6,
+		"slot_amount": 1
+	},
+	"Void": {
+		"class_unique": "all",
+		"id": -2,
+		"slot_amount": 15
+	}
+}
+Explicação:
+Painéis: Cada painel tem um class_unique, que define a classe de itens que podem ser armazenados nele. Por exemplo, o painel Armadura só pode armazenar itens da classe Armadura.
+
+Slots: O slot_amount define quantos slots estão disponíveis no painel. Por exemplo, o painel Void tem 15 slots, enquanto os outros painéis têm apenas 1 slot.
+
+ID Único: Cada painel tem um id único, que é usado para identificar o painel no sistema de inventário.
+
+Como os Arquivos JSON Interagem
+Classes e Itens:
+
+O arquivo class.json define as classes de itens e os itens associados a cada classe.
+
+Cada item tem um ID_unico, que é usado para identificar o item no inventário.
+
+Painéis e Restrições:
+
+O arquivo panel.json define os painéis do inventário e as restrições de classe (class_unique).
+
+Por exemplo, o painel Armadura só pode armazenar itens da classe Armadura, enquanto o painel Void pode armazenar qualquer item (class_unique: "all").
+
+Adição de Itens:
+
+Quando um item é adicionado ao inventário, o sistema verifica o ID_unico do item e o class_unique do painel para garantir que o item seja adicionado ao painel correto.
+
+Se o painel não tiver slots disponíveis ou se o item não corresponder à classe permitida, o sistema pode rejeitar o item ou movê-lo para outro painel.
+
+Exemplo de Uso
+Adicionando um Item ao Inventário:
+gdscript
+Copy
+# Adiciona um item ao painel de Armadura
+Inventory.add_item(1, 1) # Painel ID 1 (Armadura), Item ID_unico 1 (Armadura1)
+Verificando Itens em um Painel:
+gdscript
+Copy
+# Pesquisa itens no painel de Armas
+var itens_armas = Inventory.search_item(3, 1) # Painel ID 3 (Armas), Item ID_unico 1 (Pa)
+print(itens_armas)
+Movendo Itens entre Painéis:
+gdscript
+Copy
+# Move um item do painel de Armadura para o painel de Armas
+Inventory.set_panel_item(1, 1, 3) # Item ID 1, Painel de Origem 1 (Armadura), Painel de Destino 3 (Armas)
+Conclusão
+O uso de arquivos JSON para definir classes de itens e painéis de inventário é uma abordagem muito eficiente e flexível. Ela permite que você configure o sistema de inventário de forma dinâmica e facilita a adição de novos itens e painéis sem a necessidade de alterar o código-fonte.
+
+Se você tiver mais dúvidas sobre como implementar ou personalizar o sistema, sinta-se à vontade para perguntar!
+
+(system.json)
+{
+	"amount_anchor": 0,
+	"amount_show_being_one": false,
+	"amount_text": "Amount",
+	"description_amount_show": true,
+	"description_description": true,
+	"description_name_item": true
+}
+O arquivo system.json parece ser uma configuração de sistema para personalizar o comportamento e a exibição do inventário. Ele define como certas informações serão exibidas ou tratadas no sistema de inventário. Vamos analisar cada propriedade e seu significado:
+
+Estrutura do Arquivo system.json
+json
+Copy
+{
+	"amount_anchor": 0,
+	"amount_show_being_one": false,
+	"amount_text": "Amount",
+	"description_amount_show": true,
+	"description_description": true,
+	"description_name_item": true
+}
+Explicação das Propriedades
+amount_anchor:
+
+Valor: 0
+
+Significado: Define o ponto de ancoragem (ou posição) onde o texto da quantidade será exibido. O valor 0 pode significar uma posição padrão ou centralizada, mas o significado exato depende da implementação no código.
+
+amount_show_being_one:
+
+Valor: false
+
+Significado: Define se a quantidade deve ser exibida mesmo quando o item tem apenas uma unidade. Se for false, a quantidade não será exibida para itens com quantidade 1.
+
+amount_text:
+
+Valor: "Amount"
+
+Significado: Define o texto que será exibido antes da quantidade do item. Por exemplo, se o item tiver 5 unidades, o texto exibido pode ser "Amount: 5".
+
+description_amount_show:
+
+Valor: true
+
+Significado: Define se a quantidade do item será exibida na descrição do item. Se for true, a quantidade será incluída na descrição.
+
+description_description:
+
+Valor: true
+
+Significado: Define se a descrição do item será exibida. Se for true, a descrição do item será mostrada ao usuário.
+
+description_name_item:
+
+Valor: true
+
+Significado: Define se o nome do item será exibido na descrição. Se for true, o nome do item será incluído na descrição.
+
+Exemplo de Uso
+Com base nas configurações acima, o sistema de inventário se comportará da seguinte forma:
+
+Quantidade:
+
+A quantidade será exibida apenas se o item tiver mais de uma unidade (amount_show_being_one: false).
+
+O texto "Amount" será exibido antes da quantidade (amount_text: "Amount").
+
+A quantidade será exibida na descrição do item (description_amount_show: true).
+
+Descrição:
+
+A descrição do item será exibida (description_description: true).
+
+O nome do item será exibido na descrição (description_name_item: true).
+
+Personalização
+Você pode personalizar o arquivo system.json para ajustar o comportamento do sistema de inventário de acordo com as necessidades do seu jogo. Por exemplo:
+
+Exibir a quantidade mesmo para itens com apenas uma unidade:
+
+json
+Copy
+"amount_show_being_one": true
+Alterar o texto da quantidade:
+
+json
+Copy
+"amount_text": "Quantidade"
+Ocultar a descrição do item:
+
+json
+Copy
+"description_description": false
+Ocultar o nome do item na descrição:
+
+json
+Copy
+"description_name_item": false
+Conclusão
+O arquivo system.json é uma configuração importante para personalizar a exibição e o comportamento do sistema de inventário. Ele permite que você ajuste detalhes como a exibição da quantidade, a descrição do item e o texto associado.
+
