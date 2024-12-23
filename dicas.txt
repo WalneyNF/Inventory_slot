@@ -1,0 +1,49 @@
+Para criar os itens pode ser pelo proprio arquivo json que fica na pasta (addons\inventory_slot_plugin\save) com nome de class.json
+
+exemplo
+{
+	"Arma": {
+		"Serrote": {
+			"ID_unico": 0,
+			"descricao": "Serrote",
+			"description": "Serrote",
+			"icon": "res://Assets/Itens/genericItem_color_016.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Pa": {
+			"ID_unico": 1,
+			"descricao": "Pa",
+			"description": "Pa",
+			"icon": "res://Assets/Itens/genericItem_color_022.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		},
+		"Picareta": {
+			"ID_unico": 2,
+			"descricao": "Picareta",
+			"description": "Picareta",
+			"icon": "res://Assets/Itens/genericItem_color_021.png",
+			"quantidade_maxima": 1,
+			"scene": "res://"
+		}
+	},
+	"Armadura": {
+
+	},
+	"Bota": {
+
+	},
+	"Calca": {
+
+	},
+	"Capacete": {
+
+	},
+	"Escudo": {
+
+	},
+	"Pet": {
+
+	}
+}
